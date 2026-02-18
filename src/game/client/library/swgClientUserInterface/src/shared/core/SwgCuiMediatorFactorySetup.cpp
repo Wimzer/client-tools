@@ -70,6 +70,7 @@
 #include "swgClientUserInterface/SwgCuiGalacticCivilWar.h"
 #include "swgClientUserInterface/SwgCuiGameMenu.h"
 #include "swgClientUserInterface/SwgCuiHarassmentReport.h"
+#include "swgClientUserInterface/SwgCuiHolocron.h"
 #include "swgClientUserInterface/SwgCuiHudGround.h"
 #include "swgClientUserInterface/SwgCuiHudSpace.h"
 #include "swgClientUserInterface/SwgCuiHyperspaceMap.h"
@@ -200,6 +201,7 @@ void SwgCuiMediatorFactorySetup::install ()
 
 	MAKE_SWG_CTOR (DebugInfoPage,                     "/Debug.DebugInfo");
 	MAKE_SWG_CTOR (GameMenu,                          "/GameMenu");
+	MAKE_SWG_CTOR (Holocron,                          "/PDA.help");
 	MAKE_SWG_CTOR (HudGround,                         "/GroundHUD");
 	MAKE_SWG_CTOR (HudSpace,                          "/HudSpace");
 	MAKE_SWG_CTOR (Inventory,                         "/Inv");
