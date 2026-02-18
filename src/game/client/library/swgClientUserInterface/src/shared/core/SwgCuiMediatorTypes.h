@@ -47,6 +47,7 @@ namespace CuiMediatorTypes
 	MAKE_MEDIATOR_TYPE (SceneSelection);
 	MAKE_MEDIATOR_TYPE (ServerDisconnected);
 	MAKE_MEDIATOR_TYPE (Service);
+	MAKE_MEDIATOR_TYPE (Holocron);
 	MAKE_MEDIATOR_TYPE (ShipSelection);
 	MAKE_MEDIATOR_TYPE (StructurePlacement);
 	MAKE_MEDIATOR_TYPE (WS_Vendor);

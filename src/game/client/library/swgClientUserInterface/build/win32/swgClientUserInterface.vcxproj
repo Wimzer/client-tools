@@ -472,6 +472,9 @@
     <ClCompile Include="..\..\src\shared\page\SwgCuiHighlight.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
     </ClCompile>
+    <ClCompile Include="..\..\src\shared\page\SwgCuiHolocron.cpp">
+      <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
+    </ClCompile>
     <ClCompile Include="..\..\src\shared\page\SwgCuiHud.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
     </ClCompile>
@@ -1014,6 +1017,7 @@
     <ClInclude Include="..\..\src\shared\page\SwgCuiHarassmentMessage.h" />
     <ClInclude Include="..\..\src\shared\page\SwgCuiHarassmentReport.h" />
     <ClInclude Include="..\..\src\shared\page\SwgCuiHighlight.h" />
+    <ClInclude Include="..\..\src\shared\page\SwgCuiHolocron.h" />
     <ClInclude Include="..\..\src\shared\page\SwgCuiHud.h" />
     <ClInclude Include="..\..\src\shared\page\SwgCuiHudAction.h" />
     <ClInclude Include="..\..\src\shared\page\SwgCuiHudActionGround.h" />

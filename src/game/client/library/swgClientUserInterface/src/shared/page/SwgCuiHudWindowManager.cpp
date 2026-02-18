@@ -99,6 +99,7 @@
 #include "swgClientUserInterface/SwgCuiTicketPurchase.h"
 #include "swgClientUserInterface/SwgCuiToolbar.h"
 #include "swgClientUserInterface/SwgCuiTrade.h"
+#include "swgClientUserInterface/SwgCuiHolocron.h"
 #include "swgSharedNetworkMessages/ConsentRequestMessage.h"
 #include "swgSharedNetworkMessages/PermissionListCreateMessage.h"
 
@@ -731,7 +732,14 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
-		IGNORE_RETURN(CuiActionManager::performAction (CuiActions::service, Unicode::emptyString));
+		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
+		OpenHolocronToPageMessage msg(ri);
+		openHolocronToPage(msg.getPage());
+	}
+
+	else if (message.isType (CloseHolocronMessage::MessageType))
+	{
+		closeHolocron();
 	}
 
 	else if (message.isType (EditAppearanceMessage::MessageType))
@@ -1695,6 +1703,74 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 	else
 		result = m_singleToolbar;
 	return result;
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
+{
+	SwgCuiHolocron * holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
+
+	if (holocron)
+	{
+		// Holocron already exists, just activate and load page
+		if (!holocron->isActive())
+			holocron->activate();
+
+		if (!pageName.empty())
+			holocron->loadPage(pageName);
+
+		m_workspace->focusMediator(*holocron, true);
+	}
+	else
+	{
+		// Create new Holocron window
+		holocron = SwgCuiHolocron::createInto(&m_workspace->getPage());
+		holocron->setSettingsAutoSizeLocation(true, true);
+		holocron->getPage().Center();
+		m_workspace->addMediator(*holocron);
+		holocron->activate();
+
+		if (!pageName.empty())
+			holocron->loadPage(pageName);
+
+		m_workspace->focusMediator(*holocron, true);
+		holocron->setEnabled(true);
+	}
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::closeHolocron()
+{
+	SwgCuiHolocron * holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
+
+	if (holocron && holocron->isActive())
+	{
+		holocron->deactivate();
+	}
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::toggleHolocron ()
+{
+	SwgCuiHolocron * holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType (typeid (SwgCuiHolocron)));
+
+	if (holocron)
+	{
+		toggleMediator (*holocron);
+	}
+	else
+	{
+		holocron = SwgCuiHolocron::createInto (&m_workspace->getPage ());
+		holocron->setSettingsAutoSizeLocation (true, true);
+		holocron->getPage ().Center ();
+		m_workspace->addMediator (*holocron);
+		holocron->activate ();
+		m_workspace->focusMediator (*holocron, true);
+		holocron->setEnabled (true);
+	}
 }
 
 //======================================================================
