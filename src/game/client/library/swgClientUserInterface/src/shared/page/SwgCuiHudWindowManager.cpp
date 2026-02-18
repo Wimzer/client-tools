@@ -621,6 +621,18 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 			m_sendOpenStatMigration = true;
 		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseStatMigration)
 			m_sendCloseStatMigration = true;
+		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestOpenHolocron)
+		{
+			openHolocronToPage(std::string());
+			const NewbieTutorialResponse response(cms_newbieTutorialRequestOpenHolocron);
+			GameNetwork::send(response, true);
+		}
+		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseHolocron)
+		{
+			closeHolocron();
+			const NewbieTutorialResponse response(cms_newbieTutorialRequestCloseHolocron);
+			GameNetwork::send(response, true);
+		}
 	}
 
 	//----------------------------------------------------------------------
