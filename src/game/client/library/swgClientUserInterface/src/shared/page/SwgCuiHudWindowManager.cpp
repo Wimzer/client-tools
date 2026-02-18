@@ -457,6 +457,7 @@ void SwgCuiHudWindowManager::handlePerformActivate ()
 	connectToMessage (ConsentRequestMessage::cms_name);
 	connectToMessage (OpenHolocronToPageMessage::MessageType);
 	connectToMessage (CloseHolocronMessage::MessageType);
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#00ffff[Holocron DEBUG] connectToMessage registered for OpenHolocronToPageMessage + CloseHolocronMessage"));
 	connectToMessage (EditAppearanceMessage::MessageType);
 	connectToMessage (EditStatsMessage::MessageType);
 	connectToMessage (NewbieTutorialHighlightUIElement::cms_name);
@@ -744,13 +745,16 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#00ff00[Holocron DEBUG] receiveMessage: OpenHolocronToPageMessage received!"));
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#00ff00[Holocron DEBUG] calling openHolocronToPage with page='" + msg.getPage() + "'"));
 		openHolocronToPage(msg.getPage());
 	}
 
 	else if (message.isType (CloseHolocronMessage::MessageType))
 	{
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#00ff00[Holocron DEBUG] receiveMessage: CloseHolocronMessage received!"));
 		closeHolocron();
 	}
 
@@ -1721,10 +1725,13 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#ffff00[Holocron DEBUG] openHolocronToPage ENTERED, page='" + pageName + "'"));
+
 	SwgCuiHolocron * holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
 
 	if (holocron)
 	{
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#ffff00[Holocron DEBUG] existing mediator found, activating"));
 		// Holocron already exists, just activate and load page
 		if (!holocron->isActive())
 			holocron->activate();
@@ -1736,8 +1743,10 @@ void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 	}
 	else
 	{
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#ffff00[Holocron DEBUG] no existing mediator, calling createInto..."));
 		// Create new Holocron window
 		holocron = SwgCuiHolocron::createInto(&m_workspace->getPage());
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#ffff00[Holocron DEBUG] createInto returned, setting up mediator..."));
 		holocron->setSettingsAutoSizeLocation(true, true);
 		holocron->getPage().Center();
 		m_workspace->addMediator(*holocron);
@@ -1748,6 +1757,7 @@ void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 
 		m_workspace->focusMediator(*holocron, true);
 		holocron->setEnabled(true);
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("\\#ffff00[Holocron DEBUG] openHolocronToPage COMPLETE"));
 	}
 }
 
