@@ -1697,7 +1697,7 @@ bool  SwgCuiHudAction::performAction (const std::string & id, const Unicode::Str
 	}
 	else if (id == CuiActions::openHolocron)
 	{
-		m_mediator.m_windowManager->toggleHolocron ();
+		CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_Holocron);
 	}
 
 	//unknown action

@@ -201,7 +201,7 @@ void SwgCuiMediatorFactorySetup::install ()
 
 	MAKE_SWG_CTOR (DebugInfoPage,                     "/Debug.DebugInfo");
 	MAKE_SWG_CTOR (GameMenu,                          "/GameMenu");
-	MAKE_SWG_CTOR (Holocron,                          "/PDA.help");
+	MAKE_SWG_CTOR_WS (Holocron,                        "/PDA.help");
 	MAKE_SWG_CTOR (HudGround,                         "/GroundHUD");
 	MAKE_SWG_CTOR (HudSpace,                          "/HudSpace");
 	MAKE_SWG_CTOR (Inventory,                         "/Inv");
