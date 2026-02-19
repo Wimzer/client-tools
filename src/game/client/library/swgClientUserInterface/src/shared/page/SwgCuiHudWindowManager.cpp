@@ -525,6 +525,7 @@ void SwgCuiHudWindowManager::handlePerformDeactivate ()
 
 void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , const MessageDispatch::MessageBase & message)
 {
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[HudWM] receiveMessage: " + message.getType()));
 
 	//----------------------------------------------------------------------
 
