@@ -3330,4 +3330,5 @@ Brawler</Text>
 		<include>ui_pda_expertise.inc</include>
 		<include>ui_pda_location_display.inc</include>
 		<include>ui_pda_location_display.inc</include>
+		<include>ui_help.inc</include>
 	</Page>
