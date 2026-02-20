@@ -1721,6 +1721,13 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
+	UIPage * const pdaPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA", TUIPage));
+	if (!pdaPage)
+	{
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA not found; aborting open"));
+		return;
+	}
+
 	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
 	if (!helpPage)
 	{
