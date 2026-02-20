@@ -747,6 +747,7 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 	{
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
+		DEBUG_WARNING(true, ("[Holocron] received OpenHolocronToPageMessage: page='%s'", msg.getPage().c_str()));
 		openHolocronToPage(msg.getPage());
 	}
 
@@ -1722,7 +1723,9 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
+	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: page='%s'", pageName.c_str()));
 	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
+	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: holocron=%p", holocron));
 	if (holocron && !pageName.empty())
 	{
 		holocron->loadPage(pageName);

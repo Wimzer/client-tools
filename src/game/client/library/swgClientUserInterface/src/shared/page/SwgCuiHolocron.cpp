@@ -512,7 +512,7 @@ SwgCuiHolocron * SwgCuiHolocron::createInto(UIPage * parent)
 {
 	HOLOCRON_DEBUG("[Holocron] createInto BEGIN");
 
-	UIPage * const dupe = NON_NULL(UIPage::DuplicateInto(*parent, "/PDA.help"));
+	UIPage * const dupe = UIPage::DuplicateInto(*parent, "/PDA.help");
 
 	char buf[256];
 	snprintf(buf, sizeof(buf), "[Holocron] createInto: dupe=%p visible=%d size=%ldx%ld",
@@ -521,6 +521,12 @@ SwgCuiHolocron * SwgCuiHolocron::createInto(UIPage * parent)
 		dupe ? dupe->GetWidth() : 0,
 		dupe ? dupe->GetHeight() : 0);
 	HOLOCRON_DEBUG(buf);
+
+	if (!dupe)
+	{
+		DEBUG_WARNING(true, ("[Holocron] createInto: DuplicateInto failed for /PDA.help"));
+		return 0;
+	}
 
 	return new SwgCuiHolocron(*dupe);
 }
