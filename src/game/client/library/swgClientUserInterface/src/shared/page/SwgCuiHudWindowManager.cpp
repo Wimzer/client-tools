@@ -1731,7 +1731,15 @@ void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
 	if (!helpPage)
 	{
-		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help not found; aborting open"));
+		UIPage * const rootHelp = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/help", TUIPage));
+		if (rootHelp)
+		{
+			CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help missing, but /help exists (root-level ui_help)"));
+		}
+		else
+		{
+			CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help not found; aborting open"));
+		}
 		return;
 	}
 
