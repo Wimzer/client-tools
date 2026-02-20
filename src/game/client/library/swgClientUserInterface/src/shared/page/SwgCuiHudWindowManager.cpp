@@ -743,7 +743,7 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
-		DEBUG_WARNING(true, ("[HudWM] received OpenHolocronToPageMessage"));
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[HudWM] received OpenHolocronToPageMessage"));
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
 		openHolocronToPage(msg.getPage());
@@ -1724,13 +1724,15 @@ void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
 	if (!helpPage)
 	{
-		DEBUG_WARNING(true, ("[Holocron] /PDA.help not found; aborting open"));
+		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help not found; aborting open"));
 		return;
 	}
 
-	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: page='%s'", pageName.c_str()));
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(std::string("[Holocron] openHolocronToPage: page='") + pageName + "'"));
 	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
-	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: holocron=%p", holocron));
+	char holobuf[128];
+	snprintf(holobuf, sizeof(holobuf), "[Holocron] openHolocronToPage: holocron=%p", holocron);
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(holobuf));
 	if (holocron && !pageName.empty())
 	{
 		holocron->loadPage(pageName);
