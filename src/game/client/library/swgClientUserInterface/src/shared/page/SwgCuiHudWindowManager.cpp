@@ -743,7 +743,7 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
-		HOLOCRON_DEBUG("[HudWM] received OpenHolocronToPageMessage");
+		DEBUG_WARNING(true, ("[HudWM] received OpenHolocronToPageMessage"));
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
 		openHolocronToPage(msg.getPage());
