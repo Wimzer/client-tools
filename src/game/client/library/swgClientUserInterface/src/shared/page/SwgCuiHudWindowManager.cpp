@@ -1721,6 +1721,7 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
+	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] openHolocronToPage ENTER"));
 	UIPage * const pdaPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA", TUIPage));
 	if (!pdaPage)
 	{
