@@ -747,7 +747,6 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 	{
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
-		DEBUG_WARNING(true, ("[Holocron] received OpenHolocronToPageMessage: page='%s'", msg.getPage().c_str()));
 		openHolocronToPage(msg.getPage());
 	}
 
