@@ -1721,6 +1721,13 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
+	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
+	if (!helpPage)
+	{
+		DEBUG_WARNING(true, ("[Holocron] /PDA.help not found; aborting open"));
+		return;
+	}
+
 	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: page='%s'", pageName.c_str()));
 	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
 	DEBUG_WARNING(true, ("[Holocron] openHolocronToPage: holocron=%p", holocron));
