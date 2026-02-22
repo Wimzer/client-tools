@@ -388,6 +388,12 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 
 	Unicode::String contentText;
 
+	{
+		char dbg[256];
+		snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: childCount=%d", static_cast<int>(node->m_children.size()));
+		HOLOCRON_DEBUG(dbg);
+	}
+
 	for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
 	     it != node->m_children.end(); ++it)
 	{
@@ -396,6 +402,12 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
 		{
 			CuiKnowledgeBaseManager::StringKBNode * const stringNode = static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
+			{
+				std::string const sid = stringNode->m_string.getDebugString();
+				char dbg[256];
+				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: String node '%s'", sid.c_str());
+				HOLOCRON_DEBUG(dbg);
+			}
 			if (stringNode->m_string.isValid())
 			{
 				contentText += stringNode->m_string.localize();
@@ -405,6 +417,11 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		else if (child->m_type == CuiKnowledgeBaseManager::s_imageType)
 		{
 			CuiKnowledgeBaseManager::ImageKBNode * const imageNode = static_cast<CuiKnowledgeBaseManager::ImageKBNode *>(child);
+			{
+				char dbg[256];
+				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: Image node path='%s'", imageNode->m_path.c_str());
+				HOLOCRON_DEBUG(dbg);
+			}
 			if (!imageNode->m_path.empty())
 			{
 				m_imageSample->SetVisible(true);
@@ -414,6 +431,11 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		else if (child->m_type == CuiKnowledgeBaseManager::s_linkButtonType)
 		{
 			CuiKnowledgeBaseManager::LinkButtonKBNode * const linkNode = static_cast<CuiKnowledgeBaseManager::LinkButtonKBNode *>(child);
+			{
+				char dbg[256];
+				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: LinkButton text='%s' link='%s'", linkNode->m_string.c_str(), linkNode->m_link.c_str());
+				HOLOCRON_DEBUG(dbg);
+			}
 
 			UIButton * const linkButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
 			NOT_NULL(linkButton);
