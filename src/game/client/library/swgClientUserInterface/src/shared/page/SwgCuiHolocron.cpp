@@ -145,6 +145,9 @@ void SwgCuiHolocron::performActivate()
 
 	CuiManager::requestPointer(true);
 
+	// Pre-warm all KB string tables so article bodies load instantly
+	CuiKnowledgeBaseManager::preloadStrings();
+
 	populateTopicTree();
 
 	if (m_currentPageName.empty())
