@@ -37,6 +37,27 @@ using namespace SwgCuiHolocronNamespace;
 
 #define HOLOCRON_DEBUG(msg) CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(msg))
 
+//----------------------------------------------------------------------
+
+static void preWarmBodyStrings(CuiKnowledgeBaseManager::BaseKBNode * const node)
+{
+	if (!node)
+		return;
+	for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
+	     it != node->m_children.end(); ++it)
+	{
+		CuiKnowledgeBaseManager::BaseKBNode * const child = *it;
+		if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
+		{
+			CuiKnowledgeBaseManager::StringKBNode * const sn =
+				static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
+			if (sn->m_string.isValid())
+				IGNORE_RETURN(sn->m_string.localize());
+		}
+		preWarmBodyStrings(child);
+	}
+}
+
 //======================================================================
 
 SwgCuiHolocron::SwgCuiHolocron(UIPage & page) :
@@ -145,8 +166,10 @@ void SwgCuiHolocron::performActivate()
 
 	CuiManager::requestPointer(true);
 
-	// Pre-warm all KB string tables so article bodies load instantly
-	CuiKnowledgeBaseManager::preloadStrings();
+	// Pre-warm all KB body string tables so article text loads instantly.
+	// populateTopicTree() already warms the _n (title) tables via localize().
+	// This does the same for _d (body) tables using the identical code path.
+	preWarmBodyStrings(CuiKnowledgeBaseManager::getRoot());
 
 	populateTopicTree();
 
