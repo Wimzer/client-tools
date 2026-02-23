@@ -165,6 +165,8 @@ void CuiKnowledgeBaseManager::preloadStrings()
 	if (!fileTable)
 		return;
 
+	LocalizationManager & lm = LocalizationManager::getManager();
+
 	const int numRows = fileTable->getNumRows();
 	for (int i = 0; i < numRows; ++i)
 	{
@@ -175,9 +177,9 @@ void CuiKnowledgeBaseManager::preloadStrings()
 		if (dotPos != std::string::npos)
 			filename = filename.substr(0, dotPos);
 
-		// Preload title and description string tables for this section
-		LocalizationManager::getManager().preload("kb/kb_" + filename + "_n");
-		LocalizationManager::getManager().preload("kb/kb_" + filename + "_d");
+		// Fetch string tables into cache; do not release so they stay pinned in memory
+		IGNORE_RETURN(lm.fetchStringTable("kb/kb_" + filename + "_n"));
+		IGNORE_RETURN(lm.fetchStringTable("kb/kb_" + filename + "_d"));
 	}
 }
 
