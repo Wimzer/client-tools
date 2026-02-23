@@ -155,32 +155,33 @@ void CuiKnowledgeBaseManager::remove ()
 
 //----------------------------------------------------------------------
 
-void CuiKnowledgeBaseManager::preloadStrings()
+namespace
 {
-	if (!s_installed)
-		return;
-
-	static std::string const fileTableName = "datatables/knowledgebase/filelist.iff";
-	const DataTable * const fileTable = DataTableManager::getTable(fileTableName.c_str(), true);
-	if (!fileTable)
-		return;
-
-	LocalizationManager & lm = LocalizationManager::getManager();
-
-	const int numRows = fileTable->getNumRows();
-	for (int i = 0; i < numRows; ++i)
+	void warmBodyStringsRecursive(CuiKnowledgeBaseManager::BaseKBNode * const node)
 	{
-		std::string filename = fileTable->getStringValue(0, i);
-
-		// Strip extension: "begin.iff" -> "begin"
-		const size_t dotPos = filename.rfind('.');
-		if (dotPos != std::string::npos)
-			filename = filename.substr(0, dotPos);
-
-		// Fetch string tables into cache; do not release so they stay pinned in memory
-		IGNORE_RETURN(lm.fetchStringTable("kb/kb_" + filename + "_n"));
-		IGNORE_RETURN(lm.fetchStringTable("kb/kb_" + filename + "_d"));
+		if (!node)
+			return;
+		for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
+		     it != node->m_children.end(); ++it)
+		{
+			CuiKnowledgeBaseManager::BaseKBNode * const child = *it;
+			if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
+			{
+				CuiKnowledgeBaseManager::StringKBNode * const sn =
+					static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
+				if (sn->m_string.isValid())
+					IGNORE_RETURN(sn->m_string.localize());
+			}
+			warmBodyStringsRecursive(child);
+		}
 	}
+}
+
+void CuiKnowledgeBaseManager::warmAllBodyStrings()
+{
+	if (!s_installed || !m_kbRoot)
+		return;
+	warmBodyStringsRecursive(m_kbRoot);
 }
 
 //----------------------------------------------------------------------

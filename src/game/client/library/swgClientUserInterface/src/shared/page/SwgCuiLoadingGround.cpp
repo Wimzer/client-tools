@@ -164,7 +164,7 @@ void SwgCuiLoadingGround::performActivate        ()
 
 	GameNetwork::setAcceptSceneCommand (true);
 
-	CuiKnowledgeBaseManager::preloadStrings();
+	CuiKnowledgeBaseManager::warmAllBodyStrings();
 
 	connectToMessage(CuiLoadingManager::Messages::FullscreenBackButtonEnabled);
 

@@ -101,7 +101,7 @@ void SwgCuiLoadingSpace::performActivate()
 	UIClock::gUIClock ().ListenPerFrame (this);
 	GameNetwork::setAcceptSceneCommand (true);
 
-	CuiKnowledgeBaseManager::preloadStrings();
+	CuiKnowledgeBaseManager::warmAllBodyStrings();
 
 	CuiLoadingManager::setLoadingScreenVisible(true);
 	//mark that the first loading screen of this loading sequence has definitely been displayed
