@@ -90,6 +90,7 @@ public:
 
 	static void          install ();
 	static void          remove  ();
+	static void          preloadStrings();
 
 	static BaseKBNode*   getRoot();
 	static BaseKBNode*   findNode(const std::string& name);

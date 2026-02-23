@@ -19,6 +19,7 @@
 #include "clientGame/Game.h"
 #include "clientGame/GameNetwork.h"
 #include "clientGame/Scene.h"
+#include "clientUserInterface/CuiKnowledgeBaseManager.h"
 #include "clientUserInterface/CuiLoadingManager.h"
 #include "clientUserInterface/CuiManager.h"
 #include "sharedFile/TreeFile.h"
@@ -99,6 +100,8 @@ void SwgCuiLoadingSpace::performActivate()
 
 	UIClock::gUIClock ().ListenPerFrame (this);
 	GameNetwork::setAcceptSceneCommand (true);
+
+	CuiKnowledgeBaseManager::preloadStrings();
 
 	CuiLoadingManager::setLoadingScreenVisible(true);
 	//mark that the first loading screen of this loading sequence has definitely been displayed

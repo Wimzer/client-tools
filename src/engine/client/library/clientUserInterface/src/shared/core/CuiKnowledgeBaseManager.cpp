@@ -155,6 +155,34 @@ void CuiKnowledgeBaseManager::remove ()
 
 //----------------------------------------------------------------------
 
+void CuiKnowledgeBaseManager::preloadStrings()
+{
+	if (!s_installed)
+		return;
+
+	static std::string const fileTableName = "datatables/knowledgebase/filelist.iff";
+	const DataTable * const fileTable = DataTableManager::getTable(fileTableName.c_str(), true);
+	if (!fileTable)
+		return;
+
+	const int numRows = fileTable->getNumRows();
+	for (int i = 0; i < numRows; ++i)
+	{
+		std::string filename = fileTable->getStringValue(0, i);
+
+		// Strip extension: "begin.iff" -> "begin"
+		const size_t dotPos = filename.rfind('.');
+		if (dotPos != std::string::npos)
+			filename = filename.substr(0, dotPos);
+
+		// Preload title and description string tables for this section
+		LocalizationManager::getManager().preload("kb/kb_" + filename + "_n");
+		LocalizationManager::getManager().preload("kb/kb_" + filename + "_d");
+	}
+}
+
+//----------------------------------------------------------------------
+
 void CuiKnowledgeBaseManager::reloadData()
 {
 	DEBUG_FATAL (!s_installed, ("not installed"));

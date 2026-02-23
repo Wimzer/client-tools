@@ -22,6 +22,7 @@
 #include "clientGame/GameNetwork.h"
 #include "clientGame/Scene.h"
 #include "clientUserInterface/ConfigClientUserInterface.h"
+#include "clientUserInterface/CuiKnowledgeBaseManager.h"
 #include "clientUserInterface/CuiLoadingManager.h"
 #include "clientUserInterface/CuiManager.h"
 #include "sharedFile/TreeFile.h"
@@ -162,6 +163,8 @@ void SwgCuiLoadingGround::performActivate        ()
 	UIClock::gUIClock ().ListenPerFrame (this);
 
 	GameNetwork::setAcceptSceneCommand (true);
+
+	CuiKnowledgeBaseManager::preloadStrings();
 
 	connectToMessage(CuiLoadingManager::Messages::FullscreenBackButtonEnabled);
 
