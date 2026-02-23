@@ -536,14 +536,6 @@
 						Style='/Styles.New.buttons.hud.style'
 						Visible='false'
 					>xxx button text</Button>
-					<Image
-						Location='124,0'
-						Name='sampleimage'
-						ScrollExtent='65,65'
-						Size='65,65'
-						SourceResource='ui_recon'
-						Visible='false'
-					/>
 					<Text
 						BackgroundColor='#FFFFFF'
 						ColorCarat='#FFFFFF'
@@ -595,6 +587,14 @@
 							TextColor='#96F4FC'
 						>asfasf</Text>
 					</Composite>
+					<Image
+						Location='0,205'
+						Name='sampleimage'
+						ScrollExtent='413,180'
+						Size='413,180'
+						SourceResource='ui_recon'
+						Visible='false'
+					/>
 					<Text
 						Font='bold_12'
 						LocalText='xxx Entry Title'
