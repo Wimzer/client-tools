@@ -148,8 +148,8 @@ void SwgCuiHolocron::performActivate()
 
 	CuiManager::requestPointer(true);
 
-	// Strings are pre-warmed at startup in CuiManagerManager::install().
-	// This is a safety net — near-instant since it's all cache hits.
+	// Re-warm body strings in case they were GC'd since the loading screen.
+	// When called after a fresh zone-in this is near-instant (cache hits only).
 	CuiKnowledgeBaseManager::warmAllBodyStrings();
 
 	populateTopicTree();
@@ -158,20 +158,6 @@ void SwgCuiHolocron::performActivate()
 	{
 		HOLOCRON_DEBUG("[Holocron] performActivate: loading Root page");
 		loadPage("Root");
-	}
-
-	// Pre-warm the button template so the first LinkButton page doesn't hitch.
-	// Create an invisible duplicate, add it (forces template resource load),
-	// then clearContent() will clean it up on the next page navigation.
-	if (m_buttonSample && m_entryComp)
-	{
-		UIButton * const warmup = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
-		if (warmup)
-		{
-			warmup->SetVisible(false);
-			warmup->SetName(cms_linkButton);
-			m_entryComp->AddChild(warmup);
-		}
 	}
 
 	char buf[256];

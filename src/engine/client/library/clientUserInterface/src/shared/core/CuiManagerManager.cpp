@@ -116,7 +116,6 @@ void CuiManagerManager::install (UIPage & rootPage)
 	CuiPreferences::install              ();
 	CuiSettings::install                 ();
 	CuiKnowledgeBaseManager::install     ();
-	CuiKnowledgeBaseManager::warmAllBodyStrings();
 	CuiCachedAvatarManager::install      ();
 	CuiPoiManager::install               ();
 	CuiModifierManager::install          ();
