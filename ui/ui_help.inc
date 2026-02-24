@@ -526,7 +526,6 @@
 					<Button
 						BackgroundColor='#FFFFFF'
 						BackgroundOpacity='0.80'
-						Font='bold_14'
 						LocalText='xxx button text'
 						Location='0,109'
 						MinimumSize='0,19'
@@ -535,7 +534,7 @@
 						PackSize='p,f'
 						ScrollExtent='255,19'
 						Size='255,19'
-						TextColor='#000000'
+						Style='/Styles.Frame.buttonClose.style'
 						Visible='false'
 					>xxx button text</Button>
 					<Text
