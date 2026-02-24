@@ -461,9 +461,7 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 				displayText = Unicode::narrowToWide(btnText);
 			}
 
-			linkButton->SetText(Unicode::emptyString);
-			linkButton->SetPreLocalized(true);
-			linkButton->SetLocalText(displayText);
+			linkButton->SetText(displayText);
 
 			linkButton->SetName(cms_linkButton);
 			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
