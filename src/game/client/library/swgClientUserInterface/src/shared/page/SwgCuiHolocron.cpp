@@ -446,27 +446,25 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 
 			UIButton * const linkButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
 			NOT_NULL(linkButton);
-			linkButton->SetVisible(true);
+			linkButton->SetName(cms_linkButton);
+			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
 
-			// Resolve @table:key localization references and set text
-			Unicode::String displayText;
+			// Set text using [@table:key] format matching XML-defined buttons
 			std::string const & btnText = linkNode->m_string;
 			if (!btnText.empty() && btnText[0] == '@')
 			{
-				StringId const sid(btnText.substr(1));
-				displayText = sid.localize();
+				std::string const localTextBracket = "[" + btnText + "]";
+				linkButton->SetProperty(UILowerString("LocalText"), Unicode::narrowToWide(localTextBracket));
 			}
 			else
 			{
-				displayText = Unicode::narrowToWide(btnText);
+				linkButton->SetProperty(UILowerString("LocalText"), Unicode::narrowToWide(btnText));
 			}
 
-			linkButton->SetText(displayText);
-
-			linkButton->SetName(cms_linkButton);
-			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
-			registerMediatorObject(*linkButton, true);
+			// Add to tree before making visible so layout initializes properly
 			m_entryComp->AddChild(linkButton);
+			linkButton->SetVisible(true);
+			registerMediatorObject(*linkButton, true);
 		}
 	}
 
