@@ -459,6 +459,21 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 	{
 		m_entryText->SetLocalText(contentText);
 	}
+
+	// Force a layout repack by ensuring m_entryComp always has a child added.
+	// Without this, pages that lack a LinkButton never trigger AddChild,
+	// and the text content fails to render.
+	if (m_buttonSample && m_entryComp)
+	{
+		UIButton * const spacer = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
+		if (spacer)
+		{
+			spacer->SetVisible(false);
+			spacer->SetSize(UISize(0, 0));
+			spacer->SetName(cms_linkButton);
+			m_entryComp->AddChild(spacer);
+		}
+	}
 }
 
 //----------------------------------------------------------------------
