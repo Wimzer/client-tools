@@ -148,8 +148,8 @@ void SwgCuiHolocron::performActivate()
 
 	CuiManager::requestPointer(true);
 
-	// Re-warm body strings in case they were GC'd since the loading screen.
-	// When called after a fresh zone-in this is near-instant (cache hits only).
+	// Strings are pre-warmed at startup in CuiManagerManager::install().
+	// This is a safety net — near-instant since it's all cache hits.
 	CuiKnowledgeBaseManager::warmAllBodyStrings();
 
 	populateTopicTree();

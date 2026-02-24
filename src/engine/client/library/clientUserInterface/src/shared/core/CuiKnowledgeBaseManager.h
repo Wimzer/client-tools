@@ -44,6 +44,8 @@ public:
 	struct StringKBNode : public BaseKBNode
 	{
 		StringId m_string;
+		mutable Unicode::String m_cachedText;
+		mutable bool            m_textCached;
 
 		StringKBNode(BaseKBNode* parent, const std::string& name, const StringId& s);
 	};

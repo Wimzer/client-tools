@@ -81,7 +81,9 @@ CuiKnowledgeBaseManager::BaseKBNode::~BaseKBNode()
 
 CuiKnowledgeBaseManager::StringKBNode::StringKBNode(BaseKBNode* parent, const std::string& name, const StringId& s)
 : BaseKBNode(s_stringType, parent, name),
-  m_string(s)
+  m_string(s),
+  m_cachedText(),
+  m_textCached(false)
 {}
 
 //----------------------------------------------------------------------
