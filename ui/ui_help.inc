@@ -524,16 +524,17 @@
 					Size='413,426'
 				>
 					<Button
+						BackgroundColor='#038D9C'
+						BackgroundOpacity='0.50'
 						LocalText='xxx button text'
 						Location='0,109'
 						Name='samplebutton'
 						PackLocation='nfn,fff'
 						PackSize='p,f'
-						RStyleDefault='/Styles.New.buttons.hud.style'
 						ScrollExtent='255,17'
 						Size='255,17'
 						Style='/Styles.New.buttons.hud.style'
-						TextColor='#000000'
+						TextColor='#FFFFFF'
 						Visible='false'
 					>xxx button text</Button>
 					<Text
