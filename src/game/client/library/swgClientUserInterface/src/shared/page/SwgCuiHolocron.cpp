@@ -460,7 +460,7 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 				linkButton->SetLocalText(Unicode::narrowToWide(btnText));
 			}
 
-			linkButton->SetPropertyColor(UIButton::PropertyName::TextColor, UIColor(0, 0, 0));
+			linkButton->SetPropertyColor(UILowerString("TextColor"), UIColor(0, 0, 0));
 			linkButton->SetName(cms_linkButton);
 			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
 			registerMediatorObject(*linkButton, true);
