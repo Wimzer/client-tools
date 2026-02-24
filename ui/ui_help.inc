@@ -529,6 +529,7 @@
 						Name='samplebutton'
 						PackLocation='nfn,fff'
 						PackSize='p,f'
+						RStyleDefault='/Styles.New.buttons.hud.default.rs'
 						ScrollExtent='255,17'
 						Size='255,17'
 						Style='/Styles.New.buttons.hud.style'
@@ -569,6 +570,7 @@
 							Size='65,65'
 							SourceRect='0,0,64,64'
 							SourceResource='ui_recon'
+							Visible='false'
 						/>
 						<Text
 							BackgroundColor='#FFFFFF'
