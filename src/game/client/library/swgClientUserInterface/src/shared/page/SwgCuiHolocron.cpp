@@ -14,6 +14,7 @@
 #include "clientUserInterface/CuiManager.h"
 #include "clientUserInterface/CuiSystemMessageManager.h"
 #include "UIButton.h"
+#include "UIButtonStyle.h"
 #include "UIDataSourceContainer.h"
 #include "UIImage.h"
 #include "UIPage.h"
@@ -449,21 +450,24 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 			linkButton->SetName(cms_linkButton);
 			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
 
-			// Add to tree and resolve style paths (Link re-processes Style,
-			// Icon, etc. now that the button has a parent for path lookup)
 			m_entryComp->AddChild(linkButton);
-			linkButton->Link();
 
-			// Set text after Link so the resolved style's font is available
+			// Copy the already-resolved ButtonStyle directly from the template
+			// (m_buttonSample is always in the tree, so its style is always linked)
+			UIButtonStyle * const templateStyle = const_cast<UIButtonStyle *>(m_buttonSample->GetButtonStyle());
+			if (templateStyle)
+				linkButton->SetStyle(templateStyle);
+
+			// SetText() runs through CreateLocalizedString which processes [@table:key] brackets
 			std::string const & btnText = linkNode->m_string;
 			if (!btnText.empty() && btnText[0] == '@')
 			{
-				std::string const localTextBracket = "[" + btnText + "]";
-				linkButton->SetProperty(UILowerString("LocalText"), Unicode::narrowToWide(localTextBracket));
+				std::string const bracketText = "[" + btnText + "]";
+				linkButton->SetText(Unicode::narrowToWide(bracketText));
 			}
 			else
 			{
-				linkButton->SetProperty(UILowerString("LocalText"), Unicode::narrowToWide(btnText));
+				linkButton->SetText(Unicode::narrowToWide(btnText));
 			}
 
 			linkButton->SetVisible(true);
