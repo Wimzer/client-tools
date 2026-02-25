@@ -8,6 +8,7 @@
 #include "swgClientUserInterface/FirstSwgClientUserInterface.h"
 #include "swgClientUserInterface/SwgCuiHolocron.h"
 
+#include "clientGame/ClientCommandQueue.h"
 #include "clientUserInterface/CuiActionManager.h"
 #include "clientUserInterface/CuiActions.h"
 #include "clientUserInterface/CuiKnowledgeBaseManager.h"
@@ -27,6 +28,7 @@ namespace SwgCuiHolocronNamespace
 {
 	static const UILowerString KBNodeNameProperty = UILowerString("KBNodeNameProperty");
 	static const UILowerString KBLinkTargetProperty = UILowerString("KBLinkTargetProperty");
+	static const UILowerString KBCommandProperty = UILowerString("KBCommandProperty");
 
 	std::string const cms_linkButton("linkButton");
 
@@ -216,12 +218,28 @@ void SwgCuiHolocron::OnButtonPressed(UIWidget * context)
 	}
 	else
 	{
-		// Check if a dynamically created link button was pressed
 		std::string linkTarget;
 		context->GetPropertyNarrow(KBLinkTargetProperty, linkTarget);
 		if (!linkTarget.empty())
 		{
 			loadPage(linkTarget);
+			return;
+		}
+
+		std::string kbCommand;
+		context->GetPropertyNarrow(KBCommandProperty, kbCommand);
+		if (!kbCommand.empty())
+		{
+			// Strip leading '/' if present, then split into command name and params
+			std::string cmd = kbCommand;
+			if (!cmd.empty() && cmd[0] == '/')
+				cmd.erase(cmd.begin());
+			std::string::size_type const spacePos = cmd.find(' ');
+			std::string const commandName = cmd.substr(0, spacePos);
+			Unicode::String const commandParams = (spacePos != std::string::npos)
+				? Unicode::narrowToWide(cmd.substr(spacePos + 1))
+				: Unicode::emptyString;
+			ClientCommandQueue::enqueueCommand(commandName, NetworkId::cms_invalid, commandParams);
 		}
 	}
 }
@@ -463,6 +481,26 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 
 			linkButton->SetVisible(true);
 			registerMediatorObject(*linkButton, true);
+		}
+		else if (child->m_type == CuiKnowledgeBaseManager::s_commandButtonType)
+		{
+			CuiKnowledgeBaseManager::CommandButtonKBNode * const cmdNode =
+				static_cast<CuiKnowledgeBaseManager::CommandButtonKBNode *>(child);
+
+			UIButton * const cmdButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
+			NOT_NULL(cmdButton);
+			cmdButton->SetName(cms_linkButton);
+			cmdButton->SetPropertyNarrow(KBCommandProperty, cmdNode->m_command);
+
+			m_entryComp->AddChild(cmdButton);
+
+			UIButtonStyle * const templateStyle = const_cast<UIButtonStyle *>(m_buttonSample->GetButtonStyle());
+			if (templateStyle)
+				cmdButton->SetStyle(templateStyle);
+
+			cmdButton->SetText(Unicode::narrowToWide(cmdNode->m_string));
+			cmdButton->SetVisible(true);
+			registerMediatorObject(*cmdButton, true);
 		}
 	}
 
