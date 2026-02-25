@@ -524,17 +524,15 @@
 					Size='413,426'
 				>
 					<Button
-						BackgroundColor='#FFFFFF'
-						BackgroundOpacity='0.80'
 						LocalText='xxx button text'
 						Location='0,109'
-						MinimumSize='0,19'
 						Name='samplebutton'
 						PackLocation='nfn,fff'
 						PackSize='p,f'
-						ScrollExtent='255,19'
-						Size='255,19'
-						Style='/Styles.Frame.buttonClose.style'
+						ScrollExtent='255,17'
+						Size='255,17'
+						Style='/Styles.New.buttons.hud.style'
+						TextColor='#000000'
 						Visible='false'
 					>xxx button text</Button>
 					<Text

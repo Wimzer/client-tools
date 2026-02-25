@@ -449,7 +449,12 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 			linkButton->SetName(cms_linkButton);
 			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
 
-			// Set text using [@table:key] format matching XML-defined buttons
+			// Add to tree and resolve style paths (Link re-processes Style,
+			// Icon, etc. now that the button has a parent for path lookup)
+			m_entryComp->AddChild(linkButton);
+			linkButton->Link();
+
+			// Set text after Link so the resolved style's font is available
 			std::string const & btnText = linkNode->m_string;
 			if (!btnText.empty() && btnText[0] == '@')
 			{
@@ -461,8 +466,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 				linkButton->SetProperty(UILowerString("LocalText"), Unicode::narrowToWide(btnText));
 			}
 
-			// Add to tree before making visible so layout initializes properly
-			m_entryComp->AddChild(linkButton);
 			linkButton->SetVisible(true);
 			registerMediatorObject(*linkButton, true);
 		}
