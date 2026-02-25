@@ -458,17 +458,8 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 			if (templateStyle)
 				linkButton->SetStyle(templateStyle);
 
-			// SetText() runs through CreateLocalizedString which processes [@table:key] brackets
-			std::string const & btnText = linkNode->m_string;
-			if (!btnText.empty() && btnText[0] == '@')
-			{
-				std::string const bracketText = "[" + btnText + "]";
-				linkButton->SetText(Unicode::narrowToWide(bracketText));
-			}
-			else
-			{
-				linkButton->SetText(Unicode::narrowToWide(btnText));
-			}
+			// SetText() calls CreateLocalizedString() which resolves @table:key directly
+			linkButton->SetText(Unicode::narrowToWide(linkNode->m_string));
 
 			linkButton->SetVisible(true);
 			registerMediatorObject(*linkButton, true);
