@@ -524,6 +524,8 @@
 					Size='413,426'
 				>
 					<Button
+						BackgroundColor='#FFFFFF'
+						BackgroundOpacity='0.80'
 						LocalText='xxx button text'
 						Location='0,109'
 						Name='samplebutton'
@@ -532,7 +534,6 @@
 						ScrollExtent='255,17'
 						Size='255,17'
 						Style='/Styles.New.buttons.hud.style'
-						TextColor='#000000'
 						Visible='false'
 					>xxx button text</Button>
 					<Text
