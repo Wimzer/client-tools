@@ -514,11 +514,11 @@ void DataTable::load_0000(Iff & iff)
 			}
 			break;
 		case DataTableColumnType::DT_String:
+		case DataTableColumnType::DT_Unknown: // older compiled tables stored DT_String as enum value 3 which is now DT_Unknown
 			{
 				m_types.push_back(new DataTableColumnType("s"));
 			}
 			break;
-		case DataTableColumnType::DT_Unknown:
 		case DataTableColumnType::DT_HashString:
 		case DataTableColumnType::DT_Enum:
 		case DataTableColumnType::DT_Bool:
