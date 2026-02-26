@@ -978,9 +978,15 @@ void CuiMediator::updateAll (float deltaTimeSecs)
 #endif
 	{
 		int i = 0;
-		for (MediatorVector::iterator it = s_mediators.begin (); it != s_mediators.end (); ++it)
+		for (MediatorVector::iterator it = s_mediators.begin (); it != s_mediators.end (); )
 		{
-			CuiMediator * const mediator = NON_NULL (*it);
+			CuiMediator * const mediator = *it;
+			if (!mediator)
+			{
+				DEBUG_WARNING(true, ("CuiMediator::updateAll found null mediator in list; removing"));
+				it = s_mediators.erase(it);
+				continue;
+			}
 			
 			if (mediator->getRefCount () > 0)
 			{
@@ -1020,6 +1026,7 @@ void CuiMediator::updateAll (float deltaTimeSecs)
 					++i;
 				}
 			}
+			++it;
 		}
 
 		DEBUG_WARNING (i >= numProfilerBufs && i > warnedProfilerBufsCount, ("CuiMediator ran out of profiler name buffers, needed %d have %d", i, numProfilerBufs));
