@@ -622,8 +622,8 @@ void SwgCuiHolocron::syncTreeSelection(const std::string & pageName)
 			break;
 		}
 
-		UIBaseObject::UIObjectList const & children = cur->GetChildrenRef();
-		for (UIBaseObject::UIObjectList::const_iterator cit = children.begin(); cit != children.end(); ++cit)
+		UIDataSourceContainer::DataSourceBaseList const & children = cur->GetDataSourceBaseList();
+		for (UIDataSourceContainer::DataSourceBaseList::const_iterator cit = children.begin(); cit != children.end(); ++cit)
 		{
 			if ((*cit)->IsA(TUIDataSourceContainer))
 				stack.push_back(static_cast<UIDataSourceContainer *>(*cit));
