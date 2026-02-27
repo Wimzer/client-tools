@@ -67,6 +67,7 @@ CuiMediator                ("SwgCuiHolocron", page)
 , m_navigationHistory      ()
 , m_navigationIndex        (-1)
 , m_currentPageName        ()
+, m_syncingTree            (false)
 {
 	getCodeDataObject(TUITreeView,  m_treeTopics,        "treeTopics");
 	getCodeDataObject(TUIText,      m_entryText,         "entrytext");
@@ -248,7 +249,7 @@ void SwgCuiHolocron::OnButtonPressed(UIWidget * context)
 
 void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
 {
-	if (context == m_treeTopics)
+	if (context == m_treeTopics && !m_syncingTree)
 	{
 		int const selectedRow = m_treeTopics->GetLastSelectedRow();
 		UIDataSourceContainer const * const dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
@@ -646,8 +647,10 @@ void SwgCuiHolocron::syncTreeSelection(const std::string & pageName)
 	m_treeTopics->FindDataNodeByDataSource(*targetDsc, row);
 	if (row >= 0)
 	{
+		m_syncingTree = true;
 		m_treeTopics->SelectRow(row);
 		m_treeTopics->ScrollToRow(row);
+		m_syncingTree = false;
 	}
 }
 

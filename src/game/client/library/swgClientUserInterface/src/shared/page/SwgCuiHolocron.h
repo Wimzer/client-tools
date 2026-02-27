@@ -74,6 +74,7 @@ private:
 	std::vector<std::string> m_navigationHistory;
 	int m_navigationIndex;
 	std::string m_currentPageName;
+	bool m_syncingTree;
 };
 
 //======================================================================
