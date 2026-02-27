@@ -51,6 +51,7 @@ private:
 	void navigateBack();
 	void navigateNext();
 	void updateNavigationButtons();
+	void syncTreeSelection(const std::string & pageName);
 
 private:
 	UITreeView *  m_treeTopics;

@@ -280,6 +280,9 @@ void SwgCuiHolocron::loadPage(const std::string & pageName)
 	{
 		HOLOCRON_DEBUG("[Holocron] loadPage: node found");
 		displayPage(node);
+
+		syncTreeSelection(pageName);
+
 		m_currentPageName = pageName;
 
 		// Truncate forward history if navigating to a new page
@@ -561,6 +564,7 @@ void SwgCuiHolocron::navigateBack()
 		if (node)
 		{
 			displayPage(node);
+			syncTreeSelection(pageName);
 			m_currentPageName = pageName;
 		}
 
@@ -581,10 +585,68 @@ void SwgCuiHolocron::navigateNext()
 		if (node)
 		{
 			displayPage(node);
+			syncTreeSelection(pageName);
 			m_currentPageName = pageName;
 		}
 
 		updateNavigationButtons();
+	}
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHolocron::syncTreeSelection(const std::string & pageName)
+{
+	if (!m_treeTopics)
+		return;
+
+	UIDataSourceContainer * const rootDsc = m_treeTopics->GetDataSourceContainer();
+	if (!rootDsc)
+		return;
+
+	// DFS over datasource containers to find the one matching pageName
+	UIDataSourceContainer * targetDsc = 0;
+	std::vector<UIDataSourceContainer *> stack;
+	stack.push_back(rootDsc);
+
+	while (!stack.empty())
+	{
+		UIDataSourceContainer * cur = stack.back();
+		stack.pop_back();
+
+		std::string kbName;
+		cur->GetPropertyNarrow(KBNodeNameProperty, kbName);
+		if (!kbName.empty() && kbName == pageName)
+		{
+			targetDsc = cur;
+			break;
+		}
+
+		UIBaseObject::UIObjectList const & children = cur->GetChildrenRef();
+		for (UIBaseObject::UIObjectList::const_iterator cit = children.begin(); cit != children.end(); ++cit)
+		{
+			if ((*cit)->IsA(TUIDataSourceContainer))
+				stack.push_back(static_cast<UIDataSourceContainer *>(*cit));
+		}
+	}
+
+	if (!targetDsc)
+		return;
+
+	int row = -1;
+	UITreeView::DataNode * const dataNode = m_treeTopics->FindDataNodeByDataSource(*targetDsc, row);
+	if (!dataNode)
+		return;
+
+	// Expand parents first — this inserts visible rows and invalidates the row index
+	m_treeTopics->ExpandParentNodes(*dataNode);
+
+	// Re-query row after expansion since visible row indices have shifted
+	m_treeTopics->FindDataNodeByDataSource(*targetDsc, row);
+	if (row >= 0)
+	{
+		m_treeTopics->SelectRow(row);
+		m_treeTopics->ScrollToRow(row);
 	}
 }
 
