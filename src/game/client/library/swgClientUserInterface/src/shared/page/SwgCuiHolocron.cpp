@@ -622,11 +622,12 @@ void SwgCuiHolocron::syncTreeSelection(const std::string & pageName)
 			break;
 		}
 
-		UIDataSourceContainer::DataSourceBaseList const & children = cur->GetDataSourceBaseList();
-		for (UIDataSourceContainer::DataSourceBaseList::const_iterator cit = children.begin(); cit != children.end(); ++cit)
+		unsigned long const childCount = cur->GetChildCount();
+		for (unsigned long i = 0; i < childCount; ++i)
 		{
-			if ((*cit)->IsA(TUIDataSourceContainer))
-				stack.push_back(static_cast<UIDataSourceContainer *>(*cit));
+			UIDataSourceBase * const child = cur->GetChildByPositionLinear(i);
+			if (child && child->IsA(TUIDataSourceContainer))
+				stack.push_back(static_cast<UIDataSourceContainer *>(child));
 		}
 	}
 
