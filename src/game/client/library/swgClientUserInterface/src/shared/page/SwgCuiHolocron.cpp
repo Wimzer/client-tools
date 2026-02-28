@@ -511,16 +511,19 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 	if (m_entryText)
 	{
 		m_entryText->SetLocalText(contentText);
+	}
 
-		// Push text below the image when one is visible, otherwise start at top
+	// Push entryComp below the image when one is visible
+	if (m_entryComp)
+	{
 		if (m_imageSample && m_imageSample->IsVisible())
 		{
 			long const imageBottom = m_imageSample->GetLocation().y + m_imageSample->GetHeight();
-			m_entryText->SetLocation(UIPoint(1, imageBottom + 5));
+			m_entryComp->SetLocation(UIPoint(10, imageBottom + 5));
 		}
 		else
 		{
-			m_entryText->SetLocation(UIPoint(1, 0));
+			m_entryComp->SetLocation(UIPoint(10, 25));
 		}
 	}
 
@@ -545,10 +548,9 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 void SwgCuiHolocron::clearContent()
 {
 	if (m_entryText)
-	{
 		m_entryText->Clear();
-		m_entryText->SetLocation(UIPoint(1, 0));
-	}
+	if (m_entryComp)
+		m_entryComp->SetLocation(UIPoint(10, 25));
 	if (m_entryTitle)
 		m_entryTitle->Clear();
 	if (m_imageSample)

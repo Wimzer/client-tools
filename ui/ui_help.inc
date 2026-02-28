@@ -24,7 +24,7 @@
 				entrycomp='comp.right.entrycomp'
 				entrytext='comp.right.entrycomp.text'
 				entrytitle='comp.right.title'
-				imagesample='comp.right.entrycomp.sampleimage'
+				imagesample='comp.right.sampleimage'
 				Name='CodeData'
 				PopupHelp='PopupHelp'
 				textInfor='comp.right.helpInfo'
@@ -551,6 +551,14 @@
 						TextColor='#96F4FC'
 						Visible='false'
 					></Text>
+					<Image
+						Location='121,25'
+						Name='sampleimage'
+						ScrollExtent='170,170'
+						Size='170,170'
+						SourceResource='ui_recon'
+						Visible='false'
+					/>
 					<Composite
 						Location='10,25'
 						Name='entryComp'
@@ -562,15 +570,6 @@
 						Size='379,360'
 						SpacingType='Constant'
 					>
-						<Image
-							Location='104,0'
-							Name='sampleimage'
-							PackLocation='cfc,nfn'
-							ScrollExtent='170,170'
-							Size='170,170'
-							SourceResource='ui_recon'
-							Visible='false'
-						/>
 						<Text
 							BackgroundColor='#FFFFFF'
 							ColorCarat='#FFFFFF'
