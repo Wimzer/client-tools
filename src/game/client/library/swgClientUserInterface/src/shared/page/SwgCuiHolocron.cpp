@@ -530,6 +530,7 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 			{
 				m_entryText->SetLocation(entryTextLoc);
 				m_entryText->SetSize(entryCompWithImageSize);
+				m_entryText->SetScrollExtent(entryCompWithImageSize);
 			}
 			// Move the image to the top area
 			m_imageSample->SetLocation(UIPoint(10, 25));
@@ -543,6 +544,7 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 			{
 				m_entryText->SetLocation(entryTextLoc);
 				m_entryText->SetSize(entryCompNoImageSize);
+				m_entryText->SetScrollExtent(entryCompNoImageSize);
 			}
 			if (m_imageSample)
 				m_imageSample->SetVisible(false);
