@@ -513,6 +513,26 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		m_entryText->SetLocalText(contentText);
 	}
 
+	// Layout: if an image is present, reserve top area; otherwise use full height for text.
+	if (m_entryComp)
+	{
+		static const UIPoint entryCompWithImageLoc(10, 155);
+		static const UISize  entryCompWithImageSize(379, 230);
+		static const UIPoint entryCompNoImageLoc(10, 25);
+		static const UISize  entryCompNoImageSize(379, 360);
+
+		if (m_imageSample && m_imageSample->IsVisible())
+		{
+			m_entryComp->SetLocation(entryCompWithImageLoc);
+			m_entryComp->SetSize(entryCompWithImageSize);
+		}
+		else
+		{
+			m_entryComp->SetLocation(entryCompNoImageLoc);
+			m_entryComp->SetSize(entryCompNoImageSize);
+		}
+	}
+
 	// Force a layout repack by ensuring m_entryComp always has a child added.
 	// Without this, pages that lack a LinkButton never trigger AddChild,
 	// and the text content fails to render.
