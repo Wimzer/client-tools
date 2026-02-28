@@ -563,12 +563,11 @@
 						SpacingType='Constant'
 					>
 						<Image
-							Location='157,0'
+							Location='104,0'
 							Name='sampleimage'
-							PackLocation='cfc,cfc'
-							ScrollExtent='65,65'
-							Size='65,65'
-							SourceRect='0,0,64,64'
+							PackLocation='cfc,nfn'
+							ScrollExtent='170,170'
+							Size='170,170'
 							SourceResource='ui_recon'
 							Visible='false'
 						/>
@@ -578,7 +577,7 @@
 							ColorSelection='#FFFFFF'
 							Font='default_13'
 							LocalText='asfasf'
-							Location='1,65'
+							Location='1,0'
 							MaxLines='0'
 							Name='text'
 							PackSize='a,f'
