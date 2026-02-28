@@ -24,7 +24,7 @@
 				entrycomp='comp.right.entrycomp'
 				entrytext='comp.right.entrycomp.text'
 				entrytitle='comp.right.title'
-				imagesample='comp.right.sampleimage'
+				imagesample='comp.right.entrycomp.sampleimage'
 				Name='CodeData'
 				PopupHelp='PopupHelp'
 				textInfor='comp.right.helpInfo'
@@ -588,14 +588,6 @@
 							TextColor='#96F4FC'
 						>asfasf</Text>
 					</Composite>
-					<Image
-						Location='0,205'
-						Name='sampleimage'
-						ScrollExtent='413,180'
-						Size='413,180'
-						SourceResource='ui_recon'
-						Visible='false'
-					/>
 					<Text
 						Font='bold_12'
 						LocalText='xxx Entry Title'
