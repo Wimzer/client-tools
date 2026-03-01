@@ -21,6 +21,7 @@
 #include "UIPage.h"
 #include "UIText.h"
 #include "UITreeView.h"
+#include "UITreeView_DataNode.h"
 
 //======================================================================
 
@@ -252,16 +253,21 @@ void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
 	if (context == m_treeTopics && !m_syncingTree)
 	{
 		int const selectedRow = m_treeTopics->GetLastSelectedRow();
-		UIDataSourceContainer const * const dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
+		UITreeView::DataNode * const dataNode = m_treeTopics->GetDataNodeAtRow(selectedRow);
 
-		if (dsc)
+		if (dataNode)
 		{
-			std::string nodeName;
-			dsc->GetPropertyNarrow(KBNodeNameProperty, nodeName);
-
-			if (!nodeName.empty())
+			UIBaseObject const * const dataObj = dataNode->getDataObject();
+			if (dataObj && dataObj->IsA(TUIDataSourceContainer))
 			{
-				loadPage(nodeName);
+				UIDataSourceContainer const * const dsc = static_cast<UIDataSourceContainer const *>(dataObj);
+				std::string nodeName;
+				dsc->GetPropertyNarrow(KBNodeNameProperty, nodeName);
+
+				if (!nodeName.empty())
+				{
+					loadPage(nodeName);
+				}
 			}
 		}
 	}
