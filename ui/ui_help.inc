@@ -552,7 +552,7 @@
 						Visible='false'
 					></Text>
 					<Image
-						Location='121,25'
+						Location='225,25'
 						Name='sampleimage'
 						ScrollExtent='170,170'
 						Size='170,170'
