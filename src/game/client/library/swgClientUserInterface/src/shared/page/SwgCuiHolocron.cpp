@@ -21,7 +21,6 @@
 #include "UIPage.h"
 #include "UIText.h"
 #include "UITreeView.h"
-#include "UITreeView_DataNode.h"
 
 //======================================================================
 
@@ -253,20 +252,7 @@ void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
 	if (context == m_treeTopics && !m_syncingTree)
 	{
 		int const selectedRow = m_treeTopics->GetLastSelectedRow();
-		UIDataSourceContainer const * dsc = 0;
-
-		// GetDataNodeAtRow uses the visual row iterator (correct mapping),
-		// fall back to GetDataSourceContainerAtRow if it returns NULL
-		UITreeView::DataNode * const dataNode = m_treeTopics->GetDataNodeAtRow(selectedRow);
-		if (dataNode)
-		{
-			UIBaseObject const * const dataObj = dataNode->getDataObject();
-			if (dataObj && dataObj->IsA(TUIDataSourceContainer))
-				dsc = static_cast<UIDataSourceContainer const *>(dataObj);
-		}
-
-		if (!dsc)
-			dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
+		UIDataSourceContainer const * const dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
 
 		if (dsc)
 		{
@@ -527,20 +513,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		m_entryText->SetLocalText(contentText);
 	}
 
-	// Push entryComp below the image when one is visible
-	if (m_entryComp)
-	{
-		if (m_imageSample && m_imageSample->IsVisible())
-		{
-			long const imageBottom = m_imageSample->GetLocation().y + m_imageSample->GetHeight();
-			m_entryComp->SetLocation(UIPoint(10, imageBottom + 5));
-		}
-		else
-		{
-			m_entryComp->SetLocation(UIPoint(10, 25));
-		}
-	}
-
 	// Force a layout repack by ensuring m_entryComp always has a child added.
 	// Without this, pages that lack a LinkButton never trigger AddChild,
 	// and the text content fails to render.
@@ -563,8 +535,6 @@ void SwgCuiHolocron::clearContent()
 {
 	if (m_entryText)
 		m_entryText->Clear();
-	if (m_entryComp)
-		m_entryComp->SetLocation(UIPoint(10, 25));
 	if (m_entryTitle)
 		m_entryTitle->Clear();
 	if (m_imageSample)

@@ -551,14 +551,6 @@
 						TextColor='#96F4FC'
 						Visible='false'
 					></Text>
-					<Image
-						Location='225,25'
-						Name='sampleimage'
-						ScrollExtent='170,170'
-						Size='170,170'
-						SourceResource='ui_recon'
-						Visible='false'
-					/>
 					<Composite
 						Location='10,25'
 						Name='entryComp'
@@ -570,13 +562,23 @@
 						Size='379,360'
 						SpacingType='Constant'
 					>
+						<Image
+							Location='157,0'
+							Name='sampleimage'
+							PackLocation='cfc,cfc'
+							ScrollExtent='65,65'
+							Size='65,65'
+							SourceRect='0,0,64,64'
+							SourceResource='ui_recon'
+							Visible='false'
+						/>
 						<Text
 							BackgroundColor='#FFFFFF'
 							ColorCarat='#FFFFFF'
 							ColorSelection='#FFFFFF'
 							Font='default_13'
 							LocalText='asfasf'
-							Location='1,0'
+							Location='1,65'
 							MaxLines='0'
 							Name='text'
 							PackSize='a,f'
@@ -586,6 +588,14 @@
 							TextColor='#96F4FC'
 						>asfasf</Text>
 					</Composite>
+					<Image
+						Location='0,205'
+						Name='sampleimage'
+						ScrollExtent='413,180'
+						Size='413,180'
+						SourceResource='ui_recon'
+						Visible='false'
+					/>
 					<Text
 						Font='bold_12'
 						LocalText='xxx Entry Title'
