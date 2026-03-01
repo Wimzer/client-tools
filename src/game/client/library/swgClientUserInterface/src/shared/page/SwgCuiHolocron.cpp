@@ -253,21 +253,29 @@ void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
 	if (context == m_treeTopics && !m_syncingTree)
 	{
 		int const selectedRow = m_treeTopics->GetLastSelectedRow();
-		UITreeView::DataNode * const dataNode = m_treeTopics->GetDataNodeAtRow(selectedRow);
+		UIDataSourceContainer const * dsc = 0;
 
+		// GetDataNodeAtRow uses the visual row iterator (correct mapping),
+		// fall back to GetDataSourceContainerAtRow if it returns NULL
+		UITreeView::DataNode * const dataNode = m_treeTopics->GetDataNodeAtRow(selectedRow);
 		if (dataNode)
 		{
 			UIBaseObject const * const dataObj = dataNode->getDataObject();
 			if (dataObj && dataObj->IsA(TUIDataSourceContainer))
-			{
-				UIDataSourceContainer const * const dsc = static_cast<UIDataSourceContainer const *>(dataObj);
-				std::string nodeName;
-				dsc->GetPropertyNarrow(KBNodeNameProperty, nodeName);
+				dsc = static_cast<UIDataSourceContainer const *>(dataObj);
+		}
 
-				if (!nodeName.empty())
-				{
-					loadPage(nodeName);
-				}
+		if (!dsc)
+			dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
+
+		if (dsc)
+		{
+			std::string nodeName;
+			dsc->GetPropertyNarrow(KBNodeNameProperty, nodeName);
+
+			if (!nodeName.empty())
+			{
+				loadPage(nodeName);
 			}
 		}
 	}
