@@ -13,7 +13,6 @@
 #include "clientUserInterface/CuiActions.h"
 #include "clientUserInterface/CuiKnowledgeBaseManager.h"
 #include "clientUserInterface/CuiManager.h"
-#include "clientUserInterface/CuiSystemMessageManager.h"
 #include "UIButton.h"
 #include "UIButtonStyle.h"
 #include "UIDataSourceContainer.h"
@@ -37,11 +36,6 @@ namespace SwgCuiHolocronNamespace
 }
 
 using namespace SwgCuiHolocronNamespace;
-
-#define HOLOCRON_DEBUG(msg) CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(msg))
-
-//----------------------------------------------------------------------
-
 
 //======================================================================
 
@@ -118,8 +112,6 @@ CuiMediator                ("SwgCuiHolocron", page)
 
 	setState(MS_closeable);
 	setState(MS_closeDeactivates);
-
-	HOLOCRON_DEBUG("[Holocron] constructor complete");
 }
 
 //----------------------------------------------------------------------
@@ -148,8 +140,6 @@ SwgCuiHolocron::~SwgCuiHolocron()
 
 void SwgCuiHolocron::performActivate()
 {
-	HOLOCRON_DEBUG("[Holocron] performActivate BEGIN");
-
 	CuiManager::requestPointer(true);
 
 	// Re-warm body strings in case they were GC'd since the loading screen.
@@ -160,23 +150,14 @@ void SwgCuiHolocron::performActivate()
 
 	if (m_currentPageName.empty())
 	{
-		HOLOCRON_DEBUG("[Holocron] performActivate: loading Root page");
 		loadPage("Root");
 	}
-
-	char buf[256];
-	snprintf(buf, sizeof(buf), "[Holocron] performActivate END - page visible=%d size=%ldx%ld",
-		getPage().IsVisible() ? 1 : 0,
-		getPage().GetWidth(),
-		getPage().GetHeight());
-	HOLOCRON_DEBUG(buf);
 }
 
 //----------------------------------------------------------------------
 
 void SwgCuiHolocron::performDeactivate()
 {
-	HOLOCRON_DEBUG("[Holocron] performDeactivate");
 	CuiManager::requestPointer(false);
 }
 
@@ -271,15 +252,10 @@ void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
 
 void SwgCuiHolocron::loadPage(const std::string & pageName)
 {
-	char buf[256];
-	snprintf(buf, sizeof(buf), "[Holocron] loadPage: '%s'", pageName.c_str());
-	HOLOCRON_DEBUG(buf);
-
 	CuiKnowledgeBaseManager::BaseKBNode * const node = CuiKnowledgeBaseManager::findNode(pageName);
 
 	if (node)
 	{
-		HOLOCRON_DEBUG("[Holocron] loadPage: node found");
 		displayPage(node);
 
 		syncTreeSelection(pageName);
@@ -302,8 +278,6 @@ void SwgCuiHolocron::loadPage(const std::string & pageName)
 	}
 	else
 	{
-		snprintf(buf, sizeof(buf), "[Holocron] loadPage: NODE NOT FOUND '%s'", pageName.c_str());
-		HOLOCRON_DEBUG(buf);
 		DEBUG_WARNING(true, ("SwgCuiHolocron: Page not found: %s", pageName.c_str()));
 	}
 }
@@ -319,13 +293,8 @@ void SwgCuiHolocron::setActivePage(const std::string & pageName)
 
 void SwgCuiHolocron::populateTopicTree()
 {
-	HOLOCRON_DEBUG("[Holocron] populateTopicTree BEGIN");
-
 	if (!m_treeTopics)
-	{
-		HOLOCRON_DEBUG("[Holocron] populateTopicTree: m_treeTopics is NULL!");
 		return;
-	}
 
 	UIDataSourceContainer * const mainDsc = NON_NULL(m_treeTopics->GetDataSourceContainer());
 	mainDsc->Attach(0);
@@ -335,26 +304,15 @@ void SwgCuiHolocron::populateTopicTree()
 	CuiKnowledgeBaseManager::BaseKBNode * const root = CuiKnowledgeBaseManager::getRoot();
 	if (root)
 	{
-		char buf[256];
-		snprintf(buf, sizeof(buf), "[Holocron] populateTopicTree: root has %d children",
-			static_cast<int>(root->m_children.size()));
-		HOLOCRON_DEBUG(buf);
-
 		for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = root->m_children.begin();
 		     it != root->m_children.end(); ++it)
 		{
 			populateDataSourceRecursive(mainDsc, *it);
 		}
 	}
-	else
-	{
-		HOLOCRON_DEBUG("[Holocron] populateTopicTree: KB root is NULL - no data loaded!");
-	}
 
 	m_treeTopics->SetDataSourceContainer(mainDsc);
 	mainDsc->Detach(0);
-
-	HOLOCRON_DEBUG("[Holocron] populateTopicTree END");
 }
 
 //----------------------------------------------------------------------
@@ -418,12 +376,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 
 	Unicode::String contentText;
 
-	{
-		char dbg[256];
-		snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: childCount=%d", static_cast<int>(node->m_children.size()));
-		HOLOCRON_DEBUG(dbg);
-	}
-
 	for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
 	     it != node->m_children.end(); ++it)
 	{
@@ -432,12 +384,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
 		{
 			CuiKnowledgeBaseManager::StringKBNode * const stringNode = static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
-			{
-				std::string const sid = stringNode->m_string.getDebugString();
-				char dbg[256];
-				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: String node '%s'", sid.c_str());
-				HOLOCRON_DEBUG(dbg);
-			}
 			if (stringNode->m_string.isValid())
 			{
 				contentText += stringNode->m_string.localize();
@@ -447,11 +393,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		else if (child->m_type == CuiKnowledgeBaseManager::s_imageType)
 		{
 			CuiKnowledgeBaseManager::ImageKBNode * const imageNode = static_cast<CuiKnowledgeBaseManager::ImageKBNode *>(child);
-			{
-				char dbg[256];
-				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: Image node path='%s'", imageNode->m_path.c_str());
-				HOLOCRON_DEBUG(dbg);
-			}
 			if (!imageNode->m_path.empty())
 			{
 				m_imageSample->SetVisible(true);
@@ -461,11 +402,6 @@ void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
 		else if (child->m_type == CuiKnowledgeBaseManager::s_linkButtonType)
 		{
 			CuiKnowledgeBaseManager::LinkButtonKBNode * const linkNode = static_cast<CuiKnowledgeBaseManager::LinkButtonKBNode *>(child);
-			{
-				char dbg[256];
-				snprintf(dbg, sizeof(dbg), "[Holocron] displayPage: LinkButton text='%s' link='%s'", linkNode->m_string.c_str(), linkNode->m_link.c_str());
-				HOLOCRON_DEBUG(dbg);
-			}
 
 			UIButton * const linkButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
 			NOT_NULL(linkButton);
@@ -669,17 +605,7 @@ void SwgCuiHolocron::updateNavigationButtons()
 
 SwgCuiHolocron * SwgCuiHolocron::createInto(UIPage * parent)
 {
-	HOLOCRON_DEBUG("[Holocron] createInto BEGIN");
-
 	UIPage * const dupe = UIPage::DuplicateInto(*parent, "/PDA.help");
-
-	char buf[256];
-	snprintf(buf, sizeof(buf), "[Holocron] createInto: dupe=%p visible=%d size=%ldx%ld",
-		static_cast<void*>(dupe),
-		dupe ? dupe->IsVisible() ? 1 : 0 : -1,
-		dupe ? dupe->GetWidth() : 0,
-		dupe ? dupe->GetHeight() : 0);
-	HOLOCRON_DEBUG(buf);
 
 	if (!dupe)
 	{

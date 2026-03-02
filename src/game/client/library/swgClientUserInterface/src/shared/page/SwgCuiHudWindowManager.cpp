@@ -743,7 +743,6 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
-		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[HudWM] received OpenHolocronToPageMessage"));
 		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
 		OpenHolocronToPageMessage msg(ri);
 		openHolocronToPage(msg.getPage());
@@ -1721,34 +1720,15 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 
 void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
 {
-	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] openHolocronToPage ENTER"));
 	UIPage * const pdaPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA", TUIPage));
 	if (!pdaPage)
-	{
-		CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA not found; aborting open"));
 		return;
-	}
 
 	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
 	if (!helpPage)
-	{
-		UIPage * const rootHelp = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/help", TUIPage));
-		if (rootHelp)
-		{
-			CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help missing, but /help exists (root-level ui_help)"));
-		}
-		else
-		{
-			CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide("[Holocron] /PDA.help not found; aborting open"));
-		}
 		return;
-	}
 
-	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(std::string("[Holocron] openHolocronToPage: page='") + pageName + "'"));
 	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
-	char holobuf[128];
-	snprintf(holobuf, sizeof(holobuf), "[Holocron] openHolocronToPage: holocron=%p", holocron);
-	CuiSystemMessageManager::sendFakeSystemMessage(Unicode::narrowToWide(holobuf));
 	if (holocron && !pageName.empty())
 	{
 		holocron->loadPage(pageName);
