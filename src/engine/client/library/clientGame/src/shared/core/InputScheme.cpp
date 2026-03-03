@@ -464,15 +464,15 @@ InputMap * InputScheme::fetchGroundInputMap()
 
 		// Register Holocron as a bindable UI command
 		{
-			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("CMD_openHolocron", true);
+			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("CMD_uiHolocron", true);
 			if (!existing)
 			{
 				InputMap::Command cmd;
-				cmd.name = "CMD_openHolocron";
+				cmd.name = "CMD_uiHolocron";
 				cmd.category = "ui";
 				cmd.types = InputMap::Command::T_BUTTON;
 				cmd.pressEvent = InputMap::Command::EventData(
-					static_cast<int>(CM_clientCommandParser), 0.0f, "ui action openHolocron");
+					static_cast<int>(CM_clientCommandParser), 0.0f, "/ui action openHolocron");
 				cmd.userDefined = false;
 				IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, false));
 			}
