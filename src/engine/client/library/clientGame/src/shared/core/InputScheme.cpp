@@ -18,6 +18,7 @@
 #include "clientUserInterface/CuiMessageBox.h"
 #include "clientUserInterface/CuiStringVariablesManager.h"
 #include "clientUserInterface/CuiPreferences.h"
+#include "sharedFoundation/GameControllerMessage.h"
 #include "sharedFoundation/NetworkId.h"
 #include "sharedInputMap/InputMap.h"
 #include "sharedInputMap/InputMap_Command.h"
@@ -460,6 +461,21 @@ InputMap * InputScheme::fetchGroundInputMap()
 		}
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
+
+		// Add default Ctrl+H binding for Holocron if no command is already bound to that key
+		{
+			const InputMap::BindInfo ctrlH(CuiM_BITS_CTRL, InputMap::IT_Key, DIK_H);
+			if (!s_groundInputMap->getCommandByBinding(ctrlH))
+			{
+				IGNORE_RETURN(s_groundInputMap->addCustomCommand("CMD_uiHolocron", static_cast<int>(CM_clientCommandParser), "ui+action+openHolocron", false));
+				const InputMap::Command * const holocronCmd = s_groundInputMap->findCommandByName("CMD_uiHolocron");
+				if (holocronCmd)
+				{
+					IGNORE_RETURN(s_groundInputMap->addBinding(ctrlH, holocronCmd));
+				}
+			}
+		}
+
 		s_resetCallback  = new Callback;
 		s_resetCallback->fetch ();
 

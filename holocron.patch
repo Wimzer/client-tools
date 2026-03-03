@@ -1,0 +1,1319 @@
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientGame/src/shared/core/InputScheme.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientGame/src/shared/core/InputScheme.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientGame/src/shared/core/InputScheme.cpp	2026-03-02 17:18:02.326988526 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientGame/src/shared/core/InputScheme.cpp	2026-03-02 18:17:33.608705019 -0600
+@@ -18,6 +18,7 @@
+ #include "clientUserInterface/CuiMessageBox.h"
+ #include "clientUserInterface/CuiStringVariablesManager.h"
+ #include "clientUserInterface/CuiPreferences.h"
++#include "sharedFoundation/GameControllerMessage.h"
+ #include "sharedFoundation/NetworkId.h"
+ #include "sharedInputMap/InputMap.h"
+ #include "sharedInputMap/InputMap_Command.h"
+@@ -460,6 +461,21 @@
+ 		}
+ 
+ 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
++
++		// Add default Ctrl+H binding for Holocron if no command is already bound to that key
++		{
++			const InputMap::BindInfo ctrlH(CuiM_BITS_CTRL, InputMap::IT_Key, DIK_H);
++			if (!s_groundInputMap->getCommandByBinding(ctrlH))
++			{
++				IGNORE_RETURN(s_groundInputMap->addCustomCommand("CMD_uiHolocron", static_cast<int>(CM_clientCommandParser), "ui+action+openHolocron", false));
++				const InputMap::Command * const holocronCmd = s_groundInputMap->findCommandByName("CMD_uiHolocron");
++				if (holocronCmd)
++				{
++					IGNORE_RETURN(s_groundInputMap->addBinding(ctrlH, holocronCmd));
++				}
++			}
++		}
++
+ 		s_resetCallback  = new Callback;
+ 		s_resetCallback->fetch ();
+ 
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiActions.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiActions.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiActions.h	2026-03-02 17:18:02.454991539 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiActions.h	2026-02-18 10:42:08.604245273 -0600
+@@ -262,6 +262,7 @@
+ 	MAKE_ACTION(rating);
+ 	MAKE_ACTION(commPlayerQuest);
+ 	MAKE_ACTION(gcwInfo);
++	MAKE_ACTION(openHolocron);
+ }
+ 
+ #undef MAKE_ACTION
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.cpp	2026-03-02 17:18:02.462991727 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.cpp	2026-03-02 17:28:04.536523363 -0600
+@@ -155,6 +155,37 @@
+ 
+ //----------------------------------------------------------------------
+ 
++namespace
++{
++	void warmBodyStringsRecursive(CuiKnowledgeBaseManager::BaseKBNode * const node)
++	{
++		if (!node)
++			return;
++		for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
++		     it != node->m_children.end(); ++it)
++		{
++			CuiKnowledgeBaseManager::BaseKBNode * const child = *it;
++			if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
++			{
++				CuiKnowledgeBaseManager::StringKBNode * const sn =
++					static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
++				if (sn->m_string.isValid())
++					IGNORE_RETURN(sn->m_string.localize());
++			}
++			warmBodyStringsRecursive(child);
++		}
++	}
++}
++
++void CuiKnowledgeBaseManager::warmAllBodyStrings()
++{
++	if (!s_installed || !m_kbRoot)
++		return;
++	warmBodyStringsRecursive(m_kbRoot);
++}
++
++//----------------------------------------------------------------------
++
+ void CuiKnowledgeBaseManager::reloadData()
+ {
+ 	DEBUG_FATAL (!s_installed, ("not installed"));
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.h	2026-03-02 17:18:02.462991727 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/engine/client/library/clientUserInterface/src/shared/core/CuiKnowledgeBaseManager.h	2026-03-02 17:27:55.400322668 -0600
+@@ -90,6 +90,7 @@
+ 
+ 	static void          install ();
+ 	static void          remove  ();
++	static void          warmAllBodyStrings();
+ 
+ 	static BaseKBNode*   getRoot();
+ 	static BaseKBNode*   findNode(const std::string& name);
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/build/win32/swgClientUserInterface.vcxproj /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/build/win32/swgClientUserInterface.vcxproj
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/build/win32/swgClientUserInterface.vcxproj	2026-03-02 17:18:06.427085026 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/build/win32/swgClientUserInterface.vcxproj	2026-02-18 10:42:08.604245273 -0600
+@@ -472,6 +472,9 @@
+     <ClCompile Include="..\..\src\shared\page\SwgCuiHighlight.cpp">
+       <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
+     </ClCompile>
++    <ClCompile Include="..\..\src\shared\page\SwgCuiHolocron.cpp">
++      <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
++    </ClCompile>
+     <ClCompile Include="..\..\src\shared\page\SwgCuiHud.cpp">
+       <Optimization Condition="'$(Configuration)|$(Platform)'=='Optimized|Win32'">MaxSpeed</Optimization>
+     </ClCompile>
+@@ -1014,6 +1017,7 @@
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHarassmentMessage.h" />
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHarassmentReport.h" />
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHighlight.h" />
++    <ClInclude Include="..\..\src\shared\page\SwgCuiHolocron.h" />
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHud.h" />
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHudAction.h" />
+     <ClInclude Include="..\..\src\shared\page\SwgCuiHudActionGround.h" />
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/include/public/swgClientUserInterface/SwgCuiHolocron.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/include/public/swgClientUserInterface/SwgCuiHolocron.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/include/public/swgClientUserInterface/SwgCuiHolocron.h	1969-12-31 18:00:00.000000000 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/include/public/swgClientUserInterface/SwgCuiHolocron.h	2026-02-18 10:42:08.604245273 -0600
+@@ -0,0 +1 @@
++#include "../../src/shared/page/SwgCuiHolocron.h"
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorFactorySetup.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorFactorySetup.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorFactorySetup.cpp	2026-03-02 17:18:06.443085402 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorFactorySetup.cpp	2026-02-19 08:02:43.286527194 -0600
+@@ -70,6 +70,7 @@
+ #include "swgClientUserInterface/SwgCuiGalacticCivilWar.h"
+ #include "swgClientUserInterface/SwgCuiGameMenu.h"
+ #include "swgClientUserInterface/SwgCuiHarassmentReport.h"
++#include "swgClientUserInterface/SwgCuiHolocron.h"
+ #include "swgClientUserInterface/SwgCuiHudGround.h"
+ #include "swgClientUserInterface/SwgCuiHudSpace.h"
+ #include "swgClientUserInterface/SwgCuiHyperspaceMap.h"
+@@ -200,6 +201,7 @@
+ 
+ 	MAKE_SWG_CTOR (DebugInfoPage,                     "/Debug.DebugInfo");
+ 	MAKE_SWG_CTOR (GameMenu,                          "/GameMenu");
++	MAKE_SWG_CTOR_WS (Holocron,                        "/PDA.help");
+ 	MAKE_SWG_CTOR (HudGround,                         "/GroundHUD");
+ 	MAKE_SWG_CTOR (HudSpace,                          "/HudSpace");
+ 	MAKE_SWG_CTOR (Inventory,                         "/Inv");
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorTypes.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorTypes.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorTypes.h	2026-03-02 17:18:06.443085402 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/core/SwgCuiMediatorTypes.h	2026-02-19 08:02:38.214407934 -0600
+@@ -47,6 +47,7 @@
+ 	MAKE_MEDIATOR_TYPE (SceneSelection);
+ 	MAKE_MEDIATOR_TYPE (ServerDisconnected);
+ 	MAKE_MEDIATOR_TYPE (Service);
++	MAKE_MEDIATOR_TYPE (WS_Holocron);
+ 	MAKE_MEDIATOR_TYPE (ShipSelection);
+ 	MAKE_MEDIATOR_TYPE (StructurePlacement);
+ 	MAKE_MEDIATOR_TYPE (WS_Vendor);
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.cpp	1969-12-31 18:00:00.000000000 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.cpp	2026-03-02 17:27:04.491208261 -0600
+@@ -0,0 +1,619 @@
++//======================================================================
++//
++// SwgCuiHolocron.cpp
++// Copyright Sony Online Entertainment
++//
++//======================================================================
++
++#include "swgClientUserInterface/FirstSwgClientUserInterface.h"
++#include "swgClientUserInterface/SwgCuiHolocron.h"
++
++#include "clientGame/ClientCommandQueue.h"
++#include "clientUserInterface/CuiActionManager.h"
++#include "clientUserInterface/CuiActions.h"
++#include "clientUserInterface/CuiKnowledgeBaseManager.h"
++#include "clientUserInterface/CuiManager.h"
++#include "UIButton.h"
++#include "UIButtonStyle.h"
++#include "UIDataSourceContainer.h"
++#include "UIImage.h"
++#include "UIPage.h"
++#include "UIText.h"
++#include "UITreeView.h"
++
++//======================================================================
++
++namespace SwgCuiHolocronNamespace
++{
++	static const UILowerString KBNodeNameProperty = UILowerString("KBNodeNameProperty");
++	static const UILowerString KBLinkTargetProperty = UILowerString("KBLinkTargetProperty");
++	static const UILowerString KBCommandProperty = UILowerString("KBCommandProperty");
++
++	std::string const cms_linkButton("linkButton");
++
++	Unicode::String const cms_expandAllStyle(Unicode::narrowToWide("/Styles.tree.image.expanded"));
++	Unicode::String const cms_collapseAllStyle(Unicode::narrowToWide("/Styles.tree.image.collapsed"));
++}
++
++using namespace SwgCuiHolocronNamespace;
++
++//======================================================================
++
++SwgCuiHolocron::SwgCuiHolocron(UIPage & page) :
++CuiMediator                ("SwgCuiHolocron", page)
++, UIEventCallback          ()
++, m_treeTopics             (0)
++, m_entryText              (0)
++, m_entryTitle             (0)
++, m_textInfo               (0)
++, m_entryComp              (0)
++, m_imageSample            (0)
++, m_buttonBack             (0)
++, m_buttonNext             (0)
++, m_buttonClose            (0)
++, m_buttonExit             (0)
++, m_buttonServices         (0)
++, m_buttonBug              (0)
++, m_buttonReportPlayer     (0)
++, m_buttonReload           (0)
++, m_buttonSample           (0)
++, m_textSample             (0)
++, m_navigationHistory      ()
++, m_navigationIndex        (-1)
++, m_currentPageName        ()
++, m_syncingTree            (false)
++{
++	getCodeDataObject(TUITreeView,  m_treeTopics,        "treeTopics");
++	getCodeDataObject(TUIText,      m_entryText,         "entrytext");
++	getCodeDataObject(TUIText,      m_entryTitle,        "entrytitle");
++	getCodeDataObject(TUIText,      m_textInfo,          "textInfor");
++	getCodeDataObject(TUIPage,      m_entryComp,         "entrycomp");
++	getCodeDataObject(TUIImage,     m_imageSample,       "imagesample");
++	getCodeDataObject(TUIButton,    m_buttonBack,        "buttonback");
++	getCodeDataObject(TUIButton,    m_buttonNext,        "buttonnext");
++	getCodeDataObject(TUIButton,    m_buttonClose,       "buttonclose");
++	getCodeDataObject(TUIButton,    m_buttonExit,        "buttonExit");
++	getCodeDataObject(TUIButton,    m_buttonServices,    "buttonservices");
++	getCodeDataObject(TUIButton,    m_buttonBug,         "buttonbug");
++	getCodeDataObject(TUIButton,    m_buttonReportPlayer,"buttonReportPlayer");
++	getCodeDataObject(TUIButton,    m_buttonSample,      "buttonSample");
++	getCodeDataObject(TUIText,      m_textSample,        "textSample");
++
++	// Optional debug reload button
++	UIButton * debugButton = 0;
++	getCodeDataObject(TUIButton, debugButton, "buttonreload", true);
++	if (debugButton)
++	{
++		m_buttonReload = debugButton;
++		registerMediatorObject(*m_buttonReload, true);
++	}
++
++	registerMediatorObject(*m_treeTopics,        true);
++	registerMediatorObject(*m_buttonBack,        true);
++	registerMediatorObject(*m_buttonNext,        true);
++	registerMediatorObject(*m_buttonClose,       true);
++	registerMediatorObject(*m_buttonExit,        true);
++	registerMediatorObject(*m_buttonServices,    true);
++	registerMediatorObject(*m_buttonBug,         true);
++	registerMediatorObject(*m_buttonReportPlayer,true);
++
++	m_entryTitle->SetPreLocalized(true);
++	m_entryTitle->Clear();
++	m_entryText->SetPreLocalized(true);
++	m_entryText->Clear();
++	m_textInfo->SetPreLocalized(true);
++
++	m_buttonSample->SetVisible(false);
++	m_textSample->SetVisible(false);
++	m_imageSample->SetVisible(false);
++
++	m_buttonBack->SetEnabled(false);
++	m_buttonNext->SetEnabled(false);
++
++	setState(MS_closeable);
++	setState(MS_closeDeactivates);
++}
++
++//----------------------------------------------------------------------
++
++SwgCuiHolocron::~SwgCuiHolocron()
++{
++	m_treeTopics         = 0;
++	m_entryText          = 0;
++	m_entryTitle         = 0;
++	m_textInfo           = 0;
++	m_entryComp          = 0;
++	m_imageSample        = 0;
++	m_buttonBack         = 0;
++	m_buttonNext         = 0;
++	m_buttonClose        = 0;
++	m_buttonExit         = 0;
++	m_buttonServices     = 0;
++	m_buttonBug          = 0;
++	m_buttonReportPlayer = 0;
++	m_buttonReload       = 0;
++	m_buttonSample       = 0;
++	m_textSample         = 0;
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::performActivate()
++{
++	CuiManager::requestPointer(true);
++
++	// Re-warm body strings in case they were GC'd since the loading screen.
++	// When called after a fresh zone-in this is near-instant (cache hits only).
++	CuiKnowledgeBaseManager::warmAllBodyStrings();
++
++	populateTopicTree();
++
++	if (m_currentPageName.empty())
++	{
++		loadPage("Root");
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::performDeactivate()
++{
++	CuiManager::requestPointer(false);
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::OnButtonPressed(UIWidget * context)
++{
++	if (context == m_buttonClose || context == m_buttonExit)
++	{
++		closeThroughWorkspace();
++	}
++	else if (context == m_buttonBack)
++	{
++		navigateBack();
++	}
++	else if (context == m_buttonNext)
++	{
++		navigateNext();
++	}
++	else if (context == m_buttonServices)
++	{
++		IGNORE_RETURN(CuiActionManager::performAction(CuiActions::service, Unicode::emptyString));
++	}
++	else if (context == m_buttonBug)
++	{
++		IGNORE_RETURN(CuiActionManager::performAction(CuiActions::bugReport, Unicode::emptyString));
++	}
++	else if (context == m_buttonReportPlayer)
++	{
++		IGNORE_RETURN(CuiActionManager::performAction(CuiActions::harassmentMessage, Unicode::emptyString));
++	}
++	else if (context == m_buttonReload && m_buttonReload != 0)
++	{
++		CuiKnowledgeBaseManager::reloadData();
++		populateTopicTree();
++		if (!m_currentPageName.empty())
++		{
++			loadPage(m_currentPageName);
++		}
++	}
++	else
++	{
++		std::string linkTarget;
++		context->GetPropertyNarrow(KBLinkTargetProperty, linkTarget);
++		if (!linkTarget.empty())
++		{
++			loadPage(linkTarget);
++			return;
++		}
++
++		std::string kbCommand;
++		context->GetPropertyNarrow(KBCommandProperty, kbCommand);
++		if (!kbCommand.empty())
++		{
++			// Strip leading '/' if present, then split into command name and params
++			std::string cmd = kbCommand;
++			if (!cmd.empty() && cmd[0] == '/')
++				cmd.erase(cmd.begin());
++			std::string::size_type const spacePos = cmd.find(' ');
++			std::string const commandName = cmd.substr(0, spacePos);
++			Unicode::String const commandParams = (spacePos != std::string::npos)
++				? Unicode::narrowToWide(cmd.substr(spacePos + 1))
++				: Unicode::emptyString;
++			ClientCommandQueue::enqueueCommand(commandName, NetworkId::cms_invalid, commandParams);
++		}
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::OnGenericSelectionChanged(UIWidget * context)
++{
++	if (context == m_treeTopics && !m_syncingTree)
++	{
++		int const selectedRow = m_treeTopics->GetLastSelectedRow();
++		UIDataSourceContainer const * const dsc = m_treeTopics->GetDataSourceContainerAtRow(selectedRow);
++
++		if (dsc)
++		{
++			std::string nodeName;
++			dsc->GetPropertyNarrow(KBNodeNameProperty, nodeName);
++
++			if (!nodeName.empty())
++			{
++				loadPage(nodeName);
++			}
++		}
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::loadPage(const std::string & pageName)
++{
++	CuiKnowledgeBaseManager::BaseKBNode * const node = CuiKnowledgeBaseManager::findNode(pageName);
++
++	if (node)
++	{
++		displayPage(node);
++
++		syncTreeSelection(pageName);
++
++		m_currentPageName = pageName;
++
++		// Truncate forward history if navigating to a new page
++		if (m_navigationIndex < static_cast<int>(m_navigationHistory.size()) - 1)
++		{
++			m_navigationHistory.erase(
++				m_navigationHistory.begin() + m_navigationIndex + 1,
++				m_navigationHistory.end()
++			);
++		}
++
++		m_navigationHistory.push_back(pageName);
++		m_navigationIndex = static_cast<int>(m_navigationHistory.size()) - 1;
++
++		updateNavigationButtons();
++	}
++	else
++	{
++		DEBUG_WARNING(true, ("SwgCuiHolocron: Page not found: %s", pageName.c_str()));
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::setActivePage(const std::string & pageName)
++{
++	loadPage(pageName);
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::populateTopicTree()
++{
++	if (!m_treeTopics)
++		return;
++
++	UIDataSourceContainer * const mainDsc = NON_NULL(m_treeTopics->GetDataSourceContainer());
++	mainDsc->Attach(0);
++	m_treeTopics->SetDataSourceContainer(0);
++	mainDsc->Clear();
++
++	CuiKnowledgeBaseManager::BaseKBNode * const root = CuiKnowledgeBaseManager::getRoot();
++	if (root)
++	{
++		for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = root->m_children.begin();
++		     it != root->m_children.end(); ++it)
++		{
++			populateDataSourceRecursive(mainDsc, *it);
++		}
++	}
++
++	m_treeTopics->SetDataSourceContainer(mainDsc);
++	mainDsc->Detach(0);
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::populateDataSourceRecursive(UIDataSourceContainer * parentDsc, CuiKnowledgeBaseManager::BaseKBNode * node)
++{
++	if (!node || !parentDsc)
++		return;
++
++	if (node->m_type != CuiKnowledgeBaseManager::s_pageType)
++		return;
++
++	CuiKnowledgeBaseManager::PageKBNode * const pageNode = static_cast<CuiKnowledgeBaseManager::PageKBNode *>(node);
++
++	Unicode::String title;
++	if (pageNode->m_string.isValid())
++	{
++		title = pageNode->m_string.localize();
++	}
++	else
++	{
++		title = Unicode::narrowToWide(node->m_name);
++	}
++
++	UIDataSourceContainer * const nodeDsc = new UIDataSourceContainer;
++	nodeDsc->SetProperty(UITreeView::DataProperties::Text, title);
++	nodeDsc->SetPropertyNarrow(KBNodeNameProperty, node->m_name);
++	nodeDsc->SetPropertyBoolean(UITreeView::DataProperties::Selectable, true);
++	nodeDsc->SetPropertyBoolean(UITreeView::DataProperties::Expanded, false);
++
++	parentDsc->AddChild(nodeDsc);
++
++	for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
++	     it != node->m_children.end(); ++it)
++	{
++		populateDataSourceRecursive(nodeDsc, *it);
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::displayPage(CuiKnowledgeBaseManager::BaseKBNode * node)
++{
++	if (!node)
++		return;
++
++	clearContent();
++
++	if (node->m_type == CuiKnowledgeBaseManager::s_pageType)
++	{
++		CuiKnowledgeBaseManager::PageKBNode * const pageNode = static_cast<CuiKnowledgeBaseManager::PageKBNode *>(node);
++		if (pageNode->m_string.isValid())
++		{
++			m_entryTitle->SetLocalText(pageNode->m_string.localize());
++		}
++		else
++		{
++			m_entryTitle->SetLocalText(Unicode::narrowToWide(node->m_name));
++		}
++	}
++
++	Unicode::String contentText;
++
++	for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
++	     it != node->m_children.end(); ++it)
++	{
++		CuiKnowledgeBaseManager::BaseKBNode * const child = *it;
++
++		if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
++		{
++			CuiKnowledgeBaseManager::StringKBNode * const stringNode = static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
++			if (stringNode->m_string.isValid())
++			{
++				contentText += stringNode->m_string.localize();
++				contentText += Unicode::narrowToWide("\n\n");
++			}
++		}
++		else if (child->m_type == CuiKnowledgeBaseManager::s_imageType)
++		{
++			CuiKnowledgeBaseManager::ImageKBNode * const imageNode = static_cast<CuiKnowledgeBaseManager::ImageKBNode *>(child);
++			if (!imageNode->m_path.empty())
++			{
++				m_imageSample->SetVisible(true);
++				IGNORE_RETURN(m_imageSample->SetSourceResource(Unicode::narrowToWide(imageNode->m_path)));
++			}
++		}
++		else if (child->m_type == CuiKnowledgeBaseManager::s_linkButtonType)
++		{
++			CuiKnowledgeBaseManager::LinkButtonKBNode * const linkNode = static_cast<CuiKnowledgeBaseManager::LinkButtonKBNode *>(child);
++
++			UIButton * const linkButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
++			NOT_NULL(linkButton);
++			linkButton->SetName(cms_linkButton);
++			linkButton->SetPropertyNarrow(KBLinkTargetProperty, linkNode->m_link);
++
++			m_entryComp->AddChild(linkButton);
++
++			// Copy the already-resolved ButtonStyle directly from the template
++			// (m_buttonSample is always in the tree, so its style is always linked)
++			UIButtonStyle * const templateStyle = const_cast<UIButtonStyle *>(m_buttonSample->GetButtonStyle());
++			if (templateStyle)
++				linkButton->SetStyle(templateStyle);
++
++			// SetText() calls CreateLocalizedString() which resolves @table:key directly
++			linkButton->SetText(Unicode::narrowToWide(linkNode->m_string));
++
++			linkButton->SetVisible(true);
++			registerMediatorObject(*linkButton, true);
++		}
++		else if (child->m_type == CuiKnowledgeBaseManager::s_commandButtonType)
++		{
++			CuiKnowledgeBaseManager::CommandButtonKBNode * const cmdNode =
++				static_cast<CuiKnowledgeBaseManager::CommandButtonKBNode *>(child);
++
++			UIButton * const cmdButton = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
++			NOT_NULL(cmdButton);
++			cmdButton->SetName(cms_linkButton);
++			cmdButton->SetPropertyNarrow(KBCommandProperty, cmdNode->m_command);
++
++			m_entryComp->AddChild(cmdButton);
++
++			UIButtonStyle * const templateStyle = const_cast<UIButtonStyle *>(m_buttonSample->GetButtonStyle());
++			if (templateStyle)
++				cmdButton->SetStyle(templateStyle);
++
++			cmdButton->SetText(Unicode::narrowToWide(cmdNode->m_string));
++			cmdButton->SetVisible(true);
++			registerMediatorObject(*cmdButton, true);
++		}
++	}
++
++	if (m_entryText)
++	{
++		m_entryText->SetLocalText(contentText);
++	}
++
++	// Force a layout repack by ensuring m_entryComp always has a child added.
++	// Without this, pages that lack a LinkButton never trigger AddChild,
++	// and the text content fails to render.
++	if (m_buttonSample && m_entryComp)
++	{
++		UIButton * const spacer = safe_cast<UIButton *>(m_buttonSample->DuplicateObject());
++		if (spacer)
++		{
++			spacer->SetVisible(false);
++			spacer->SetSize(UISize(0, 0));
++			spacer->SetName(cms_linkButton);
++			m_entryComp->AddChild(spacer);
++		}
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::clearContent()
++{
++	if (m_entryText)
++		m_entryText->Clear();
++	if (m_entryTitle)
++		m_entryTitle->Clear();
++	if (m_imageSample)
++		m_imageSample->SetVisible(false);
++
++	// Remove dynamically created link buttons from entrycomp
++	if (m_entryComp)
++	{
++		UIBaseObject * linkBtn = m_entryComp->GetChild(cms_linkButton.c_str());
++		while (linkBtn)
++		{
++			m_entryComp->RemoveChild(linkBtn);
++			linkBtn = m_entryComp->GetChild(cms_linkButton.c_str());
++		}
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::navigateBack()
++{
++	if (m_navigationIndex > 0)
++	{
++		--m_navigationIndex;
++		std::string const & pageName = m_navigationHistory[static_cast<size_t>(m_navigationIndex)];
++
++		CuiKnowledgeBaseManager::BaseKBNode * const node = CuiKnowledgeBaseManager::findNode(pageName);
++		if (node)
++		{
++			displayPage(node);
++			syncTreeSelection(pageName);
++			m_currentPageName = pageName;
++		}
++
++		updateNavigationButtons();
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::navigateNext()
++{
++	if (m_navigationIndex < static_cast<int>(m_navigationHistory.size()) - 1)
++	{
++		++m_navigationIndex;
++		std::string const & pageName = m_navigationHistory[static_cast<size_t>(m_navigationIndex)];
++
++		CuiKnowledgeBaseManager::BaseKBNode * const node = CuiKnowledgeBaseManager::findNode(pageName);
++		if (node)
++		{
++			displayPage(node);
++			syncTreeSelection(pageName);
++			m_currentPageName = pageName;
++		}
++
++		updateNavigationButtons();
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::syncTreeSelection(const std::string & pageName)
++{
++	if (!m_treeTopics)
++		return;
++
++	UIDataSourceContainer * const rootDsc = m_treeTopics->GetDataSourceContainer();
++	if (!rootDsc)
++		return;
++
++	// DFS over datasource containers to find the one matching pageName
++	UIDataSourceContainer * targetDsc = 0;
++	std::vector<UIDataSourceContainer *> stack;
++	stack.push_back(rootDsc);
++
++	while (!stack.empty())
++	{
++		UIDataSourceContainer * cur = stack.back();
++		stack.pop_back();
++
++		std::string kbName;
++		cur->GetPropertyNarrow(KBNodeNameProperty, kbName);
++		if (!kbName.empty() && kbName == pageName)
++		{
++			targetDsc = cur;
++			break;
++		}
++
++		unsigned long const childCount = cur->GetChildCount();
++		for (unsigned long i = 0; i < childCount; ++i)
++		{
++			UIDataSourceBase * const child = cur->GetChildByPositionLinear(i);
++			if (child && child->IsA(TUIDataSourceContainer))
++				stack.push_back(static_cast<UIDataSourceContainer *>(child));
++		}
++	}
++
++	if (!targetDsc)
++		return;
++
++	int row = -1;
++	UITreeView::DataNode * const dataNode = m_treeTopics->FindDataNodeByDataSource(*targetDsc, row);
++	if (!dataNode)
++		return;
++
++	// Expand parents first — this inserts visible rows and invalidates the row index
++	m_treeTopics->ExpandParentNodes(*dataNode);
++
++	// Re-query row after expansion since visible row indices have shifted
++	m_treeTopics->FindDataNodeByDataSource(*targetDsc, row);
++	if (row >= 0)
++	{
++		m_syncingTree = true;
++		m_treeTopics->SelectRow(row);
++		m_treeTopics->ScrollToRow(row);
++		m_syncingTree = false;
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHolocron::updateNavigationButtons()
++{
++	if (m_buttonBack)
++		m_buttonBack->SetEnabled(m_navigationIndex > 0);
++
++	if (m_buttonNext)
++		m_buttonNext->SetEnabled(m_navigationIndex < static_cast<int>(m_navigationHistory.size()) - 1);
++}
++
++//----------------------------------------------------------------------
++
++SwgCuiHolocron * SwgCuiHolocron::createInto(UIPage * parent)
++{
++	UIPage * const dupe = UIPage::DuplicateInto(*parent, "/PDA.help");
++
++	if (!dupe)
++	{
++		DEBUG_WARNING(true, ("[Holocron] createInto: DuplicateInto failed for /PDA.help"));
++		return 0;
++	}
++
++	return new SwgCuiHolocron(*dupe);
++}
++
++//======================================================================
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.h	1969-12-31 18:00:00.000000000 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHolocron.h	2026-02-27 12:27:02.299462119 -0600
+@@ -0,0 +1,82 @@
++//======================================================================
++//
++// SwgCuiHolocron.h
++// Copyright Sony Online Entertainment
++//
++//======================================================================
++
++#ifndef INCLUDED_SwgCuiHolocron_H
++#define INCLUDED_SwgCuiHolocron_H
++
++//======================================================================
++
++#include "clientUserInterface/CuiMediator.h"
++#include "clientUserInterface/CuiKnowledgeBaseManager.h"
++#include "UIEventCallback.h"
++
++class UIButton;
++class UIDataSourceContainer;
++class UIImage;
++class UIPage;
++class UIText;
++class UITreeView;
++
++//======================================================================
++
++class SwgCuiHolocron : public CuiMediator, public UIEventCallback
++{
++public:
++	explicit SwgCuiHolocron(UIPage & page);
++
++	virtual void performActivate();
++	virtual void performDeactivate();
++
++	virtual void OnButtonPressed(UIWidget *context);
++	virtual void OnGenericSelectionChanged(UIWidget *context);
++
++	void loadPage(const std::string & pageName);
++	void setActivePage(const std::string & pageName);
++
++	static SwgCuiHolocron * createInto(UIPage * parent);
++
++private:
++	~SwgCuiHolocron();
++	SwgCuiHolocron(const SwgCuiHolocron & rhs);
++	SwgCuiHolocron & operator=(const SwgCuiHolocron & rhs);
++
++	void populateTopicTree();
++	void populateDataSourceRecursive(UIDataSourceContainer * parentDsc, CuiKnowledgeBaseManager::BaseKBNode * node);
++	void displayPage(CuiKnowledgeBaseManager::BaseKBNode * node);
++	void clearContent();
++	void navigateBack();
++	void navigateNext();
++	void updateNavigationButtons();
++	void syncTreeSelection(const std::string & pageName);
++
++private:
++	UITreeView *  m_treeTopics;
++	UIText *      m_entryText;
++	UIText *      m_entryTitle;
++	UIText *      m_textInfo;
++	UIPage *      m_entryComp;
++	UIImage *     m_imageSample;
++	UIButton *    m_buttonBack;
++	UIButton *    m_buttonNext;
++	UIButton *    m_buttonClose;
++	UIButton *    m_buttonExit;
++	UIButton *    m_buttonServices;
++	UIButton *    m_buttonBug;
++	UIButton *    m_buttonReportPlayer;
++	UIButton *    m_buttonReload;
++	UIButton *    m_buttonSample;
++	UIText *      m_textSample;
++
++	std::vector<std::string> m_navigationHistory;
++	int m_navigationIndex;
++	std::string m_currentPageName;
++	bool m_syncingTree;
++};
++
++//======================================================================
++
++#endif // INCLUDED_SwgCuiHolocron_H
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudAction.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudAction.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudAction.cpp	2026-03-02 17:18:06.459085779 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudAction.cpp	2026-02-19 08:02:49.814680681 -0600
+@@ -295,6 +295,7 @@
+ 	CuiActionManager::addAction (CuiActions::commPlayerQuest, this, false);
+ 
+ 	CuiActionManager::addAction (CuiActions::gcwInfo, this, false);
++	CuiActionManager::addAction (CuiActions::openHolocron, this, false);
+ 
+ 	static bool s_installed = false;
+ 	if (!s_installed)
+@@ -1694,6 +1695,10 @@
+ 	{
+ 		CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_GalacticCivilWar);
+ 	}
++	else if (id == CuiActions::openHolocron)
++	{
++		CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_Holocron);
++	}
+ 
+ 	//unknown action
+ 	else
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.cpp	2026-03-02 17:18:06.463085873 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.cpp	2026-03-02 17:27:39.759979589 -0600
+@@ -99,6 +99,7 @@
+ #include "swgClientUserInterface/SwgCuiTicketPurchase.h"
+ #include "swgClientUserInterface/SwgCuiToolbar.h"
+ #include "swgClientUserInterface/SwgCuiTrade.h"
++#include "swgClientUserInterface/SwgCuiHolocron.h"
+ #include "swgSharedNetworkMessages/ConsentRequestMessage.h"
+ #include "swgSharedNetworkMessages/PermissionListCreateMessage.h"
+ 
+@@ -524,7 +525,6 @@
+ 
+ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , const MessageDispatch::MessageBase & message)
+ {
+-
+ 	//----------------------------------------------------------------------
+ 
+ 	if (message.isType (Game::Messages::SCENE_CHANGED))
+@@ -620,6 +620,18 @@
+ 			m_sendOpenStatMigration = true;
+ 		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseStatMigration)
+ 			m_sendCloseStatMigration = true;
++		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestOpenHolocron)
++		{
++			openHolocronToPage(std::string());
++			const NewbieTutorialResponse response(cms_newbieTutorialRequestOpenHolocron);
++			GameNetwork::send(response, true);
++		}
++		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseHolocron)
++		{
++			closeHolocron();
++			const NewbieTutorialResponse response(cms_newbieTutorialRequestCloseHolocron);
++			GameNetwork::send(response, true);
++		}
+ 	}
+ 
+ 	//----------------------------------------------------------------------
+@@ -731,7 +743,14 @@
+ 
+ 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
+ 	{
+-		IGNORE_RETURN(CuiActionManager::performAction (CuiActions::service, Unicode::emptyString));
++		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
++		OpenHolocronToPageMessage msg(ri);
++		openHolocronToPage(msg.getPage());
++	}
++
++	else if (message.isType (CloseHolocronMessage::MessageType))
++	{
++		closeHolocron();
+ 	}
+ 
+ 	else if (message.isType (EditAppearanceMessage::MessageType))
+@@ -1697,4 +1716,37 @@
+ 	return result;
+ }
+ 
++//----------------------------------------------------------------------
++
++void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
++{
++	UIPage * const pdaPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA", TUIPage));
++	if (!pdaPage)
++		return;
++
++	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
++	if (!helpPage)
++		return;
++
++	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
++	if (holocron && !pageName.empty())
++	{
++		holocron->loadPage(pageName);
++	}
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHudWindowManager::closeHolocron()
++{
++	CuiMediatorFactory::deactivateInWorkspace(CuiMediatorTypes::WS_Holocron);
++}
++
++//----------------------------------------------------------------------
++
++void SwgCuiHudWindowManager::toggleHolocron ()
++{
++	CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_Holocron);
++}
++
+ //======================================================================
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.h /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.h
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.h	2026-03-02 17:18:06.463085873 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiHudWindowManager.h	2026-02-18 10:42:08.604245273 -0600
+@@ -85,6 +85,9 @@
+ 	void                spawnCustomizationWindow              (NetworkId const & objectId, std::string const &customVarName1, int minVar1, int maxVar1, std::string const &customVarName2, int minVar2, int maxVar2, std::string const &customVarName3, int minVar3, int maxVar3, std::string const &customVarName4, int minVar4, int maxVar4) const;
+ 	void				spawnRatingWindow					  (std::string const & windowTitle, std::string const & windowText);
+ 
++	void                openHolocronToPage                    (const std::string & pageName);
++	void                closeHolocron                         ();
++	void                toggleHolocron                        ();
+ 
+ 	void                colorTest                             (TangibleObject & id);
+ 	void                hueObjectTest                         (const NetworkId & id, int maxIndex1, int maxIndex2);
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiLoadingGround.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiLoadingGround.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiLoadingGround.cpp	2026-03-02 17:18:06.467085967 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiLoadingGround.cpp	2026-02-26 11:34:39.475937087 -0600
+@@ -163,6 +163,7 @@
+ 
+ 	GameNetwork::setAcceptSceneCommand (true);
+ 
++
+ 	connectToMessage(CuiLoadingManager::Messages::FullscreenBackButtonEnabled);
+ 
+ 	clearAllLoadingChecks();
+diff -ruN /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiMediatorFactorySetup.cpp /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiMediatorFactorySetup.cpp
+--- /root/opt/swg_source/nge_client_source/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiMediatorFactorySetup.cpp	1969-12-31 18:00:00.000000000 -0600
++++ /root/opt/swg_source/nge_client_adjusting/client-tools/src/game/client/library/swgClientUserInterface/src/shared/page/SwgCuiMediatorFactorySetup.cpp	2026-02-19 08:03:42.727924529 -0600
+@@ -0,0 +1,316 @@
++// ======================================================================
++//
++// SwgCuiMediatorFactorySetup.cpp
++// copyright (c) 2001 Sony Online Entertainment
++//
++// ======================================================================
++
++#include "swgClientUserInterface/FirstSwgClientUserInterface.h"
++#include "swgClientUserInterface/SwgCuiMediatorFactorySetup.h"
++
++#include "clientUserInterface/CuiBackdrop.h"
++#include "clientUserInterface/CuiBugSubmissionPage.h"
++#include "clientUserInterface/CuiColorPicker.h"
++#include "clientUserInterface/CuiDeleteSkillConfirmation.h"
++#include "clientUserInterface/CuiHueObject.h"
++#include "clientUserInterface/CuiInputBox.h"
++#include "clientUserInterface/CuiKeypad.h"
++#include "clientUserInterface/CuiMediator.h"
++#include "clientUserInterface/CuiMediatorFactory.h"
++#include "clientUserInterface/CuiMediatorFactory_Constructor.h"
++#include "clientUserInterface/CuiMinigameManager.h"
++#include "clientUserInterface/CuiNotepad.h"
++#include "clientUserInterface/CuiPopupHelp.h"
++#include "clientUserInterface/CuiSetName.h"
++#include "clientUserInterface/CuiShipSelfInfo.h"
++#include "clientUserInterface/CuiShipTargetInfo.h"
++#include "clientUserInterface/CuiTransfer.h"
++#include "clientUserInterface/CuiTransition.h"
++#include "clientUserInterface/CuiVehicleProto.h"
++#include "sharedDebug/DebugFlags.h"
++#include "sharedFoundation/Production.h"
++#include "swgClientUserInterface/SwgCuiAppearanceTab.h"
++#include "swgClientUserInterface/SwgCuiAuctionBid.h"
++#include "swgClientUserInterface/SwgCuiAuctionBuy.h"
++#include "swgClientUserInterface/SwgCuiAuctionDetails.h"
++#include "swgClientUserInterface/SwgCuiAuctionList.h"
++#include "swgClientUserInterface/SwgCuiAuctionSell.h"
++#include "swgClientUserInterface/SwgCuiAvatarCreation.h"
++#include "swgClientUserInterface/SwgCuiAvatarCustomize2.h"
++#include "swgClientUserInterface/SwgCuiAvatarLocation2.h"
++#include "swgClientUserInterface/SwgCuiAvatarProfessionTemplateSelect.h"
++#include "swgClientUserInterface/SwgCuiAvatarSelection.h"
++#include "swgClientUserInterface/SwgCuiAvatarSetupProf.h"
++#include "swgClientUserInterface/SwgCuiAvatarSimple.h"
++#include "swgClientUserInterface/SwgCuiAvatarSummary.h"
++#include "swgClientUserInterface/SwgCuiBiographyEdit.h"
++#include "swgClientUserInterface/SwgCuiBuffBuilderBuffee.h"
++#include "swgClientUserInterface/SwgCuiBuffBuilderBuffer.h"
++#include "swgClientUserInterface/SwgCuiChatRooms.h"
++#include "swgClientUserInterface/SwgCuiClusterSelection.h"
++#include "swgClientUserInterface/SwgCuiCollections.h"
++#include "swgClientUserInterface/SwgCuiCommandBrowser.h"
++#include "swgClientUserInterface/SwgCuiConsole.h"
++#include "swgClientUserInterface/SwgCuiCraftAssembly.h"
++#include "swgClientUserInterface/SwgCuiCraftCustomize.h"
++#include "swgClientUserInterface/SwgCuiCraftDraft.h"
++#include "swgClientUserInterface/SwgCuiCraftExperiment.h"
++#include "swgClientUserInterface/SwgCuiCraftOption.h"
++#include "swgClientUserInterface/SwgCuiCraftSummary.h"
++#include "swgClientUserInterface/SwgCuiCredits.h"
++#include "swgClientUserInterface/SwgCuiCustomize.h"
++#include "swgClientUserInterface/SwgCuiCybernetics.h"
++#include "swgClientUserInterface/SwgCuiDataStorage.h"
++#include "swgClientUserInterface/SwgCuiDebugInfoPage.h"
++#include "swgClientUserInterface/SwgCuiDpsMeter.h"
++#include "swgClientUserInterface/SwgCuiDroidCommand.h"
++#include "swgClientUserInterface/SwgCuiExamine.h"
++#include "swgClientUserInterface/SwgCuiExpertise.h"
++#include "swgClientUserInterface/SwgCuiExpMonitorBox.h"
++#include "swgClientUserInterface/SwgCuiGalacticCivilWar.h"
++#include "swgClientUserInterface/SwgCuiGameMenu.h"
++#include "swgClientUserInterface/SwgCuiHarassmentReport.h"
++#include "swgClientUserInterface/SwgCuiHolocron.h"
++#include "swgClientUserInterface/SwgCuiHudGround.h"
++#include "swgClientUserInterface/SwgCuiHudSpace.h"
++#include "swgClientUserInterface/SwgCuiHyperspaceMap.h"
++#include "swgClientUserInterface/SwgCuiImageDesignerDesigner.h"
++#include "swgClientUserInterface/SwgCuiImageDesignerRecipient.h"
++#include "swgClientUserInterface/SwgCuiIMEIndicator.h"
++#include "swgClientUserInterface/SwgCuiIMEIndicatorSpace.h"
++#include "swgClientUserInterface/SwgCuiIMEInput.h"
++#include "swgClientUserInterface/SwgCuiIncubator.h"
++#include "swgClientUserInterface/SwgCuiInventory.h"
++#include "swgClientUserInterface/SwgCuiKillMeter.h"
++#include "swgClientUserInterface/SwgCuiLoadingGround.h"
++#include "swgClientUserInterface/SwgCuiLoadingSpace.h"
++#include "swgClientUserInterface/SwgCuiLocationDisplay.h"
++#include "swgClientUserInterface/SwgCuiLocations.h"
++#include "swgClientUserInterface/SwgCuiLoginScreen.h"
++#include "swgClientUserInterface/SwgCuiLootBox.h"
++#include "swgClientUserInterface/SwgCuiMahjong.h"
++#include "swgClientUserInterface/SwgCuiMediatorTypes.h"
++#include "swgClientUserInterface/SwgCuiMissionBrowser.h"
++#include "swgClientUserInterface/SwgCuiMissionDetails.h"
++#include "swgClientUserInterface/SwgCuiNetStatus.h"
++#include "swgClientUserInterface/SwgCuiNews.h"
++#include "swgClientUserInterface/SwgCuiOpt.h"
++#include "swgClientUserInterface/SwgCuiPersistentMessageBrowser.h"
++#include "swgClientUserInterface/SwgCuiPersistentMessageComposer.h"
++#include "swgClientUserInterface/SwgCuiPlanetMap.h"
++#include "swgClientUserInterface/SwgCuiPlayerQuestConversation.h"
++#include "swgClientUserInterface/SwgCuiProfessionTemplateSelect.h"
++#include "swgClientUserInterface/SwgCuiQuestAcceptance.h"
++#include "swgClientUserInterface/SwgCuiQuestBuilder.h"
++#include "swgClientUserInterface/SwgCuiQuestJournal.h"
++#include "swgClientUserInterface/SwgCuiQuestHelper.h"
++#include "swgClientUserInterface/SwgCuiRating.h"
++#include "swgClientUserInterface/SwgCuiResourceExtraction.h"
++#include "swgClientUserInterface/SwgCuiResourceExtraction_Hopper.h"
++#include "swgClientUserInterface/SwgCuiResourceExtraction_Quantity.h"
++#include "swgClientUserInterface/SwgCuiResourceExtraction_SetResource.h"
++#include "swgClientUserInterface/SwgCuiResourceSplitter.h"
++#include "swgClientUserInterface/SwgCuiRoadmap.h"
++#include "swgClientUserInterface/SwgCuiSceneSelection.h"
++#include "swgClientUserInterface/SwgCuiServerDisconnected.h"
++#include "swgClientUserInterface/SwgCuiService_TicketList_AddComment.h"
++#include "swgClientUserInterface/SwgCuiShipChoose.h"
++#include "swgClientUserInterface/SwgCuiShipComponentDetail.h"
++#include "swgClientUserInterface/SwgCuiShipComponentManagement.h"
++#include "swgClientUserInterface/SwgCuiShipView.h"
++#include "swgClientUserInterface/SwgCuiSpaceAssignPlayerFormation.h"
++#include "swgClientUserInterface/SwgCuiSpaceConversation.h"
++#include "swgClientUserInterface/SwgCuiSpaceGroupLaunch.h"
++#include "swgClientUserInterface/SwgCuiSpaceMiningSale.h"
++#include "swgClientUserInterface/SwgCuiSpaceZoneMap.h"
++#include "swgClientUserInterface/SwgCuiSplash.h"
++#include "swgClientUserInterface/SwgCuiStructurePlacement.h"
++#include "swgClientUserInterface/SwgCuiTcgWindow.h"
++#include "swgClientUserInterface/SwgCuiTicketPurchase.h"
++#include "swgClientUserInterface/SwgCuiTrade.h"
++#include "swgClientUserInterface/SwgCuiVendor.h"
++#include "swgClientUserInterface/SwgCuiVendorSetPrice.h"
++#include "swgClientUserInterface/SwgCuiVoiceActiveSpeakers.h"
++#include "swgClientUserInterface/SwgCuiVoiceFlyBar.h"
++#include "swgClientUserInterface/SwgCuiWaypointMonitorBox.h"
++#include "swgClientUserInterface/SwgCuiWeaponGroupAssignment.h"
++
++#include "UIManager.h"
++#include "UIPage.h"
++
++#include <vector>
++
++// ======================================================================
++
++namespace
++{
++	bool s_installed;
++}
++
++//-----------------------------------------------------------------
++
++#define MAKE_SWG_CTOR(type,path) CuiMediatorFactory::addConstructor (CuiMediatorTypes::##type , new CuiMediatorFactory::Constructor <SwgCui##type        > (##path));
++#define MAKE_SWG_CTOR_WS(type,path) CuiMediatorFactory::addConstructor (CuiMediatorTypes::WS_##type , new CuiMediatorFactory::Constructor <SwgCui##type        > (##path, true));
++
++void SwgCuiMediatorFactorySetup::install () 
++{
++	DEBUG_FATAL (s_installed, ("already installed\n"));
++
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::Backdrop,      new CuiMediatorFactory::Constructor <CuiBackdrop>          ("/Back"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::ColorPicker,   new CuiMediatorFactory::Constructor <CuiColorPicker>       ("DO NOT USE"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::Keypad,        new CuiMediatorFactory::Constructor <CuiKeypad>            ("DO NOT USE"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::HueObject,     new CuiMediatorFactory::Constructor <CuiHueObject>         ("DO NOT USE"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::Transfer,      new CuiMediatorFactory::Constructor <CuiTransfer>          ("DO NOT USE"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::BugSubmission, new CuiMediatorFactory::Constructor <CuiBugSubmissionPage> ("/Debug.Bug"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::PopupHelp,     new CuiMediatorFactory::Constructor <CuiPopupHelp>         ("/craft.help", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::Transition,    new CuiMediatorFactory::Constructor <CuiTransition>        ("/trans"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::InputBox,      new CuiMediatorFactory::Constructor <CuiInputBox>          ("/pda.inputbox", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::SetName,       new CuiMediatorFactory::Constructor <CuiSetName>           ("/pda.inputbox", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::Notepad,       new CuiMediatorFactory::Constructor <CuiNotepad>           ("/pda.notepad", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::DeleteSkillConfirmation,      new CuiMediatorFactory::Constructor <CuiDeleteSkillConfirmation>("/confirm"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::VehicleProto,  new CuiMediatorFactory::Constructor <CuiVehicleProto>      ("/debug.vproto"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::WS_ShipTargetInfo, new CuiMediatorFactory::Constructor <CuiShipTargetInfo>   ("/pda.ShipTargetInfo", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::WS_ShipSelfInfo, new CuiMediatorFactory::Constructor <CuiShipSelfInfo>   ("/pda.ShipSelfInfo", true));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::WS_BiographyEdit, new CuiMediatorFactory::Constructor<SwgCuiBiographyEdit>("/pda.EditBiography", true));
++
++	MAKE_SWG_CTOR (AvatarCreation,        "/AvCre");
++
++	bool progressive = false;
++	DebugFlags::registerFlag(progressive,       "SwgClientUserInterface", "progressive");
++
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::AvatarCustomize, new CuiMediatorFactory::Constructor <SwgCuiAvatarCustomize2>   ("/AvCust"));
++
++	MAKE_SWG_CTOR (Credits,                           "/Credits");
++
++	MAKE_SWG_CTOR_WS (AuctionBid,                     "/Auction.AuctionBid");
++	MAKE_SWG_CTOR_WS (AuctionBuy,                     "/Auction.AuctionBuy");
++	MAKE_SWG_CTOR_WS (AuctionDetails,                 "/Auction.AuctionDetails");
++	MAKE_SWG_CTOR_WS (AuctionList,                    "/Auction.AuctionList");
++	MAKE_SWG_CTOR_WS (AuctionSell,                    "/Auction.AuctionSell");
++	MAKE_SWG_CTOR (AvatarLocation2,                   "/AvLoc2");
++	MAKE_SWG_CTOR (AvatarSelection,                   "/AvSel");
++	MAKE_SWG_CTOR (AvatarSetupProf,                   "/AvSetupProf");
++	MAKE_SWG_CTOR (AvatarSummary,                     "/AvSum");
++	MAKE_SWG_CTOR (AvatarSimple,                      "/AvSimple");
++	MAKE_SWG_CTOR (AvatarProfessionTemplateSelect,    "/AvProfessionTemplateSelect");
++	MAKE_SWG_CTOR (ClusterSelection,                  "/ClusterSel");
++
++#if PRODUCTION==0
++	MAKE_SWG_CTOR (Console,                           "/Console");
++#endif
++
++	MAKE_SWG_CTOR (DebugInfoPage,                     "/Debug.DebugInfo");
++	MAKE_SWG_CTOR (GameMenu,                          "/GameMenu");
++	MAKE_SWG_CTOR_WS (Holocron,                        "/PDA.help");
++	MAKE_SWG_CTOR (HudGround,                         "/GroundHUD");
++	MAKE_SWG_CTOR (HudSpace,                          "/HudSpace");
++	MAKE_SWG_CTOR (Inventory,                         "/Inv");
++	MAKE_SWG_CTOR (LoadingGround,                     "/Load2");
++	MAKE_SWG_CTOR (Locations,                         "/Loc");
++	MAKE_SWG_CTOR (LoginScreen,                       "/Login");
++	MAKE_SWG_CTOR (MissionBrowser,                    "/Mission.Browser");
++	MAKE_SWG_CTOR (MissionDetails,                    "/Mission.Details");
++	MAKE_SWG_CTOR (News,                              "/News");
++	MAKE_SWG_CTOR (SceneSelection,                    "/SceneSel");
++	MAKE_SWG_CTOR (ServerDisconnected,                "/Debug.ServerDisconnected");
++	MAKE_SWG_CTOR (IMEInput,                          "/Debug.IME");
++	MAKE_SWG_CTOR (Splash,                            "/Splash");
++	MAKE_SWG_CTOR (StructurePlacement,                "/Placement");
++	MAKE_SWG_CTOR_WS (Vendor,                         "/Auction.AuctionList");
++	MAKE_SWG_CTOR_WS (VendorSetPrice,                 "/Auction.AuctionsetPrice");
++	MAKE_SWG_CTOR_WS (ChatRooms,                      "/pda.ChatRooms");
++	MAKE_SWG_CTOR_WS (CommandBrowser,                 "/skill.commandbrowser");
++	MAKE_SWG_CTOR_WS (CraftAssembly,                  "/Craft.Assembly");
++	MAKE_SWG_CTOR_WS (CraftCustomize,                 "/Craft.Customize");
++	MAKE_SWG_CTOR_WS (CraftDraft,                     "/Craft.Draft");
++	MAKE_SWG_CTOR_WS (CraftExperiment,                "/Craft.Experiment");
++	MAKE_SWG_CTOR_WS (CraftOption,                    "/Craft.Option");
++	MAKE_SWG_CTOR_WS (CraftSummary,                   "/Craft.Summary");
++	MAKE_SWG_CTOR_WS (Customize,                      "/pda.Customize");
++	MAKE_SWG_CTOR_WS (DataStorage,                    "/pda.datapad");
++	MAKE_SWG_CTOR_WS (Examine,                        "/pda.examine");
++	MAKE_SWG_CTOR_WS (Expertise,                      "/pda.Expertise");
++	MAKE_SWG_CTOR_WS (ExpMonitorBox,                  "/pda.expMon");
++	MAKE_SWG_CTOR_WS (WaypointMonitorBox,             "/pda.waypointMon");
++	MAKE_SWG_CTOR_WS (NetStatus,                      "/pda.netStatus");
++	MAKE_SWG_CTOR_WS (Opt,                            "/Opt.OptMain");
++	MAKE_SWG_CTOR_WS (PersistentMessageBrowser,       "/pda.pmBrowser");
++	MAKE_SWG_CTOR_WS (PersistentMessageComposer,      "/pda.pmComposer");
++	MAKE_SWG_CTOR_WS (PlanetMap,                      "/PlanetMap.planetMap");
++	MAKE_SWG_CTOR_WS (ResourceExtraction,             "/res.HarvesterPage");
++	MAKE_SWG_CTOR_WS (ResourceExtraction_Hopper,      "/res.HopperPage");
++	MAKE_SWG_CTOR_WS (ResourceExtraction_Quantity,    "/res.QuantityPage");
++	MAKE_SWG_CTOR_WS (ResourceExtraction_SetResource, "/res.SetResourcePage");
++	MAKE_SWG_CTOR_WS (TicketPurchase,                 "/TicketPurchase.ticketPurchase");
++	MAKE_SWG_CTOR_WS (Trade,                          "/pda.trade");
++	MAKE_SWG_CTOR_WS (ImageDesignerDesigner,          "/pda.imagedesigner.designer");
++	MAKE_SWG_CTOR_WS (ImageDesignerRecipient,         "/pda.imagedesigner.recipient");
++	MAKE_SWG_CTOR_WS (QuestJournal,                   "/pda.Quest");
++	MAKE_SWG_CTOR_WS (QuestAcceptance,                "/pda.QuestAcceptance");
++	MAKE_SWG_CTOR_WS (QuestHelper,                    "/GroundHUD.QuestHelper");
++	MAKE_SWG_CTOR_WS (LocationDisplay,                "/pda.LocationDisplay");
++	MAKE_SWG_CTOR_WS (DpsMeter,                       "/pda.dpsMeter");
++	MAKE_SWG_CTOR_WS (Roadmap,                        "/pda.Roadmap");
++	MAKE_SWG_CTOR_WS (LootBox,                        "/pda.lootbox");
++	MAKE_SWG_CTOR_WS (KillMeter,                      "/pda.KillMeter");
++	MAKE_SWG_CTOR_WS (BuffBuilderBuffer,              "/pda.BuffBuilder.buffer");
++	MAKE_SWG_CTOR_WS (BuffBuilderBuffee,              "/pda.BuffBuilder.buffee");
++	MAKE_SWG_CTOR_WS (Incubator,                      "/pda.Incubator");
++	MAKE_SWG_CTOR_WS (Collections,                    "/pda.Collections");
++	MAKE_SWG_CTOR_WS (VoiceFlyBar,                    "/Voice.VoiceFlyBar");
++	MAKE_SWG_CTOR_WS (VoiceActiveSpeakers,            "/Voice.VoiceActiveSpeakers");
++	MAKE_SWG_CTOR_WS (TcgWindow,                      "/pda.Tcg");
++	MAKE_SWG_CTOR_WS (Mahjong,                        "/pda.Mahjong");
++	MAKE_SWG_CTOR_WS (AppearanceTab,                  "/pda.AppearanceTab");
++	MAKE_SWG_CTOR_WS (QuestBuilder,					  "/pda.QuestBuilder");
++	MAKE_SWG_CTOR_WS (Rating,                         "/pda.ratingScreen");
++	MAKE_SWG_CTOR_WS (GalacticCivilWar,               "/pda.GCWInformation");
++
++	//space
++	MAKE_SWG_CTOR_WS (SpaceConversation,              "/space.convo");
++	MAKE_SWG_CTOR_WS (HyperspaceMap,                  "/space.hyperspace");
++	MAKE_SWG_CTOR_WS (ShipComponentDetail,            "/space.componentdetails");
++	MAKE_SWG_CTOR_WS (SpaceAssignPlayerFormation,     "/space.formation");
++	MAKE_SWG_CTOR_WS (SpaceZoneMap,                   "/space.ZoneMap");
++	MAKE_SWG_CTOR_WS (WeaponGroupAssignment,          "/space.weapongroupassignment");
++	MAKE_SWG_CTOR_WS (PlayerQuestConversation,        "/space.playerQuest");
++
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::LoadingSpace, new CuiMediatorFactory::Constructor <SwgCuiLoadingSpace> ("/SpaceLoading"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::LoadingMustafar , new CuiMediatorFactory::Constructor <SwgCuiLoadingSpace> ("/MustaLoading"));
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::LoadingHoth, new CuiMediatorFactory::Constructor <SwgCuiLoadingSpace> ("/HothLoading"));
++
++	MAKE_SWG_CTOR_WS (ShipComponentManagement,        "/space.shipcomponents");
++	MAKE_SWG_CTOR_WS (ShipChoose,                     "/space.shipchoose");
++	MAKE_SWG_CTOR_WS (ShipView,                       "/space.shipview");
++	MAKE_SWG_CTOR_WS (DroidCommand,                   "/PDA.droidcommand");
++	MAKE_SWG_CTOR_WS (SpaceGroupLaunch,               "/space.spaceGroupLaunch");
++	MAKE_SWG_CTOR_WS (Cybernetics,                    "/PDA.cybernetics");
++	MAKE_SWG_CTOR_WS (SpaceMiningSale,                "/space.mining_sale");
++	//end space
++
++	CuiMediatorFactory::addConstructor (CuiMediatorTypes::WS_TicketListAddComment, new CuiMediatorFactory::Constructor <SwgCuiService::TicketList::AddComment> ("/PDA.Service.edit", true));
++	MAKE_SWG_CTOR (ResourceSplitter,                  "/pda.SplitResource.main");
++	MAKE_SWG_CTOR_WS (HarassmentReport,               "/pda.Service.harassment");
++	
++	MAKE_SWG_CTOR_WS (IMEIndicator,                   "/pda.ime");
++	MAKE_SWG_CTOR_WS (IMEIndicatorSpace,              "/pda.imeSpace");
++
++	MAKE_SWG_CTOR_WS (ProfessionTemplateSelect,	      "/Skill.professionTemplate");
++
++	//register the mediators for ui minigames
++	CuiMinigameManager::registerMediatorForGame(SwgCuiMahjong::cms_gameName, CuiMediatorTypes::WS_Mahjong);
++
++	s_installed = true;
++}
++
++//-----------------------------------------------------------------
++
++void SwgCuiMediatorFactorySetup::remove ()
++{
++	CuiMinigameManager::unregisterMediatorForGame(SwgCuiMahjong::cms_gameName);
++
++	DEBUG_FATAL (!s_installed, ("not installed\n"));
++	s_installed = false;
++}
++
++// ======================================================================
