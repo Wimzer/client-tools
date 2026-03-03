@@ -462,17 +462,19 @@ InputMap * InputScheme::fetchGroundInputMap()
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
 
-		// Add default Ctrl+H binding for Holocron if no command is already bound to that key
+		// Register Holocron as a bindable UI command
 		{
-			const InputMap::BindInfo ctrlH(CuiM_BITS_CTRL, InputMap::IT_Key, DIK_H);
-			if (!s_groundInputMap->getCommandByBinding(ctrlH))
+			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("CMD_openHolocron", true);
+			if (!existing)
 			{
-				IGNORE_RETURN(s_groundInputMap->addCustomCommand("CMD_uiHolocron", static_cast<int>(CM_clientCommandParser), "ui+action+openHolocron", false));
-				const InputMap::Command * const holocronCmd = s_groundInputMap->findCommandByName("CMD_uiHolocron");
-				if (holocronCmd)
-				{
-					IGNORE_RETURN(s_groundInputMap->addBinding(ctrlH, holocronCmd));
-				}
+				InputMap::Command cmd;
+				cmd.name = "CMD_openHolocron";
+				cmd.category = "ui";
+				cmd.types = InputMap::Command::T_BUTTON;
+				cmd.pressEvent = InputMap::Command::EventData(
+					static_cast<int>(CM_clientCommandParser), 0.0f, "ui action openHolocron");
+				cmd.userDefined = false;
+				IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, false));
 			}
 		}
 
