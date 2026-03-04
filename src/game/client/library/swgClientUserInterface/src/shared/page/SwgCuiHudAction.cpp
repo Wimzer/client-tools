@@ -296,6 +296,7 @@ m_toggleDownTimeNames          (0.0f)
 
 	CuiActionManager::addAction (CuiActions::gcwInfo, this, false);
 	CuiActionManager::addAction (CuiActions::openHolocron, this, false);
+	CuiActionManager::addAction (CuiActions::holocron, this, false);
 
 	static bool s_installed = false;
 	if (!s_installed)
@@ -1695,7 +1696,7 @@ bool  SwgCuiHudAction::performAction (const std::string & id, const Unicode::Str
 	{
 		CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_GalacticCivilWar);
 	}
-	else if (id == CuiActions::openHolocron)
+	else if (id == CuiActions::openHolocron || id == CuiActions::holocron)
 	{
 		CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_Holocron);
 	}
