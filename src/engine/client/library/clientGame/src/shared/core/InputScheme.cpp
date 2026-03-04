@@ -464,34 +464,14 @@ InputMap * InputScheme::fetchGroundInputMap()
 
 		// Register Holocron as a bindable UI command
 		{
-			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("CMD_uiHolocron", true);
-			if (!existing)
-			{
-				InputMap::Command cmd;
-				cmd.name = "CMD_uiHolocron";
-				cmd.category = "ui";
-				cmd.types = InputMap::Command::T_BUTTON;
-				cmd.pressEvent = InputMap::Command::EventData(
-					static_cast<int>(CM_clientCommandParser), 0.0f, "/ui action openHolocron");
-				cmd.userDefined = false;
-				IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, false));
-			}
-		}
-
-		// Back-compat/alias for existing bind list entry: cmd_openholocron
-		{
-			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("cmd_openholocron", true);
-			if (!existing)
-			{
-				InputMap::Command cmd;
-				cmd.name = "cmd_openholocron";
-				cmd.category = "ui";
-				cmd.types = InputMap::Command::T_BUTTON;
-				cmd.pressEvent = InputMap::Command::EventData(
-					static_cast<int>(CM_clientCommandParser), 0.0f, "/ui action openHolocron");
-				cmd.userDefined = false;
-				IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, false));
-			}
+			InputMap::Command cmd;
+			cmd.name = "CMD_uiHolocron";
+			cmd.category = "ui";
+			cmd.types = InputMap::Command::T_BUTTON;
+			cmd.pressEvent = InputMap::Command::EventData(
+				static_cast<int>(CM_uiOpenHolocron), 0.0f, "");
+			cmd.userDefined = false;
+			IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, true));
 		}
 
 		s_resetCallback  = new Callback;

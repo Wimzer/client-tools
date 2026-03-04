@@ -18,6 +18,7 @@
 #include "sharedFoundation/MessageQueue.h"
 #include "sharedFoundation/MessageQueueDataTemplate.h"
 #include "sharedInputMap/InputMap_Command.h"
+#include "clientUserInterface/CuiActionManager.h"
 #include "sharedMessageDispatch/Transceiver.h"
 
 //@todo remove this and have the SwgCuiManager inform the CuiMessageQueueManager what its command parser message is to be
@@ -237,8 +238,14 @@ void CuiMessageQueueManager::scanMessageQueue (MessageQueue & queue)
 		typedef MessageQueueDataTemplate<std::string> MessageQueueDataString;
 
 		static const int clientCommandParser = CM_clientCommandParser;
+		static const int uiOpenHolocron = CM_uiOpenHolocron;
 
-		if (message == clientCommandParser)
+		if (message == uiOpenHolocron)
+		{
+			IGNORE_RETURN(CuiActionManager::performAction("openHolocron", Unicode::emptyString));
+			queue.clearMessage(i);
+		}
+		else if (message == clientCommandParser)
 		{
 			if (!data)
 				WARNING (true, ("Bad string"));

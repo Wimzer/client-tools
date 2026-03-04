@@ -1033,7 +1033,9 @@ enum GameControllerMessage
 	CM_addObjectEffect,
 	
 	CM_removeObjectEffect, // 1250
-	CM_removeAllObjectEffect, 
+	CM_removeAllObjectEffect,
+
+	CM_uiOpenHolocron,
 
 	CM_COUNT
 };
