@@ -478,6 +478,22 @@ InputMap * InputScheme::fetchGroundInputMap()
 			}
 		}
 
+		// Back-compat/alias for existing bind list entry: cmd_openholocron
+		{
+			const InputMap::Command * const existing = s_groundInputMap->findCommandByName("cmd_openholocron", true);
+			if (!existing)
+			{
+				InputMap::Command cmd;
+				cmd.name = "cmd_openholocron";
+				cmd.category = "ui";
+				cmd.types = InputMap::Command::T_BUTTON;
+				cmd.pressEvent = InputMap::Command::EventData(
+					static_cast<int>(CM_clientCommandParser), 0.0f, "/ui action openHolocron");
+				cmd.userDefined = false;
+				IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, false));
+			}
+		}
+
 		s_resetCallback  = new Callback;
 		s_resetCallback->fetch ();
 
