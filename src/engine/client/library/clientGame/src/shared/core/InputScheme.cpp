@@ -18,7 +18,6 @@
 #include "clientUserInterface/CuiMessageBox.h"
 #include "clientUserInterface/CuiStringVariablesManager.h"
 #include "clientUserInterface/CuiPreferences.h"
-#include "sharedFoundation/GameControllerMessage.h"
 #include "sharedFoundation/NetworkId.h"
 #include "sharedInputMap/InputMap.h"
 #include "sharedInputMap/InputMap_Command.h"
@@ -461,7 +460,6 @@ InputMap * InputScheme::fetchGroundInputMap()
 		}
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
-
 		s_resetCallback  = new Callback;
 		s_resetCallback->fetch ();
 

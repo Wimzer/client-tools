@@ -18,7 +18,6 @@
 #include "sharedFoundation/MessageQueue.h"
 #include "sharedFoundation/MessageQueueDataTemplate.h"
 #include "sharedInputMap/InputMap_Command.h"
-#include "clientUserInterface/CuiActionManager.h"
 #include "sharedMessageDispatch/Transceiver.h"
 
 //@todo remove this and have the SwgCuiManager inform the CuiMessageQueueManager what its command parser message is to be
@@ -109,12 +108,6 @@ bool CuiMessageQueueManager::executeCommandByString (const std::string & str, bo
 			else
 				break;
 		}
-	}
-
-	// Intercept client-side UI commands before they reach the chat parser
-	if (transformed == "openHolocron" || transformed == "cmd_openholocron")
-	{
-		return CuiActionManager::performAction("openHolocron", Unicode::emptyString);
 	}
 
 	Messages::CommandParserRequest::Payload payload (transformed, false);

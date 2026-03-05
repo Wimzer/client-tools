@@ -263,7 +263,6 @@ namespace CuiActions
 	MAKE_ACTION(commPlayerQuest);
 	MAKE_ACTION(gcwInfo);
 	MAKE_ACTION(openHolocron);
-	MAKE_ACTION(holocron);
 }
 
 #undef MAKE_ACTION
