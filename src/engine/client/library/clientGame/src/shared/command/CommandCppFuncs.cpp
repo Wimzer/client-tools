@@ -181,6 +181,7 @@ namespace CommandCppFuncsNamespace
 	void commandFuncFindControllers        (Command const & command, NetworkId const & , NetworkId const & target, Unicode::String const &);
 	void commandFuncShowBackpack		   (Command const & command, NetworkId const & , NetworkId const & target, Unicode::String const &);
 	void commandFuncShowHelmet			   (Command const & command, NetworkId const & , NetworkId const & target, Unicode::String const &);
+	void commandFuncOpenHolocron		   (Command const & command, NetworkId const & , NetworkId const & target, Unicode::String const &);
 
 	void commandFuncActivate               (Command const & , NetworkId const & , NetworkId const & target, Unicode::String const &);
 	void commandFuncDeactivate             (Command const & , NetworkId const & , NetworkId const & target, Unicode::String const &);
@@ -479,6 +480,13 @@ void CommandCppFuncsNamespace::commandFuncShowHelmet(Command const & /*command*/
 {
 	if(Game::getPlayerObject())
 		Game::getPlayerObject()->sendHelmetMsg(!(Game::getPlayerObject()->getShowHelmet()));
+}
+
+//----------------------------------------------------------------------
+
+void CommandCppFuncsNamespace::commandFuncOpenHolocron(Command const & /*command*/, NetworkId const & , NetworkId const & /*target*/, Unicode::String const &)
+{
+	CuiActionManager::performAction(CuiActions::openHolocron, Unicode::emptyString);
 }
 
 //----------------------------------------------------------------------
@@ -2583,6 +2591,7 @@ void CommandCppFuncs::install()
 	CommandTable::addCppFunction("findcontrollers",		   commandFuncFindControllers);
 	CommandTable::addCppFunction("showBackpack",		   commandFuncShowBackpack);
 	CommandTable::addCppFunction("showHelmet",			   commandFuncShowHelmet);
+	CommandTable::addCppFunction("openHolocron",		   commandFuncOpenHolocron);
 
 	CommandTable::addCppFunction("instantMessageReply",    commandFuncInstantMessageReply);
 	CommandTable::addCppFunction("instantMessageRetell",   commandFuncInstantMessageRetell);

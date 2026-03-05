@@ -111,6 +111,12 @@ bool CuiMessageQueueManager::executeCommandByString (const std::string & str, bo
 		}
 	}
 
+	// Intercept client-side UI commands before they reach the chat parser
+	if (transformed == "openHolocron" || transformed == "cmd_openholocron")
+	{
+		return CuiActionManager::performAction("openHolocron", Unicode::emptyString);
+	}
+
 	Messages::CommandParserRequest::Payload payload (transformed, false);
 	Transceivers::commandParserRequest.emitMessage (payload);
 	return true;
@@ -238,14 +244,8 @@ void CuiMessageQueueManager::scanMessageQueue (MessageQueue & queue)
 		typedef MessageQueueDataTemplate<std::string> MessageQueueDataString;
 
 		static const int clientCommandParser = CM_clientCommandParser;
-		static const int uiOpenHolocron = CM_uiOpenHolocron;
 
-		if (message == uiOpenHolocron)
-		{
-			IGNORE_RETURN(CuiActionManager::performAction("openHolocron", Unicode::emptyString));
-			queue.clearMessage(i);
-		}
-		else if (message == clientCommandParser)
+		if (message == clientCommandParser)
 		{
 			if (!data)
 				WARNING (true, ("Bad string"));

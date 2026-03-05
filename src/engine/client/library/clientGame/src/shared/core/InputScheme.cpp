@@ -462,18 +462,6 @@ InputMap * InputScheme::fetchGroundInputMap()
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
 
-		// Register Holocron as a bindable UI command
-		{
-			InputMap::Command cmd;
-			cmd.name = "CMD_uiHolocron";
-			cmd.category = "ui";
-			cmd.types = InputMap::Command::T_BUTTON;
-			cmd.pressEvent = InputMap::Command::EventData(
-				static_cast<int>(CM_uiOpenHolocron), 0.0f, "");
-			cmd.userDefined = false;
-			IGNORE_RETURN(s_groundInputMap->addCustomCommand(cmd, true));
-		}
-
 		s_resetCallback  = new Callback;
 		s_resetCallback->fetch ();
 
