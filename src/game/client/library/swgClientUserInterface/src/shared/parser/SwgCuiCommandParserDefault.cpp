@@ -102,6 +102,8 @@ namespace SwgCuiCommandParserDefaultNamespace
 		MAKE_COMMAND (version);
 		MAKE_COMMAND (quit);
 		MAKE_COMMAND (help);
+		MAKE_COMMAND (holocron);
+		MAKE_COMMAND (openHolocron);
 		MAKE_COMMAND (spatialChat);
 		MAKE_COMMAND (alias);
 		MAKE_COMMAND (unalias);
@@ -168,6 +170,8 @@ namespace SwgCuiCommandParserDefaultNamespace
 		{ Commands::mahjong,                    0, "",                                   "Open a minigame"},
 #endif
 		{ Commands::help,                        0, "[command]",                          "List clientside commands."},
+		{ Commands::holocron,                    0, "",                                   "Open or close the Holocron knowledge base."},
+		{ Commands::openHolocron,                0, "",                                   "Open or close the Holocron knowledge base."},
 		{ Commands::info,                        0, "",                                   "Get info."  },
 		{ Commands::who,                         0, "<name> <lfg> <roleplay> <helper>",   "List players based on filters."},
 		{ Commands::history,                     0, "",                                   "List command history." },
@@ -933,6 +937,13 @@ bool SwgCuiCommandParserDefault::performParsing (const NetworkId & userId, const
 	{
 		CrashReportInformation::addStaticText("exception from UI\n");
 		static_cast<int*>(0)[0] = 0;
+	}
+
+	//-----------------------------------------------------------------
+
+	else if (isCommand(argv[0], Commands::holocron) || isCommand(argv[0], Commands::openHolocron))
+	{
+		return CuiActionManager::performAction(CuiActions::openHolocron, Unicode::emptyString);
 	}
 
 	//-----------------------------------------------------------------

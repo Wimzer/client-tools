@@ -85,6 +85,10 @@ public:
 	void                spawnCustomizationWindow              (NetworkId const & objectId, std::string const &customVarName1, int minVar1, int maxVar1, std::string const &customVarName2, int minVar2, int maxVar2, std::string const &customVarName3, int minVar3, int maxVar3, std::string const &customVarName4, int minVar4, int maxVar4) const;
 	void				spawnRatingWindow					  (std::string const & windowTitle, std::string const & windowText);
 
+	void                openHolocronToPage                    (const std::string & pageName);
+	void                closeHolocron                         ();
+	void                toggleHolocron                        ();
+	static bool         isHolocronIntroductionBusy            ();
 
 	void                colorTest                             (TangibleObject & id);
 	void                hueObjectTest                         (const NetworkId & id, int maxIndex1, int maxIndex2);
@@ -142,6 +146,7 @@ private:
 	void              updateHudOpacity ();
 	UIPage * getToolbarPage();
 	void cacheToolbar();
+	void cancelHolocronIntroduction();
 	SwgCuiToolbar *getCachedToolbar();
 
 	SwgCuiChatWindow *         m_chatWindowMediator;

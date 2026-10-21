@@ -83,6 +83,7 @@ private:
 	UIButton *           m_expertiseButton;
 	UIButton *           m_optionsButton;
 	UIButton *           m_commandsButton;
+	UIButton *           m_holocronButton;
 	//UIButton *           m_serviceButton;
 	UIButton *           m_submenuButton;
 	UIButton *           m_shipDetailsButton;

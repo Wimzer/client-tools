@@ -1,0 +1,352 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	WelcomeToSWG	Page	@kb/kb_begin_n:welcometoswg	
+WelcomeToSWG	Text	String	@kb/kb_begin_d:welcometoswg	
+WelcomeToSWG	AboutHolocube	Page	@kb/kb_begin_n:aboutholocube	
+WelcomeToSWG.AboutHolocube	Text	String	@kb/kb_begin_d:aboutholocube	
+WelcomeToSWG	TutorialRecap	Page	@kb/kb_begin_n:tutorialrecap	
+WelcomeToSWG.TutorialRecap	Text	String	@kb/kb_begin_d:tutorialrecap	
+WelcomeToSWG.TutorialRecap	LookAndMove	Page	@kb/kb_begin_n:lookandmove	
+WelcomeToSWG.TutorialRecap.LookAndMove	Text	String	@kb/kb_begin_d:lookandmove	
+WelcomeToSWG.TutorialRecap	MouseMode	Page	@kb/kb_begin_n:mousemode	
+WelcomeToSWG.TutorialRecap.MouseMode	Text	String	@kb/kb_begin_d:mousemode	
+WelcomeToSWG.TutorialRecap	ChatWithPlayers	Page	@kb/kb_begin_n:chatwithplayers	
+WelcomeToSWG.TutorialRecap.ChatWithPlayers	Text	String	@kb/kb_begin_d:chatwithplayers	
+WelcomeToSWG.TutorialRecap	LookAtObjects	Page	@kb/kb_begin_n:lookatobjects	
+WelcomeToSWG.TutorialRecap.LookAtObjects	Text	String	@kb/kb_begin_d:lookatobjects	
+WelcomeToSWG.TutorialRecap	UsingObjects	Page	@kb/kb_begin_n:usingobjects	
+WelcomeToSWG.TutorialRecap.UsingObjects	Text	String	@kb/kb_begin_d:usingobjects	
+WelcomeToSWG.TutorialRecap	RadialMenu	Page	@kb/kb_begin_n:radialmenu	
+WelcomeToSWG.TutorialRecap.RadialMenu	Text	String	@kb/kb_begin_d:radialmenu	
+WelcomeToSWG.TutorialRecap	Conversations	Page	@kb/kb_begin_n:conversations	
+WelcomeToSWG.TutorialRecap.Conversations	Text	String	@kb/kb_begin_d:conversations	
+WelcomeToSWG.TutorialRecap	Containers	Page	@kb/kb_begin_n:containers	
+WelcomeToSWG.TutorialRecap.Containers	Text	String	@kb/kb_begin_d:containers	
+WelcomeToSWG.TutorialRecap	Inventory	Page	@kb/kb_begin_n:inventory	
+WelcomeToSWG.TutorialRecap.Inventory	Text	String	@kb/kb_begin_d:inventory	
+WelcomeToSWG.TutorialRecap	Toolbar	Page	@kb/kb_begin_n:toolbar	
+WelcomeToSWG.TutorialRecap.Toolbar	Text	String	@kb/kb_begin_d:toolbar	
+WelcomeToSWG.TutorialRecap	BuyingItems	Page	@kb/kb_begin_n:buyingitems	
+WelcomeToSWG.TutorialRecap.BuyingItems	Text	String	@kb/kb_begin_d:buyingitems	
+WelcomeToSWG.TutorialRecap	Bank	Page	@kb/kb_begin_n:bank	
+WelcomeToSWG.TutorialRecap.Bank	Text	String	@kb/kb_begin_d:bank	
+WelcomeToSWG.TutorialRecap	Dying	Page	@kb/kb_begin_n:dying	
+WelcomeToSWG.TutorialRecap.Dying	Text	String	@kb/kb_begin_d:dying	
+WelcomeToSWG.TutorialRecap	Cloning	Page	@kb/kb_begin_n:cloning	
+WelcomeToSWG.TutorialRecap.Cloning	Text	String	@kb/kb_begin_d:cloning	
+WelcomeToSWG.TutorialRecap	Insurance	Page	@kb/kb_begin_n:insurance	
+WelcomeToSWG.TutorialRecap.Insurance	Text	String	@kb/kb_begin_d:insurance	
+WelcomeToSWG.TutorialRecap	Equipment	Page	@kb/kb_begin_n:equipment	
+WelcomeToSWG.TutorialRecap.Equipment	Text	String	@kb/kb_begin_d:equipment	
+WelcomeToSWG.TutorialRecap	Combat	Page	@kb/kb_begin_n:combat	
+WelcomeToSWG.TutorialRecap.Combat	Text	String	@kb/kb_begin_d:combat	
+WelcomeToSWG.TutorialRecap	Experience	Page	@kb/kb_begin_n:experience	
+WelcomeToSWG.TutorialRecap.Experience	Text	String	@kb/kb_begin_d:experience	
+WelcomeToSWG.TutorialRecap	Missions	Page	@kb/kb_begin_n:missions	
+WelcomeToSWG.TutorialRecap.Missions	Text	String	@kb/kb_begin_d:missions	
+WelcomeToSWG	WhereDoIBegin	Page	@kb/kb_begin_n:wheredoibegin	
+WelcomeToSWG.WhereDoIBegin	Text	String	@kb/kb_begin_d:wheredoibegin	
+WelcomeToSWG.WhereDoIBegin	LinkExploring	LinkButton	@kb/kb_begin_d:link_exploring	WelcomeToSWG.WhereDoIBegin.Exploring
+WelcomeToSWG.WhereDoIBegin	Exploring	Page	@kb/kb_begin_n:exploring	
+WelcomeToSWG.WhereDoIBegin.Exploring	Text	String	@kb/kb_begin_d:exploring	
+WelcomeToSWG.WhereDoIBegin.Exploring	LinkFindBank	LinkButton	@kb/kb_begin_d:link_findbank	WelcomeToSWG.WhereDoIBegin.Exploring.FindBank
+WelcomeToSWG.WhereDoIBegin.Exploring	FindBank	Page	@kb/kb_begin_n:findbank	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	Intro	String	@kb/kb_begin_d:findbankintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	Text	String	@kb/kb_begin_d:findbank	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	LinkBankTour	ScriptMessageButton	@kb/kb_begin_d:link_banktour	tourBank
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	Skip	String	@kb/kb_begin_d:findbankskip	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	LinkFindCloning	LinkButton	@kb/kb_begin_d:link_findcloning	WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank	ArrivedBank	Page	@kb/kb_begin_n:arrivedbank	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank.ArrivedBank	Text	String	@kb/kb_begin_d:arrivedbank	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindBank.ArrivedBank	LinkFindCloning	LinkButton	@kb/kb_begin_d:link_findcloning	WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning
+WelcomeToSWG.WhereDoIBegin.Exploring	FindCloning	Page	@kb/kb_begin_n:findcloning	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	Intro	String	@kb/kb_begin_d:findcloningintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	Text	String	@kb/kb_begin_d:findcloning	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	LinkCloningTour	ScriptMessageButton	@kb/kb_begin_d:link_cloningtour	tourCloningCenter
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	Skip	String	@kb/kb_begin_d:findcloningskip	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	LinkFindHospital	LinkButton	@kb/kb_begin_d:link_findhospital	WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning	ArrivedCloning	Page	@kb/kb_begin_n:arrivedcloning	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning.ArrivedCloning	Text	String	@kb/kb_begin_d:arrivedcloning	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCloning.ArrivedCloning	LinkFindHospital	LinkButton	@kb/kb_begin_d:link_findhospital	WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital
+WelcomeToSWG.WhereDoIBegin.Exploring	FindHospital	Page	@kb/kb_begin_n:findhospital	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	Intro	String	@kb/kb_begin_d:findhospitalintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	Text	String	@kb/kb_begin_d:findhospital	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	LinkHospitalTour	ScriptMessageButton	@kb/kb_begin_d:link_hospitaltour	tourHospital
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	Skip	String	@kb/kb_begin_d:findhospitalskip	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	LinkFindCantina	LinkButton	@kb/kb_begin_d:link_findcantina	WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital	ArrivedHospital	Page	@kb/kb_begin_n:arrivedhospital	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital.ArrivedHospital	Text	String	@kb/kb_begin_d:arrivedhospital	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindHospital.ArrivedHospital	LinkFindCantina	LinkButton	@kb/kb_begin_d:link_findcantina	WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina
+WelcomeToSWG.WhereDoIBegin.Exploring	FindCantina	Page	@kb/kb_begin_n:findcantina	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	Intro	String	@kb/kb_begin_d:findcantinaintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	Text	String	@kb/kb_begin_d:findcantina	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	LinkCantinaTour	ScriptMessageButton	@kb/kb_begin_d:link_cantinatour	tourCantina
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	Skip	String	@kb/kb_begin_d:findcantinaskip	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	LinkFindSkillTrainer	LinkButton	@kb/kb_begin_d:link_findskilltrainer	WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina	ArrivedCantina	Page	@kb/kb_begin_n:arrivedcantina	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina.ArrivedCantina	Text	String	@kb/kb_begin_d:arrivedcantina	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindCantina.ArrivedCantina	LinkFindSkillTrainer	LinkButton	@kb/kb_begin_d:link_findskilltrainer	WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer
+WelcomeToSWG.WhereDoIBegin.Exploring	FindSkillTrainer	Page	@kb/kb_begin_n:findskilltrainer	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	Intro	String	@kb/kb_begin_d:findskilltrainerintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	Text	String	@kb/kb_begin_d:findskilltrainer	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	LinkSkillTrainerTour	ScriptMessageButton	@kb/kb_begin_d:link_skilltrainertour	tourSkillTrainer
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	Skip	String	@kb/kb_begin_d:findskilltrainerskip	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	LinkFinishTour	LinkButton	@kb/kb_begin_d:link_finishtour	WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer	ArrivedSkillTrainer	Page	@kb/kb_begin_n:arrivedskilltrainer	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer.ArrivedSkillTrainer	Text	String	@kb/kb_begin_d:arrivedskilltrainer	
+WelcomeToSWG.WhereDoIBegin.Exploring.FindSkillTrainer.ArrivedSkillTrainer	LinkFinishTour	LinkButton	@kb/kb_begin_d:link_finishtour	WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour
+WelcomeToSWG.WhereDoIBegin.Exploring	FinishTour	Page	@kb/kb_begin_n:finishtour	
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	Intro	String	@kb/kb_begin_d:finishtourintro	
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	Find	String	@kb/kb_begin_d:finishtourfind	
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	PlanetMap	String	@kb/kb_begin_d:finishtourplanetmap	
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	LinkPlanetMapDetails	LinkButton	@kb/kb_begin_d:link_planetmapdetails	Navigation.PlanetaryMap
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	Text	String	@kb/kb_begin_d:finishtourprofessions	
+WelcomeToSWG.WhereDoIBegin.Exploring.FinishTour	LinkProfessions	ScriptMessageButton	@kb/kb_begin_d:link_professions	openHolocronToProfession
+WelcomeToSWG.WhereDoIBegin	Professions	Page	@kb/kb_begin_n:professions	
+WelcomeToSWG.WhereDoIBegin.Professions	Text	String	@kb/kb_begin_d:professions	
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingArtisan	LinkButton	@kb/kb_begin_d:link_playingartisan	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingEntertainer	LinkButton	@kb/kb_begin_d:link_playingentertainer	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingMedic	LinkButton	@kb/kb_begin_d:link_playingmedic	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingBrawler	LinkButton	@kb/kb_begin_d:link_playingbrawler	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingMarksman	LinkButton	@kb/kb_begin_d:link_playingmarksman	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman
+WelcomeToSWG.WhereDoIBegin.Professions	LinkPlayingScout	LinkButton	@kb/kb_begin_d:link_playingscout	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingArtisan	Page	@kb/kb_begin_n:playingartisan	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	Text	String	@kb/kb_begin_d:playingartisan	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_artisandraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	DraftSchematics	Page	@kb/kb_begin_n:artisandraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.DraftSchematics	Text	String	@kb/kb_begin_d:artisandraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.DraftSchematics	LinkResources	LinkButton	@kb/kb_begin_d:link_artisanresources	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	Resources	Page	@kb/kb_begin_n:artisanresources	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources	Text	String	@kb/kb_begin_d:artisanresources	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources	LinkSurveyMission	LinkButton	@kb/kb_begin_d:link_artisansurveymission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources.Survey
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources	Skip	String	@kb/kb_begin_d:artisanresourcesskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources	LinkCrafting	LinkButton	@kb/kb_begin_d:link_artisancrafting	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources	Survey	Page	@kb/kb_begin_n:artisansurveymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources.Survey	Text	String	@kb/kb_begin_d:artisansurveymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Resources.Survey	LinkCrafting	LinkButton	@kb/kb_begin_d:link_artisancrafting	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	Crafting	Page	@kb/kb_begin_n:artisancrafting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting	Text	String	@kb/kb_begin_d:artisancrafting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting	LinkCraftingDetails	LinkButton	@kb/kb_begin_d:link_artisancraftingdetails	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting	Finish	String	@kb/kb_begin_d:artisancraftingfinish	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Crafting	LinkExperience	LinkButton	@kb/kb_begin_d:link_artisanexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	Experience	Page	@kb/kb_begin_n:artisanexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Experience	Text	String	@kb/kb_begin_d:artisanexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_artisandisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	Disciplines	Page	@kb/kb_begin_n:artisandisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Disciplines	Text	String	@kb/kb_begin_d:artisandisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_artisanfromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan	FromHere	Page	@kb/kb_begin_n:artisanfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.FromHere	Text	String	@kb/kb_begin_d:artisanfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingArtisan.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingEntertainer	Page	@kb/kb_begin_n:playingentertainer	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Text	String	@kb/kb_begin_d:playingentertainer	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	LinkInstruments	LinkButton	@kb/kb_begin_d:link_entertainerinstruments	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Instruments	Page	@kb/kb_begin_n:entertainerinstruments	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments	Text	String	@kb/kb_begin_d:entertainerinstruments	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments	LinkGigMission	LinkButton	@kb/kb_begin_d:link_entertainergigmission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments	Skip	String	@kb/kb_begin_d:entertainerinstrumentsskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments	LinkWounds	LinkButton	@kb/kb_begin_d:link_entertainerwounds	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Wounds
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments	Gig	Page	@kb/kb_begin_n:entertainergigmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	Text	String	@kb/kb_begin_d:entertainergigmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	LinkSampleDanceGig	ScriptMessageButton	@kb/kb_begin_d:link_entertainerdancegig	missionEntertainerDanceGig
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	LinkSampleMusicGig	ScriptMessageButton	@kb/kb_begin_d:link_entertainermusicgig	missionEntertainerMusicGig
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	Skip	String	@kb/kb_begin_d:entertainergigskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	LinkWounds	LinkButton	@kb/kb_begin_d:link_entertainerwounds	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Wounds
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig	Complete	Page	@kb/kb_begin_n:entertainergigcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig.Complete	Text	String	@kb/kb_begin_d:entertainergigcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Instruments.Gig.Complete	LinkWounds	LinkButton	@kb/kb_begin_d:link_entertainerwounds	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Wounds
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Wounds	Page	@kb/kb_begin_n:entertainerwounds	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Wounds	Text	String	@kb/kb_begin_d:entertainerwounds	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Wounds	LinkCantinas	LinkButton	@kb/kb_begin_d:link_entertainercantinas	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Cantinas
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Cantinas	Page	@kb/kb_begin_n:entertainercantinas	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Cantinas	Text	String	@kb/kb_begin_d:entertainercantinas	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Cantinas	LinkExperience	LinkButton	@kb/kb_begin_d:link_entertainerexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Experience	Page	@kb/kb_begin_n:entertainerexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Experience	Text	String	@kb/kb_begin_d:entertainerexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_entertainerdisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	Disciplines	Page	@kb/kb_begin_n:entertainerdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Disciplines	Text	String	@kb/kb_begin_d:entertainerdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_entertainerfromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer	FromHere	Page	@kb/kb_begin_n:entertainerfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.FromHere	Text	String	@kb/kb_begin_d:entertainerfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingEntertainer.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingMedic	Page	@kb/kb_begin_n:playingmedic	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Text	String	@kb/kb_begin_d:playingmedic	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	LinkDamage	LinkButton	@kb/kb_begin_d:link_medicdamage	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Damage
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Damage	Page	@kb/kb_begin_n:medicdamage	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Damage	Text	String	@kb/kb_begin_d:medicdamage	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Damage	LinkStimpacks	LinkButton	@kb/kb_begin_d:link_medicstimpacks	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Stimpacks	Page	@kb/kb_begin_n:medicstimpacks	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks	Text	String	@kb/kb_begin_d:medicstimpacks	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks	LinkHealMission	LinkButton	@kb/kb_begin_d:link_medichealmission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks	Skip	String	@kb/kb_begin_d:medicstimpacksskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_medicdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks	Heal	Page	@kb/kb_begin_n:medichealmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal	Text	String	@kb/kb_begin_d:medichealmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal	LinkSampleHeal	ScriptMessageButton	@kb/kb_begin_d:link_medicsamplehealmission	missionMedicHeal
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal	Skip	String	@kb/kb_begin_d:medichealmissionskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_medicdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal	Complete	Page	@kb/kb_begin_n:medichealcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal.Complete	Text	String	@kb/kb_begin_d:medichealcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Stimpacks.Heal.Complete	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_medicdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	DraftSchematics	Page	@kb/kb_begin_n:medicdraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.DraftSchematics	Text	String	@kb/kb_begin_d:medicdraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.DraftSchematics	LinkForaging	LinkButton	@kb/kb_begin_d:link_medicforaging	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Foraging
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Foraging	Page	@kb/kb_begin_n:medicforaging	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Foraging	Text	String	@kb/kb_begin_d:medicforaging	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Foraging	LinkHospitals	LinkButton	@kb/kb_begin_d:link_medichospitals	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Hospitals
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Hospitals	Page	@kb/kb_begin_n:medichospitals	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Hospitals	Text	String	@kb/kb_begin_d:medichospitals	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Hospitals	LinkExperience	LinkButton	@kb/kb_begin_d:link_medicexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Experience	Page	@kb/kb_begin_n:medicexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Experience	Text	String	@kb/kb_begin_d:medicexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_medicdisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	Disciplines	Page	@kb/kb_begin_n:medicdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Disciplines	Text	String	@kb/kb_begin_d:medicdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_medicfromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic	FromHere	Page	@kb/kb_begin_n:medicfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.FromHere	Text	String	@kb/kb_begin_d:medicfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMedic.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingBrawler	Page	@kb/kb_begin_n:playingbrawler	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	Text	String	@kb/kb_begin_d:playingbrawler	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	LinkAboutWeapons	LinkButton	@kb/kb_begin_d:link_brawlerweapons	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutWeapons
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	AboutWeapons	Page	@kb/kb_begin_n:brawlerweapons	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutWeapons	Text	String	@kb/kb_begin_d:brawlerweapons	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutWeapons	LinkAboutArmor	LinkButton	@kb/kb_begin_d:link_brawlerarmor	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutArmor
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	AboutArmor	Page	@kb/kb_begin_n:brawlerarmor	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutArmor	Text	String	@kb/kb_begin_d:brawlerarmor	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.AboutArmor	LinkMeleeTactics	LinkButton	@kb/kb_begin_d:link_brawlertactics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	MeleeTactics	Page	@kb/kb_begin_n:brawlertactics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics	Text	String	@kb/kb_begin_d:brawlertactics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics	LinkDestroyMission	LinkButton	@kb/kb_begin_d:link_brawlerdestroymission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics	Skip	String	@kb/kb_begin_d:brawlertacticsskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics	LinkExperience	LinkButton	@kb/kb_begin_d:link_brawlerexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics	Destroy	Page	@kb/kb_begin_n:brawlerdestroymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy	Text	String	@kb/kb_begin_d:brawlerdestroymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy	LinkSampleDestroy	ScriptMessageButton	@kb/kb_begin_d:link_brawlersampledestroymission	missionBrawlerDestroy
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy	Skip	String	@kb/kb_begin_d:brawlerdestroyskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy	LinkExperience	LinkButton	@kb/kb_begin_d:link_brawlerexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy	Complete	Page	@kb/kb_begin_n:brawlerdestroycomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy.Complete	Text	String	@kb/kb_begin_d:brawlerdestroycomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.MeleeTactics.Destroy.Complete	LinkExperience	LinkButton	@kb/kb_begin_d:link_brawlerexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	Experience	Page	@kb/kb_begin_n:brawlerexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Experience	Text	String	@kb/kb_begin_d:brawlerexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_brawlerdisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	Disciplines	Page	@kb/kb_begin_n:brawlerdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Disciplines	Text	String	@kb/kb_begin_d:brawlerdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_brawlerfromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler	FromHere	Page	@kb/kb_begin_n:brawlerfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.FromHere	Text	String	@kb/kb_begin_d:brawlerfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingBrawler.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingMarksman	Page	@kb/kb_begin_n:playingmarksman	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	Text	String	@kb/kb_begin_d:playingmarksman	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	LinkAboutWeapons	LinkButton	@kb/kb_begin_d:link_marksmanweapons	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutWeapons
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	AboutWeapons	Page	@kb/kb_begin_n:marksmanweapons	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutWeapons	Text	String	@kb/kb_begin_d:marksmanweapons	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutWeapons	LinkAboutArmor	LinkButton	@kb/kb_begin_d:link_marksmanarmor	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutArmor
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	AboutArmor	Page	@kb/kb_begin_n:marksmanarmor	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutArmor	Text	String	@kb/kb_begin_d:marksmanarmor	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.AboutArmor	LinkRangedTactics	LinkButton	@kb/kb_begin_d:link_marksmantactics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	RangedTactics	Page	@kb/kb_begin_n:marksmantactics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics	Text	String	@kb/kb_begin_d:marksmantactics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics	LinkDestroyMission	LinkButton	@kb/kb_begin_d:link_marksmandestroymission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics	Skip	String	@kb/kb_begin_d:marksmantacticsskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics	LinkExperience	LinkButton	@kb/kb_begin_d:link_marksmanexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics	Destroy	Page	@kb/kb_begin_n:marksmandestroymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy	Text	String	@kb/kb_begin_d:marksmandestroymission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy	LinkSampleDestroy	ScriptMessageButton	@kb/kb_begin_d:link_marksmansampledestroymission	missionMarksmanDestroy
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy	Skip	String	@kb/kb_begin_d:marksmandestroyskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy	LinkExperience	LinkButton	@kb/kb_begin_d:link_marksmanexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy	Complete	Page	@kb/kb_begin_n:marksmandestroycomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy.Complete	Text	String	@kb/kb_begin_d:marksmandestroycomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.RangedTactics.Destroy.Complete	LinkExperience	LinkButton	@kb/kb_begin_d:link_marksmanexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	Experience	Page	@kb/kb_begin_n:marksmanexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Experience	Text	String	@kb/kb_begin_d:marksmanexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_marksmandisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	Disciplines	Page	@kb/kb_begin_n:marksmandisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Disciplines	Text	String	@kb/kb_begin_d:marksmandisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_marksmanfromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman	FromHere	Page	@kb/kb_begin_n:marksmanfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.FromHere	Text	String	@kb/kb_begin_d:marksmanfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingMarksman.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin.Professions	PlayingScout	Page	@kb/kb_begin_n:playingscout	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Text	String	@kb/kb_begin_d:playingscout	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	LinkCamps	LinkButton	@kb/kb_begin_d:link_scoutcamps	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Camps
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Camps	Page	@kb/kb_begin_n:scoutcamps	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Camps	Text	String	@kb/kb_begin_d:scoutcamps	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Camps	LinkTraps	LinkButton	@kb/kb_begin_d:link_scouttraps	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Traps
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Traps	Page	@kb/kb_begin_n:scouttraps	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Traps	Text	String	@kb/kb_begin_d:scouttraps	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Traps	LinkHarvesting	LinkButton	@kb/kb_begin_d:link_scoutharvesting	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Harvesting	Page	@kb/kb_begin_n:scoutharvesting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting	Text	String	@kb/kb_begin_d:scoutharvesting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting	LinkHarvestMission	LinkButton	@kb/kb_begin_d:link_scoutharvestmission	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting	Skip	String	@kb/kb_begin_d:scoutharvestingskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_scoutdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting	Harvest	Page	@kb/kb_begin_n:scoutharvestmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest	Text	String	@kb/kb_begin_d:scoutharvestmission	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest	LinkSampleDestroy	ScriptMessageButton	@kb/kb_begin_d:link_scoutsampleharvestmission	missionScoutHarvest
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest	Skip	String	@kb/kb_begin_d:scoutharvestmissionskip	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_scoutdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest	Complete	Page	@kb/kb_begin_n:scoutharvestcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest.Complete	Text	String	@kb/kb_begin_d:scoutharvestcomplete	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Harvesting.Harvest.Complete	LinkDraftSchematics	LinkButton	@kb/kb_begin_d:link_scoutdraftschematics	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.DraftSchematics
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	DraftSchematics	Page	@kb/kb_begin_n:scoutdraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.DraftSchematics	Text	String	@kb/kb_begin_d:scoutdraftschematics	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.DraftSchematics	LinkCrafting	LinkButton	@kb/kb_begin_d:link_scoutcrafting	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Crafting
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Crafting	Page	@kb/kb_begin_n:scoutcrafting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Crafting	Text	String	@kb/kb_begin_d:scoutcrafting	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Crafting	LinkExperience	LinkButton	@kb/kb_begin_d:link_scoutexperience	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Experience
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Experience	Page	@kb/kb_begin_n:scoutexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Experience	Text	String	@kb/kb_begin_d:scoutexperience	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Experience	LinkDisciplines	LinkButton	@kb/kb_begin_d:link_scoutdisciplines	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Disciplines
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	Disciplines	Page	@kb/kb_begin_n:scoutdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Disciplines	Text	String	@kb/kb_begin_d:scoutdisciplines	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.Disciplines	LinkFromHere	LinkButton	@kb/kb_begin_d:link_scoutromhere	WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.FromHere
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout	FromHere	Page	@kb/kb_begin_n:scoutfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.FromHere	Text	String	@kb/kb_begin_d:scoutfromhere	
+WelcomeToSWG.WhereDoIBegin.Professions.PlayingScout.FromHere	LinkThingsToDo	LinkButton	@kb/kb_begin_d:link_thingstodo	WelcomeToSWG.WhereDoIBegin.ThingsToDo
+WelcomeToSWG.WhereDoIBegin	ThingsToDo	Page	@kb/kb_begin_n:thingstodo	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	Text	String	@kb/kb_begin_d:thingstodo	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	LinkMissionTerminals	LinkButton	@kb/kb_begin_d:link_missionterminals	WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	MissionTerminals	Page	@kb/kb_begin_n:missionterminals	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals	Text	String	@kb/kb_begin_d:missionterminals	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals	LinkNPCMissions	LinkButton	@kb/kb_begin_d:link_npcmissions	WelcomeToSWG.WhereDoIBegin.ThingsToDo.NPCMissions
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	NPCMissions	Page	@kb/kb_begin_n:npcmissions	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.NPCMissions	Text	String	@kb/kb_begin_d:npcmissions	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.NPCMissions	LinkThemeParks	LinkButton	@kb/kb_begin_d:link_themeparks	WelcomeToSWG.WhereDoIBegin.ThingsToDo.ThemeParks
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	ThemeParks	Page	@kb/kb_begin_n:themeparks	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ThemeParks	Text	String	@kb/kb_begin_d:themeparks	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ThemeParks	LinkStrongholds	LinkButton	@kb/kb_begin_d:link_strongholds	WelcomeToSWG.WhereDoIBegin.ThingsToDo.Strongholds
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	Strongholds	Page	@kb/kb_begin_n:strongholds	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.Strongholds	Text	String	@kb/kb_begin_d:strongholds	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.Strongholds	LinkPlayerJobs	LinkButton	@kb/kb_begin_d:link_playerjobs	WelcomeToSWG.WhereDoIBegin.ThingsToDo.PlayerJobs
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	PlayerJobs	Page	@kb/kb_begin_n:playerjobs	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.PlayerJobs	Text	String	@kb/kb_begin_d:playerjobs	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.PlayerJobs	LinkChatChannels	LinkButton	@kb/kb_begin_d:link_chatchannels	WelcomeToSWG.WhereDoIBegin.ThingsToDo.ChatChannels
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	ChatChannels	Page	@kb/kb_begin_n:chatchannels	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ChatChannels	Text	String	@kb/kb_begin_d:chatchannels	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ChatChannels	LinkGlobalChat	LinkButton	@kb/kb_begin_d:link_globalchat	WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	GlobalChat	Page	@kb/kb_begin_n:globalchat	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat	Text	String	@kb/kb_begin_d:globalchat	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat	LinkFindingPeople	LinkButton	@kb/kb_begin_d:link_findingpeople	WelcomeToSWG.WhereDoIBegin.FindingPeople
+WelcomeToSWG.WhereDoIBegin	FindingPeople	Page	@kb/kb_begin_n:findingpeople	
+WelcomeToSWG.WhereDoIBegin.FindingPeople	Text	String	@kb/kb_begin_d:findingpeople	
+WelcomeToSWG.WhereDoIBegin.FindingPeople	LinkSearchingForPlayers	LinkButton	@kb/kb_begin_d:link_searching	WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers
+WelcomeToSWG.WhereDoIBegin.FindingPeople	SearchingForPlayers	Page	@kb/kb_begin_n:searching	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers	Text	String	@kb/kb_begin_d:searching	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers	LinkFriendsList	LinkButton	@kb/kb_begin_d:link_friendslist	WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList
+WelcomeToSWG.WhereDoIBegin.FindingPeople	FriendsList	Page	@kb/kb_begin_n:friendslist	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList	Text	String	@kb/kb_begin_d:friendslist	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList	LinkMatchmaker	LinkButton	@kb/kb_begin_d:link_matchmaker	WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker
+WelcomeToSWG.WhereDoIBegin.FindingPeople	Matchmaker	Page	@kb/kb_begin_n:matchmaker	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker	Text	String	@kb/kb_begin_d:matchmaker	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker	LinkFinishHandoff	LinkButton	@kb/kb_begin_d:link_finishhandoff	WelcomeToSWG.WhereDoIBegin.FinishHandoff
+WelcomeToSWG.WhereDoIBegin	FinishHandoff	Page	@kb/kb_begin_n:finishhandoff	
+WelcomeToSWG.WhereDoIBegin.FinishHandoff	Text	String	@kb/kb_begin_d:finishhandoff	
+WelcomeToSWG.WhereDoIBegin	AdvancingCharacter	Page	@kb/kb_begin_n:advancingcharacter	
+WelcomeToSWG.WhereDoIBegin.AdvancingCharacter	Text	String	@kb/kb_begin_d:advancingcharacter	
+WelcomeToSWG.WhereDoIBegin.AdvancingCharacter	Qualified	Page	@kb/kb_begin_n:qualified	
+WelcomeToSWG.WhereDoIBegin.AdvancingCharacter.Qualified	Text	String	@kb/kb_begin_d:qualified	
+WelcomeToSWG.WhereDoIBegin.AdvancingCharacter	Trained	Page	@kb/kb_begin_n:trained	
+WelcomeToSWG.WhereDoIBegin.AdvancingCharacter.Trained	Text	String	@kb/kb_begin_d:trained	

@@ -27,6 +27,8 @@
 #include "clientGame/RoadmapManager.h"
 #include "clientGraphics/ConfigClientGraphics.h"
 #include "clientUserInterface/CuiManager.h"
+#include "clientUserInterface/CuiActionManager.h"
+#include "clientUserInterface/CuiActions.h"
 #include "clientUserInterface/CuiMessageBox.h"
 #include "clientUserInterface/CuiMediatorFactory.h"
 #include "clientUserInterface/CuiPersistentMessageManager.h"
@@ -54,11 +56,6 @@ namespace SwgCuiButtonBarNamespace
 	const StringId inventory_full = StringId("ui_inv", "inventory_full");
 	const StringId squelched = StringId("ui_chatroom", "squelched");
 	const StringId lotsOverLimitSpam = StringId("ui", "lots_over_limit_spam");
-
-	// these numbers were reduced based on the removal of the help/cs and tcg menu buttons otherwise the hover offset is fucked
-	// also for some reason these numbers need to be 2 less than the actual number of menu items, thanks SOE
-	const int NORMAL_NUMBER_BUTTONS_SPACE = 16;
-	const int NORMAL_NUMBER_BUTTONS_GROUND = 14;
 
 	void onConfirmGoHomeClosed(const CuiMessageBox & box);
 
@@ -119,6 +116,7 @@ m_characterButton(0),
 m_expertiseButton(0),
 m_optionsButton(0),
 m_commandsButton(0),
+m_holocronButton(0),
 //m_serviceButton(0),
 m_submenuButton(0),
 m_shipDetailsButton(0),
@@ -154,6 +152,7 @@ m_opacityCallback      (0)
 	getCodeDataObject (TUIButton,     m_expertiseButton,         "buttonExpertise");
 	getCodeDataObject (TUIButton,     m_optionsButton,           "buttonOptions");
 	getCodeDataObject (TUIButton,     m_commandsButton,          "buttonCommands");
+	getCodeDataObject (TUIButton,     m_holocronButton,          "buttonHolocron", true);
 	//getCodeDataObject (TUIButton,     m_serviceButton,           "buttonService");
 	getCodeDataObject (TUIButton,     m_submenuButton,           "buttonMenu");
 	getCodeDataObject (TUIButton,     m_shipDetailsButton,       "buttonShipDetails",    true);
@@ -187,6 +186,8 @@ m_opacityCallback      (0)
 	registerMediatorObject (*m_expertiseButton,      true);
 	registerMediatorObject (*m_optionsButton,        true);
 	registerMediatorObject (*m_commandsButton,       true);
+	if (m_holocronButton)
+		registerMediatorObject(*m_holocronButton, true);
 	//registerMediatorObject (*m_serviceButton,        true);
 	registerMediatorObject (*m_submenuButton,        true);
 	registerMediatorObject (*m_myCollectionsButton,  true);
@@ -512,7 +513,7 @@ bool SwgCuiButtonBar::isCompositeVisible()
 
 void SwgCuiButtonBar::updateMenuHighlight()
 {
-	if(!m_buttonsComposite->IsVisible())
+	if(!m_buttonsComposite->IsVisible() || m_numberButtons <= 0)
 		return;
 
 	UIPoint mouseCoord = UIManager::gUIManager().GetLastMouseCoord();
@@ -603,8 +604,6 @@ void SwgCuiButtonBar::toggleMenu()
 		m_mouseoverPage->SetVisible(true);
 
 		//Only show the roadmap and expertise options if the correct conditions are met.
-		m_numberButtons = Game::isHudSceneTypeSpace() ? NORMAL_NUMBER_BUTTONS_SPACE : NORMAL_NUMBER_BUTTONS_GROUND;
-
 		if(RoadmapManager::playerIsNewCharacter())
 		{
 			m_expertiseButton->GetParentWidget()->SetVisible(false);
@@ -617,7 +616,6 @@ void SwgCuiButtonBar::toggleMenu()
 				if (RoadmapManager::playerIsOnRoadmap())
 				{
 					m_roadmapButton->GetParentWidget()->SetVisible(true);
-					++m_numberButtons;
 				}
 				else
 				{
@@ -629,7 +627,6 @@ void SwgCuiButtonBar::toggleMenu()
 				if (ClientExpertiseManager::hasExpertiseTrees() && ClientExpertiseManager::getExpertisePointsTotalForPlayer() > 0)
 				{
 					m_expertiseButton->GetParentWidget()->SetVisible(true);
-					++m_numberButtons;
 				}
 				else
 				{
@@ -640,6 +637,18 @@ void SwgCuiButtonBar::toggleMenu()
 
 		m_buttonsComposite->Pack();
 		m_buttonsComposite->Pack();
+
+		// Match UIComposite's packing predicate after conditional rows settle.
+		// Hidden roadmap/expertise rows and removed menu entries must not shift
+		// the hover grid. Non-widget resources do not occupy a row.
+		m_numberButtons = 0;
+		UIBaseObject::UIObjectList const & rows = m_buttonsComposite->GetChildrenRef();
+		for (UIBaseObject::UIObjectList::const_iterator it = rows.begin(); it != rows.end(); ++it)
+		{
+			UIBaseObject const * const object = *it;
+			if (object->IsA(TUIWidget) && static_cast<UIWidget const *>(object)->WillDraw())
+				++m_numberButtons;
+		}
 
 		//Position the menu appropriately; detect if menu is on left or top of screen
 		UIPoint screenLoc = m_menuButton->GetWorldLocation();
@@ -687,6 +696,8 @@ void SwgCuiButtonBar::OnButtonPressed   (UIWidget * context)
 			m_buttonsComposite->SetVisible(false);
 
 			CuiManager::requestPointer (false);
+			if (context == m_holocronButton)
+				IGNORE_RETURN(CuiActionManager::performAction(CuiActions::openHolocron, Unicode::emptyString));
 		}
 
 	}
@@ -698,11 +709,9 @@ void SwgCuiButtonBar::ensureMenuIsVisible()
 {
 	if (!m_buttonsComposite->IsVisible())
 	{
-		m_menuButtonPage->SetOpacity(1.0f);
-		m_buttonsComposite->SetVisible(true);
-		m_mouseoverPage->SetVisible(true);
-
-		CuiManager::requestPointer (true);
+		// Tutorial highlights use the same visibility, packing and row-count
+		// initialization as a manual open, without toggling an open menu shut.
+		toggleMenu();
 	}
 }
 

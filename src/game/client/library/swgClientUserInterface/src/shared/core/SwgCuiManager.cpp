@@ -19,6 +19,7 @@
 #include "clientGame/CustomerServiceManager.h"
 #include "clientGame/DraftSchematicManager.h"
 #include "clientGame/Game.h"
+#include "clientGame/InputScheme.h"
 #include "clientGame/GameNetwork.h"
 #include "clientGame/GroundScene.h"
 #include "clientGame/MatchMakingManager.h"
@@ -311,6 +312,7 @@ namespace SwgCuiManagerNamespace
 						// This option might not exist for the next character and it's crucial that we don't
 						// re-use the value from the previous character, so reset to 0 before load.
                         CuiPreferences::setUiSettingsVersion(0);
+						InputScheme::resetHolocronBindingMigration();
 
 						std::string     loginId;
 						std::string     clusterName;

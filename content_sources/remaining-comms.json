@@ -1,0 +1,11 @@
+{
+  "table": "npe_atrium_tutorial",
+  "portrait": "object/mobile/dressed_commoner_naboo_human_female_07.iff",
+  "display_seconds": 10,
+  "lessons": [
+    {"topic": "loot", "key": "loot", "sound": "sound/tutorial_npe2_loot.snd", "text": "Double-click on a corpse to take items and credits off it."},
+    {"topic": "converse", "key": "converse", "sound": "sound/tutorial_npe2_converse.snd", "text": "To talk to an NPC, double-click on them and select a response."},
+    {"topic": "journal", "key": "journal", "sound": "sound/tutorial_npe2_journal.snd", "text": "Press the J key to open your mission journal."},
+    {"topic": "perform", "key": "perform", "sound": "sound/tutorial_npe2_perform.snd", "text": "Press the Start Music or Start Dance icon in your activities bar. Choose the type of song or dance that you wish to perform."}
+  ]
+}

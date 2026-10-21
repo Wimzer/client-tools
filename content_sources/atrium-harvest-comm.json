@@ -1,0 +1,8 @@
+{
+  "table": "npe_atrium_tutorial",
+  "key": "harvesting",
+  "text": "Right-click on a corpse and choose the harvest option. Choose what resource you wish to harvest.\n\nOpen your Holocron for more information.",
+  "sound": "sound/tutorial_npe2_harvest.snd",
+  "portrait": "object/mobile/dressed_commoner_naboo_human_female_07.iff",
+  "display_seconds": 10
+}

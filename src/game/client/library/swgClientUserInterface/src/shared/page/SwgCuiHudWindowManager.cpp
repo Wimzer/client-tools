@@ -24,6 +24,7 @@
 #include "clientUserInterface/CuiActionManager.h"
 #include "clientUserInterface/CuiActions.h"
 #include "clientUserInterface/CuiConsentManager.h"
+#include "clientUserInterface/CuiConversationManager.h"
 #include "clientUserInterface/CuiHueObject.h"
 #include "clientUserInterface/CuiInventoryManager.h"
 #include "clientUserInterface/CuiIMEManager.h"
@@ -99,8 +100,10 @@
 #include "swgClientUserInterface/SwgCuiTicketPurchase.h"
 #include "swgClientUserInterface/SwgCuiToolbar.h"
 #include "swgClientUserInterface/SwgCuiTrade.h"
+#include "swgClientUserInterface/SwgCuiHolocron.h"
 #include "swgSharedNetworkMessages/ConsentRequestMessage.h"
 #include "swgSharedNetworkMessages/PermissionListCreateMessage.h"
+#include "swgSharedUtility/States.h"
 
 #include "UIData.h"
 #include "UIIMEManager.h"
@@ -324,6 +327,7 @@ m_doubleToolbar(0)
 
 SwgCuiHudWindowManager::~SwgCuiHudWindowManager ()
 {
+	cancelHolocronIntroduction();
 	delete m_callback;
 	m_callback = 0;
 
@@ -489,6 +493,7 @@ void SwgCuiHudWindowManager::handlePerformActivate ()
 
 void SwgCuiHudWindowManager::handlePerformDeactivate ()
 {
+	cancelHolocronIntroduction();
 	if (!m_WindowManagerActive)
 		return;
 
@@ -524,11 +529,11 @@ void SwgCuiHudWindowManager::handlePerformDeactivate ()
 
 void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , const MessageDispatch::MessageBase & message)
 {
-
 	//----------------------------------------------------------------------
 
 	if (message.isType (Game::Messages::SCENE_CHANGED))
 	{
+		cancelHolocronIntroduction();
 		if (m_mfdStatusMediator != NULL)
 		{
 			m_mfdStatusMediator->setTarget (dynamic_cast<TangibleObject *>(Game::getPlayer ()));
@@ -538,6 +543,10 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	//----------------------------------------------------------------------
 
+	else if (message.isType (UnnamedMessages::ConnectionServerConnectionClosed))
+	{
+		cancelHolocronIntroduction();
+	}
 	else if (message.isType (ResourceHarvesterActivatePageMessage::MESSAGE_TYPE))
 	{
 		Archive::ReadIterator ri = NON_NULL (safe_cast<const GameNetworkMessage *>(&message))->getByteStream().begin();
@@ -604,7 +613,14 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 		Archive::ReadIterator ri = NON_NULL (safe_cast<const GameNetworkMessage*> (&message))->getByteStream ().begin ();
 		const NewbieTutorialRequest newbieTutorialRequest (ri);
 
-		if (newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestOpenCharacterSheet)
+		if (newbieTutorialRequest.getRequest().compare(0, 14, "holocronIntro:") == 0)
+		{
+			// A delayed reply must never create or reopen the window.
+			SwgCuiHolocron * const holocron = dynamic_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
+			if (holocron)
+				holocron->playIntroduction(newbieTutorialRequest.getRequest());
+		}
+		else if (newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestOpenCharacterSheet)
 			m_sendOpenCharacterSheet = true;
 		else if (newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseCharacterSheet)
 			m_sendCloseCharacterSheet = true;
@@ -620,6 +636,18 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 			m_sendOpenStatMigration = true;
 		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseStatMigration)
 			m_sendCloseStatMigration = true;
+		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestOpenHolocron)
+		{
+			openHolocronToPage(std::string());
+			const NewbieTutorialResponse response(cms_newbieTutorialRequestOpenHolocron);
+			GameNetwork::send(response, true);
+		}
+		else if(newbieTutorialRequest.getRequest () == cms_newbieTutorialRequestCloseHolocron)
+		{
+			closeHolocron();
+			const NewbieTutorialResponse response(cms_newbieTutorialRequestCloseHolocron);
+			GameNetwork::send(response, true);
+		}
 	}
 
 	//----------------------------------------------------------------------
@@ -731,7 +759,14 @@ void SwgCuiHudWindowManager::receiveMessage(const MessageDispatch::Emitter & , c
 
 	else if (message.isType (OpenHolocronToPageMessage::MessageType))
 	{
-		IGNORE_RETURN(CuiActionManager::performAction (CuiActions::service, Unicode::emptyString));
+		Archive::ReadIterator ri = NON_NULL(safe_cast<const GameNetworkMessage*>(&message))->getByteStream().begin();
+		OpenHolocronToPageMessage msg(ri);
+		openHolocronToPage(msg.getPage());
+	}
+
+	else if (message.isType (CloseHolocronMessage::MessageType))
+	{
+		closeHolocron();
 	}
 
 	else if (message.isType (EditAppearanceMessage::MessageType))
@@ -1270,6 +1305,10 @@ void SwgCuiHudWindowManager::onTradeRequestDeniedPlayerUnreachable (const Networ
 
 void SwgCuiHudWindowManager::updateWindowManager (const float elapsedTime)
 {
+	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
+	if (holocron && holocron->hasIntroduction())
+		holocron->updateIntroduction(elapsedTime, isHolocronIntroductionBusy());
+
 	if (m_blinkingMediator)
 	{
 		m_blinkTime -= elapsedTime;
@@ -1695,6 +1734,59 @@ SwgCuiToolbar *SwgCuiHudWindowManager::getCachedToolbar()
 	else
 		result = m_singleToolbar;
 	return result;
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::openHolocronToPage(const std::string & pageName)
+{
+	UIPage * const pdaPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA", TUIPage));
+	if (!pdaPage)
+		return;
+
+	UIPage * const helpPage = safe_cast<UIPage *>(UIManager::gUIManager().GetObjectFromPath("/PDA.help", TUIPage));
+	if (!helpPage)
+		return;
+
+	SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(CuiMediatorFactory::activateInWorkspace(CuiMediatorTypes::WS_Holocron));
+	if (holocron && !pageName.empty())
+	{
+		holocron->loadPage(pageName);
+	}
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::closeHolocron()
+{
+	CuiMediatorFactory::deactivateInWorkspace(CuiMediatorTypes::WS_Holocron);
+}
+
+//----------------------------------------------------------------------
+
+void SwgCuiHudWindowManager::toggleHolocron ()
+{
+	CuiMediatorFactory::toggleInWorkspace(CuiMediatorTypes::WS_Holocron);
+}
+
+bool SwgCuiHudWindowManager::isHolocronIntroductionBusy()
+{
+	CreatureObject const * const player = Game::getPlayerCreature();
+	if (!player || Game::isPlayingCutScene() || player->isDead() || player->isIncapacitated())
+		return true;
+	// Playback-script disposition only describes an attack animation; it does
+	// not establish the player's combat state between attacks or while defending.
+	return player->getState(States::Combat) || CuiConversationManager::getTarget() != NetworkId::cms_invalid;
+}
+
+void SwgCuiHudWindowManager::cancelHolocronIntroduction()
+{
+	if (m_workspace)
+	{
+		SwgCuiHolocron * const holocron = safe_cast<SwgCuiHolocron *>(m_workspace->findMediatorByType(typeid(SwgCuiHolocron)));
+		if (holocron)
+			holocron->cancelIntroduction();
+	}
 }
 
 //======================================================================

@@ -2798,7 +2798,8 @@ void SwgCuiToolbar::update (float deltaTimeSecs)
 							else
 							{
 								// Hide timer if we change the option to display the timer mid-cooldown
-								cooldownTimer->SetVisible(false);
+								if (cooldownTimer != nullptr)
+									cooldownTimer->SetVisible(false);
 							}
 						}
 						else // fail safe catch to make sure we aren't showing the timer when we shouldn't be
