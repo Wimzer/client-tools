@@ -1,0 +1,100 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	WelcomeToSWG	Page	@kb/kb_begin_n:welcometoswg	
+WelcomeToSWG	Text	String	@kb/kb_begin_d:welcometoswg	
+WelcomeToSWG	LinkClickmetolearnmore	LinkButton	@kb/kb_begin_d:clickmetolearnmore	WelcomeToSWG.AboutHolocube
+WelcomeToSWG	AboutHolocube	Page	@kb/kb_begin_n:aboutholocube	
+WelcomeToSWG.AboutHolocube	Text	String	@kb/kb_begin_d:aboutholocube	
+WelcomeToSWG	TutorialRecap	Page	@kb/kb_begin_n:tutorialrecap	
+WelcomeToSWG.TutorialRecap	Text	String	@kb/kb_begin_d:tutorialrecap	
+WelcomeToSWG.TutorialRecap	LookAndMove	Page	@kb/kb_begin_n:lookandmove	
+WelcomeToSWG.TutorialRecap.LookAndMove	Text	String	@kb/kb_begin_d:lookandmove	
+WelcomeToSWG.TutorialRecap	MouseMode	Page	@kb/kb_begin_n:mousemode	
+WelcomeToSWG.TutorialRecap.MouseMode	Text	String	@kb/kb_begin_d:mousemode	
+WelcomeToSWG.TutorialRecap	ChatWithPlayers	Page	@kb/kb_begin_n:chatwithplayers	
+WelcomeToSWG.TutorialRecap.ChatWithPlayers	Text	String	@kb/kb_begin_d:chatwithplayers	
+WelcomeToSWG.TutorialRecap	LookAtObjects	Page	@kb/kb_begin_n:lookatobjects	
+WelcomeToSWG.TutorialRecap.LookAtObjects	Text	String	@kb/kb_begin_d:lookatobjects	
+WelcomeToSWG.TutorialRecap	UsingObjects	Page	@kb/kb_begin_n:usingobjects	
+WelcomeToSWG.TutorialRecap.UsingObjects	Text	String	@kb/kb_begin_d:usingobjects	
+WelcomeToSWG.TutorialRecap	RadialMenu	Page	@kb/kb_begin_n:radialmenu	
+WelcomeToSWG.TutorialRecap.RadialMenu	Text	String	@kb/kb_begin_d:radialmenu	
+WelcomeToSWG.TutorialRecap	Conversations	Page	@kb/kb_begin_n:conversations	
+WelcomeToSWG.TutorialRecap.Conversations	Text	String	@kb/kb_begin_d:conversations	
+WelcomeToSWG.TutorialRecap	Containers	Page	@kb/kb_begin_n:containers	
+WelcomeToSWG.TutorialRecap.Containers	Text	String	@kb/kb_begin_d:containers	
+WelcomeToSWG.TutorialRecap	Inventory	Page	@kb/kb_begin_n:inventory	
+WelcomeToSWG.TutorialRecap.Inventory	Text	String	@kb/kb_begin_d:inventory	
+WelcomeToSWG.TutorialRecap	Toolbar	Page	@kb/kb_begin_n:toolbar	
+WelcomeToSWG.TutorialRecap.Toolbar	Text	String	@kb/kb_begin_d:toolbar	
+WelcomeToSWG.TutorialRecap	BuyingItems	Page	@kb/kb_begin_n:buyingitems	
+WelcomeToSWG.TutorialRecap.BuyingItems	Text	String	@kb/kb_begin_d:buyingitems	
+WelcomeToSWG.TutorialRecap	Bank	Page	@kb/kb_begin_n:bank	
+WelcomeToSWG.TutorialRecap.Bank	Text	String	@kb/kb_begin_d:bank	
+WelcomeToSWG.TutorialRecap	Dying	Page	@kb/kb_begin_n:dying	
+WelcomeToSWG.TutorialRecap.Dying	Text	String	@kb/kb_begin_d:dying	
+WelcomeToSWG.TutorialRecap	Cloning	Page	@kb/kb_begin_n:cloning	
+WelcomeToSWG.TutorialRecap.Cloning	Text	String	@kb/kb_begin_d:cloning	
+WelcomeToSWG.TutorialRecap	Equipment	Page	@kb/kb_begin_n:equipment	
+WelcomeToSWG.TutorialRecap.Equipment	Text	String	@kb/kb_begin_d:equipment	
+WelcomeToSWG.TutorialRecap	Combat	Page	@kb/kb_begin_n:combat	
+WelcomeToSWG.TutorialRecap.Combat	Text	String	@kb/kb_begin_d:combat	
+WelcomeToSWG.TutorialRecap	Missions	Page	@kb/kb_begin_n:missions	
+WelcomeToSWG.TutorialRecap.Missions	Text	String	@kb/kb_begin_d:missions	
+WelcomeToSWG	WhereDoIBegin	Page	@kb/kb_begin_n:wheredoibegin	
+WelcomeToSWG.WhereDoIBegin	Text	String	@kb/kb_begin_d:wheredoibegin	
+WelcomeToSWG.WhereDoIBegin	professions	Page	@kb/kb_begin_n:professions	
+WelcomeToSWG.WhereDoIBegin.professions	Text	String	@kb/kb_begin_d:professions	
+WelcomeToSWG.WhereDoIBegin.professions	LinkPlayingacombatprofessionbountyhuntercommandojedimedicofficersmugglerspy	LinkButton	@kb/kb_begin_d:playingacombatprofessionbountyhuntercommandojedimedicofficersmugglerspy	WelcomeToSWG.WhereDoIBegin.professions.playingcombat
+WelcomeToSWG.WhereDoIBegin.professions	LinkPlayingatraderdomesticsengineeringmunitionsstructures	LinkButton	@kb/kb_begin_d:playingatraderdomesticsengineeringmunitionsstructures	WelcomeToSWG.WhereDoIBegin.professions.playingtrader
+WelcomeToSWG.WhereDoIBegin.professions	LinkPlayinganentertainer	LinkButton	@kb/kb_begin_d:playinganentertainer	WelcomeToSWG.WhereDoIBegin.professions.playingentertainer
+WelcomeToSWG.WhereDoIBegin.professions	playingcombat	Page	@kb/kb_begin_n:playingcombat	
+WelcomeToSWG.WhereDoIBegin.professions.playingcombat	Text	String	@kb/kb_begin_d:playingcombat	
+WelcomeToSWG.WhereDoIBegin.professions.playingcombat	Quests	Page	@kb/kb_begin_n:quests	
+WelcomeToSWG.WhereDoIBegin.professions.playingcombat.Quests	Text	String	@kb/kb_begin_d:quests	
+WelcomeToSWG.WhereDoIBegin.professions.playingcombat	Weapons	Page	@kb/kb_begin_n:weapons	
+WelcomeToSWG.WhereDoIBegin.professions.playingcombat.Weapons	Text	String	@kb/kb_begin_d:weapons	
+WelcomeToSWG.WhereDoIBegin.professions	playingtrader	Page	@kb/kb_begin_n:playingtrader	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader	Text	String	@kb/kb_begin_d:playingtrader	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader	Leveling	Page	@kb/kb_begin_n:leveling	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.Leveling	Text	String	@kb/kb_begin_d:leveling	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader	Resources	Page	@kb/kb_begin_n:resources	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.Resources	Text	String	@kb/kb_begin_d:resources	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.Resources	LinkResourcetree	LinkButton	@kb/kb_begin_d:resourcetree	Resources.ResourceTree
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader	LimitedUseSchematics	Page	@kb/kb_begin_n:limiteduseschematics	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.LimitedUseSchematics	Text	String	@kb/kb_begin_d:limiteduseschematics	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader	Markets	Page	@kb/kb_begin_n:markets	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.Markets	Text	String	@kb/kb_begin_d:markets	
+WelcomeToSWG.WhereDoIBegin.professions.playingtrader.Markets	LinkLearningthebazaar	LinkButton	@kb/kb_begin_d:learningthebazaar	LearningTheBazaar
+WelcomeToSWG.WhereDoIBegin.professions	playingentertainer	Page	@kb/kb_begin_n:playingentertainer	
+WelcomeToSWG.WhereDoIBegin.professions.playingentertainer	Text	String	@kb/kb_begin_d:playingentertainer	
+WelcomeToSWG.WhereDoIBegin	ThingsToDo	Page	@kb/kb_begin_n:thingstodo	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	Text	String	@kb/kb_begin_d:thingstodo	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	LinkMissionTerminals	LinkButton	@kb/kb_begin_d:link_missionterminals	WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	MissionTerminals	Page	@kb/kb_begin_n:missionterminals	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals	Text	String	@kb/kb_begin_d:missionterminals	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.MissionTerminals	LinkNPCMissions	LinkButton	@kb/kb_begin_d:link_npcmissions	WelcomeToSWG.WhereDoIBegin.ThingsToDo.NPCMissions
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	NPCMissions	Page	@kb/kb_begin_n:npcmissions	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.NPCMissions	Text	String	@kb/kb_begin_d:npcmissions	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	ChatChannels	Page	@kb/kb_begin_n:chatchannels	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ChatChannels	Text	String	@kb/kb_begin_d:chatchannels	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.ChatChannels	LinkGlobalChat	LinkButton	@kb/kb_begin_d:link_globalchat	WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	GlobalChat	Page	@kb/kb_begin_n:globalchat	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat	Text	String	@kb/kb_begin_d:globalchat	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.GlobalChat	LinkFindingPeople	LinkButton	@kb/kb_begin_d:link_findingpeople	WelcomeToSWG.WhereDoIBegin.FindingPeople
+WelcomeToSWG.WhereDoIBegin.ThingsToDo	Legacy	Page	@kb/kb_begin_n:legacy	
+WelcomeToSWG.WhereDoIBegin.ThingsToDo.Legacy	Text	String	@kb/kb_begin_d:legacy	
+WelcomeToSWG.WhereDoIBegin	FindingPeople	Page	@kb/kb_begin_n:findingpeople	
+WelcomeToSWG.WhereDoIBegin.FindingPeople	Text	String	@kb/kb_begin_d:findingpeople	
+WelcomeToSWG.WhereDoIBegin.FindingPeople	LinkSearchingForPlayers	LinkButton	@kb/kb_begin_d:link_searching	WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers
+WelcomeToSWG.WhereDoIBegin.FindingPeople	SearchingForPlayers	Page	@kb/kb_begin_n:searchingforplayers	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers	Text	String	@kb/kb_begin_d:searchingforplayers	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.SearchingForPlayers	LinkFriendsList	LinkButton	@kb/kb_begin_d:link_friendslist	WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList
+WelcomeToSWG.WhereDoIBegin.FindingPeople	FriendsList	Page	@kb/kb_begin_n:friendslist	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList	Text	String	@kb/kb_begin_d:friendslist	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.FriendsList	LinkMatchmaker	LinkButton	@kb/kb_begin_d:link_matchmaker	WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker
+WelcomeToSWG.WhereDoIBegin.FindingPeople	Matchmaker	Page	@kb/kb_begin_n:matchmaker	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker	Text	String	@kb/kb_begin_d:matchmaker	
+WelcomeToSWG.WhereDoIBegin.FindingPeople.Matchmaker	LinkFinishHandoff	LinkButton	@kb/kb_begin_d:link_finishhandoff	WelcomeToSWG.WhereDoIBegin.FinishHandoff
+WelcomeToSWG.WhereDoIBegin	FinishHandoff	Page	@kb/kb_begin_n:finishhandoff	
+WelcomeToSWG.WhereDoIBegin.FinishHandoff	Text	String	@kb/kb_begin_d:finishhandoff	

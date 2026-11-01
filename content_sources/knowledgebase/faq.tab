@@ -1,0 +1,18 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	FAQ	Page	@kb/kb_faq_n:faq	
+FAQ	Text	String	@kb/kb_faq_d:faq	
+FAQ	Events	Page	@kb/kb_faq_n:events	
+FAQ.Events	Text	String	@kb/kb_faq_d:events	
+FAQ	Houses	Page	@kb/kb_faq_n:houses	
+FAQ.Houses	Text	String	@kb/kb_faq_d:houses	
+FAQ	PA	Page	@kb/kb_faq_n:pa	
+FAQ.PA	Text	String	@kb/kb_faq_d:pa	
+FAQ	Unity	Page	@kb/kb_faq_n:unity	
+FAQ.Unity	Text	String	@kb/kb_faq_d:unity	
+FAQ	Gameplay	Page	@kb/kb_faq_n:gameplay	
+FAQ.Gameplay	Text	String	@kb/kb_faq_d:gameplay	
+FAQ	creditfaq	Page	@kb/kb_faq_n:creditfaq	
+FAQ.creditfaq	Text	String	@kb/kb_faq_d:creditfaq	
+FAQ	Learn_more	Page	@kb/kb_faq_n:learn_more	
+FAQ.Learn_more	Text	String	@kb/kb_faq_d:learn_more	

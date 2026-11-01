@@ -7,6 +7,7 @@
 
 #include "clientGame/FirstClientGame.h"
 #include "clientGame/InputScheme.h"
+#include "InputSchemeHolocron.h"
 
 #include "clientGame/ClientStringIds.h"
 #include "clientGame/FreeChaseCamera.h"
@@ -74,6 +75,7 @@ namespace
 
 	InputMap *  s_groundInputMap = 0;
 	int         s_groundInputMapRefCount  = 0;
+	int         s_holocronBindingMigrations = 0;
 
 	struct PlayerId
 	{
@@ -176,6 +178,7 @@ namespace
 
 		CurrentUserOptionManager::registerOption (s_lastInputSchemeTypes[Game::ST_ground], "ClientGame", "lastInputSchemeType");
 		CurrentUserOptionManager::registerOption (s_lastInputSchemeTypes[Game::ST_space], "ClientGame", "lastInputSchemeTypeSpace");
+		CurrentUserOptionManager::registerOption(s_holocronBindingMigrations, "ClientGame", "holocronBindingMigrations");
 	}
 
 	//----------------------------------------------------------------------
@@ -268,6 +271,15 @@ namespace
 
 	//----------------------------------------------------------------------
 
+	void migrateHolocronBinding()
+	{
+		int const scene = Game::getHudSceneType();
+		int const migration = scene == Game::ST_ground ? 1 : 2;
+		if (s_groundInputMap)
+			InputSchemeHolocron::migrate(*s_groundInputMap, migration, s_holocronBindingMigrations,
+				DIK_H, &CurrentUserOptionManager::save);
+	}
+
 	void writeUpdate(const std::string &filename)
 	{
 		if (!s_groundInputMap->write (0, false))
@@ -354,6 +366,7 @@ bool InputScheme::resetFromType (const std::string & type, bool confirmed)
 		s_lastInputSchemeTypes[sceneType] = type;
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
+		migrateHolocronBinding();
 
 		s_resetCallback->performCallback ();
 
@@ -460,6 +473,7 @@ InputMap * InputScheme::fetchGroundInputMap()
 		}
 
 		ClientMacroManager::synchronizeWithInputMap (s_groundInputMap);
+		migrateHolocronBinding();
 		s_resetCallback  = new Callback;
 		s_resetCallback->fetch ();
 
@@ -537,6 +551,11 @@ std::string const & InputScheme::getLastInputSchemeType ()
 	}
 	
 	return s_lastInputSchemeTypes[sceneType];
+}
+
+void InputScheme::resetHolocronBindingMigration()
+{
+	s_holocronBindingMigrations = 0;
 }
 
 //======================================================================

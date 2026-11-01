@@ -1,0 +1,8 @@
+{
+  "table": "npe_atrium_tutorial",
+  "key": "targeting",
+  "text": "Left-click on an object, player, or NPC to target them. Use the Tab key to cycle through potential enemies.",
+  "sound": "sound/tutorial_npe2_target.snd",
+  "portrait": "object/mobile/dressed_commoner_naboo_human_female_07.iff",
+  "display_seconds": 10
+}

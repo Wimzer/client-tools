@@ -1,0 +1,12 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	Buffs	Page	@kb/kb_buffs_n:buffs	
+Buffs	Text	String	@kb/kb_buffs_d:buffs	
+Buffs	WhereBuffs	Page	@kb/kb_buffs_n:wherebuffs	
+Buffs.WhereBuffs	Text	String	@kb/kb_buffs_d:wherebuffs	
+Buffs.WhereBuffs	PlayerBuffs	Page	@kb/kb_buffs_n:playerbuffs	
+Buffs.WhereBuffs.PlayerBuffs	Text	String	@kb/kb_buffs_d:playerbuffs	
+Buffs.WhereBuffs	ItemBuffs	Page	@kb/kb_buffs_n:itembuffs	
+Buffs.WhereBuffs.ItemBuffs	Text	String	@kb/kb_buffs_d:itembuffs	
+Buffs.WhereBuffs	OtherBuffs	Page	@kb/kb_buffs_n:otherbuffs	
+Buffs.WhereBuffs.OtherBuffs	Text	String	@kb/kb_buffs_d:otherbuffs	

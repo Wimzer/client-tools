@@ -1,0 +1,43 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	Planets	Page	@kb/kb_planets_n:planets	
+Planets	Text	String	@kb/kb_planets_d:planets	
+Planets	Tatooine	Page	@kb/kb_planets_n:tatooine	
+Planets.Tatooine	Text	String	@kb/kb_planets_d:tatooine	
+Planets.Tatooine	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Tatooine
+Planets	Corellia	Page	@kb/kb_planets_n:corellia	
+Planets.Corellia	Text	String	@kb/kb_planets_d:corellia	
+Planets.Corellia	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Corellia
+Planets	Naboo	Page	@kb/kb_planets_n:naboo	
+Planets.Naboo	Text	String	@kb/kb_planets_d:naboo	
+Planets.Naboo	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Naboo
+Planets	Talus	Page	@kb/kb_planets_n:talus	
+Planets.Talus	Text	String	@kb/kb_planets_d:talus	
+Planets.Talus	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Talus
+Planets	Rori	Page	@kb/kb_planets_n:rori	
+Planets.Rori	Text	String	@kb/kb_planets_d:rori	
+Planets.Rori	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Rori
+Planets	Dantooine	Page	@kb/kb_planets_n:dantooine	
+Planets.Dantooine	Text	String	@kb/kb_planets_d:dantooine	
+Planets.Dantooine	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Dantooine
+Planets	Dathomir	Page	@kb/kb_planets_n:dathomir	
+Planets.Dathomir	Text	String	@kb/kb_planets_d:dathomir	
+Planets.Dathomir	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Dathomir
+Planets	Endor	Page	@kb/kb_planets_n:endor	
+Planets.Endor	Text	String	@kb/kb_planets_d:endor	
+Planets.Endor	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Endor
+Planets	Lok	Page	@kb/kb_planets_n:lok	
+Planets.Lok	Text	String	@kb/kb_planets_d:lok	
+Planets.Lok	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.Lok
+Planets	YavinIV	Page	@kb/kb_planets_n:yaviniv	
+Planets.YavinIV	Text	String	@kb/kb_planets_d:yaviniv	
+Planets.YavinIV	Button1	LinkButton	@kb/kb_planets_d:seebestiary	Bestiary.YavinIV
+Planets	Kashyyyk	Page	@kb/kb_planets_n:kashyyyk	
+Planets.Kashyyyk	Text	String	@kb/holocron_nge_loc_d:kashyyyk	
+Planets.Kashyyyk	LinkSeethisplanetsbestiary	LinkButton	@kb/kb_planets_d:seethisplanetsbestiary	Bestiary.Kashyyyk
+Planets	Mustafar	Page	@kb/kb_planets_n:mustafar	
+Planets.Mustafar	Text	String	@kb/holocron_nge_loc_d:mustafar	
+Planets.Mustafar	LinkSeethisplanetsbestiary	LinkButton	@kb/kb_planets_d:seethisplanetsbestiary	Bestiary.Mustafar
+Planets.Tatooine	Image1	Image	ui_sshot_mos_eisley	
+Planets.Corellia	Image1	Image	ui_sshot_coronet	
+Planets.Naboo	Image1	Image	ui_sshot_theed	

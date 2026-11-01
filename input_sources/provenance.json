@@ -1,0 +1,41 @@
+{
+  "compiler": "/ai-stack/repos/swg/server/source/swg-main/exe/linux/bin/Miff",
+  "files": [
+    {
+      "path": "input/groundinputmap_cmds.iff",
+      "capture_archive": "hotfix_59_client_00.tre",
+      "capture_offset": 26143,
+      "before_sha256": "9235cdf1d3ad9fb2e246509eaa9a1f1624fb49480e777dee5f09d576592374b0",
+      "after_sha256": "41c7ca0fc3ede84cc5e762c84fe43bfb15f7f24b1a64c9fce534385a98d36e8a",
+      "source_sha256": "4d1b55139a7997301f2683fe9e2659aa70d0e3d0a40ab75d5caa8ec32773a962",
+      "no_change_roundtrip": "byte-identical"
+    },
+    {
+      "path": "input/groundinputmap_swg.iff",
+      "capture_archive": "patch_42_client_00.tre",
+      "capture_offset": 11795943,
+      "before_sha256": "31639b96f1f0137aa78ead3c9f943e1d0b0252e944d5f01f27852568123d810d",
+      "after_sha256": "bdef368dc58d51fb082712c483b803d48d9523ac022e7aa2866636e357054470",
+      "source_sha256": "183e4d19653f5a36b3ed8ceab258be892d1037b0c42c565bae112da693167685",
+      "no_change_roundtrip": "byte-identical"
+    },
+    {
+      "path": "input/groundinputmap_swg_classic.iff",
+      "capture_archive": "patch_42_client_00.tre",
+      "capture_offset": 11797280,
+      "before_sha256": "fe4f79863639d19e91e3c05d3e22e20c15c73c2790bcd05241adcfa868ff4844",
+      "after_sha256": "aebaa8f2c843cfa5f49145477f1a9167ec87910c2c72375867ddfe0a5c3221c0",
+      "source_sha256": "ba478c852e9266f3fc02f756691bdf5987c3f5d6ee16e44ada527e901b0837c6",
+      "no_change_roundtrip": "byte-identical"
+    },
+    {
+      "path": "input/groundinputmap_swg_modern.iff",
+      "capture_archive": "patch_42_client_00.tre",
+      "capture_offset": 11798536,
+      "before_sha256": "c65d145fc6277337ee24b69d54b4c338c109dbf05d423214232860ff8b6cbc3c",
+      "after_sha256": "7de20080b293bd9a2c9ef564bf2b976db42627822b405e5a66e39242da2125d3",
+      "source_sha256": "127257bd497de6a64b7adfce10dcd13fa665fa5c7878fbb59991c614c74a9daf",
+      "no_change_roundtrip": "byte-identical"
+    }
+  ]
+}

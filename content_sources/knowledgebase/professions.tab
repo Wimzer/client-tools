@@ -1,0 +1,60 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	Professions	Page	@kb/kb_professions_n:professions	
+Professions	Text	String	@kb/kb_professions_d:professions	
+Professions	LinkDoyouwanttoexperienceanintricatecraftingsystem	LinkButton	@kb/kb_professions_d:doyouwanttoexperienceanintricatecraftingsystem	Professions.Trader
+Professions	LinkMaybeyoureamoresocialperson	LinkButton	@kb/kb_professions_d:maybeyoureamoresocialperson	Professions.Entertainer
+Professions	LinkYoulikelotsofdamageandalsosurvivability	LinkButton	@kb/kb_professions_d:youlikelotsofdamageandalsosurvivability	Professions.Commando
+Professions	LinkYouwanttolearnthewaysoftheforce	LinkButton	@kb/kb_professions_d:youwanttolearnthewaysoftheforce	Professions.Jedi
+Professions	LinkYouwanttohealothersaswellasutilizeafflictions	LinkButton	@kb/kb_professions_d:youwanttohealothersaswellasutilizeafflictions	Professions.Medic
+Professions	LinkYouwanttorallyyourgroupanduseartillery	LinkButton	@kb/kb_professions_d:youwanttorallyyourgroupanduseartillery	Professions.Officer
+Professions	LinkYouwanttoavoidauthoritiesandescapeatanytime	LinkButton	@kb/kb_professions_d:youwanttoavoidauthoritiesandescapeatanytime	Professions.Smuggler
+Professions	LinkYouprefersubterfugeandbackalleydeals	LinkButton	@kb/kb_professions_d:youprefersubterfugeandbackalleydeals	Professions.Spy
+Professions	LinkYouwanttohuntyourfellowplayers	LinkButton	@kb/kb_professions_d:youwanttohuntyourfellowplayers	Professions.Bounty_Hunter
+Professions	Entertainer	Page	@kb/kb_professions_n:entertainer	
+Professions.Entertainer	Text	String	@kb/kb_professions_d:entertainer	
+Professions	Trader	Page	@kb/kb_professions_n:trader	
+Professions.Trader	Text	String	@kb/kb_professions_d:trader	
+Professions.Trader	Domestics	Page	@kb/kb_professions_n:domestics	
+Professions.Trader.Domestics	Text	String	@kb/kb_professions_d:domestics	
+Professions.Trader.Domestics	Chef	Page	@kb/kb_professions_n:chef	
+Professions.Trader.Domestics.Chef	Text	String	@kb/kb_professions_d:chef	
+Professions.Trader.Domestics	Tailor	Page	@kb/kb_professions_n:tailor	
+Professions.Trader.Domestics.Tailor	Text	String	@kb/kb_professions_d:tailor	
+Professions.Trader	Structures	Page	@kb/kb_professions_n:structures	
+Professions.Trader.Structures	Text	String	@kb/kb_professions_d:structures	
+Professions.Trader.Structures	Architect	Page	@kb/kb_professions_n:architect	
+Professions.Trader.Structures.Architect	Text	String	@kb/kb_professions_d:architect	
+Professions.Trader.Structures	Shipwright	Page	@kb/kb_professions_n:shipwright	
+Professions.Trader.Structures.Shipwright	Text	String	@kb/kb_professions_d:shipwright	
+Professions.Trader	Munitions	Page	@kb/kb_professions_n:munitions	
+Professions.Trader.Munitions	Text	String	@kb/kb_professions_d:munitions	
+Professions.Trader.Munitions	Armorsmith	Page	@kb/kb_professions_n:armorsmith	
+Professions.Trader.Munitions.Armorsmith	Text	String	@kb/kb_professions_d:armorsmith	
+Professions.Trader.Munitions	Weaponsmith	Page	@kb/kb_professions_n:weaponsmith	
+Professions.Trader.Munitions.Weaponsmith	Text	String	@kb/kb_professions_d:weaponsmith	
+Professions.Trader	Engineering	Page	@kb/kb_professions_n:engineering	
+Professions.Trader.Engineering	Text	String	@kb/kb_professions_d:engineering	
+Professions	Bounty_Hunter	Page	@kb/kb_professions_n:bounty_hunter	
+Professions.Bounty_Hunter	Text	String	@kb/kb_professions_d:bounty_hunter	
+Professions.Bounty_Hunter	PlayerBounties	Page	@kb/kb_professions_n:playerbounties	
+Professions.Bounty_Hunter.PlayerBounties	Text	String	@kb/kb_professions_d:playerbounties	
+Professions	Commando	Page	@kb/kb_professions_n:commando	
+Professions.Commando	Text	String	@kb/kb_professions_d:commando	
+Professions	Jedi	Page	@kb/kb_professions_n:jedi	
+Professions.Jedi	Text	String	@kb/kb_professions_d:jedi	
+Professions	Medic	Page	@kb/kb_professions_n:medic	
+Professions.Medic	Text	String	@kb/kb_professions_d:medic	
+Professions	Officer	Page	@kb/kb_professions_n:officer	
+Professions.Officer	Text	String	@kb/kb_professions_d:officer	
+Professions	Smuggler	Page	@kb/kb_professions_n:smuggler	
+Professions.Smuggler	Text	String	@kb/kb_professions_d:smuggler	
+Professions	Spy	Page	@kb/kb_professions_n:spy	
+Professions.Spy	Text	String	@kb/kb_professions_d:spy	
+Professions	Auxillary_professions	Page	@kb/kb_professions_n:auxillary_professions	
+Professions.Auxillary_professions	Beast_Master	Page	@kb/kb_professions_n:beast_master	
+Professions.Auxillary_professions.Beast_Master	Text	String	@kb/kb_professions_d:beast_master	
+Professions.Auxillary_professions	Politician	Page	@kb/kb_professions_n:politician	
+Professions.Auxillary_professions.Politician	Text	String	@kb/kb_professions_d:politician	
+Professions.Auxillary_professions	Chronicler	Page	@kb/kb_professions_n:chronicler	
+Professions.Auxillary_professions.Chronicler	Text	String	@kb/kb_professions_d:chronicler	

@@ -1,0 +1,14 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	Grouping	Page	@kb/kb_grouping_n:grouping	
+Grouping	Text	String	@kb/kb_grouping_d:grouping	
+Grouping	Forming	Page	@kb/kb_grouping_n:forming	
+Grouping.Forming	Text	String	@kb/kb_grouping_d:forming	
+Grouping	Joining	Page	@kb/kb_grouping_n:joining	
+Grouping.Joining	Text	String	@kb/kb_grouping_d:joining	
+Grouping	GroupList	Page	@kb/kb_grouping_n:grouplist	
+Grouping.GroupList	Text	String	@kb/kb_grouping_d:grouplist	
+Grouping	GroupChat	Page	@kb/kb_grouping_n:groupchat	
+Grouping.GroupChat	Text	String	@kb/kb_grouping_d:groupchat	
+Grouping	Leaving	Page	@kb/kb_grouping_n:leaving	
+Grouping.Leaving	Text	String	@kb/kb_grouping_d:leaving	

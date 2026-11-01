@@ -44,6 +44,7 @@ public:
 	static Callback *            getResetCallback       ();
 
 	static std::string const &   getLastInputSchemeType ();
+	static void                  resetHolocronBindingMigration ();
 };
 
 //======================================================================

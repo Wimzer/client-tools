@@ -1263,6 +1263,7 @@
     <ClInclude Include="..\..\src\shared\core\HyperspaceIoWin.h" />
     <ClInclude Include="..\..\src\shared\core\InputActivityManager.h" />
     <ClInclude Include="..\..\src\shared\core\InputScheme.h" />
+    <ClInclude Include="..\..\src\shared\core\InputSchemeHolocron.h" />
     <ClInclude Include="..\..\src\shared\core\MoodManagerClient.h" />
     <ClInclude Include="..\..\src\shared\core\ObjectAttributeManager.h" />
     <ClInclude Include="..\..\src\shared\core\Panorama.h" />

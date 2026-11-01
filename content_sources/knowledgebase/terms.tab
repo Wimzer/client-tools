@@ -1,0 +1,12 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	Terms	Page	@kb/kb_terms_n:terms	
+Terms	Text	String	@kb/kb_terms_d:terms	
+Terms	SWG	Page	@kb/kb_terms_n:swg	
+Terms.SWG	Text	String	@kb/kb_terms_d:swg	
+Terms	Online	Page	@kb/kb_terms_n:online	
+Terms.Online	Text	String	@kb/kb_terms_d:online	
+Terms	Chat	Page	@kb/kb_terms_n:chat	
+Terms.Chat	Text	String	@kb/kb_terms_d:chat	
+Terms	SW	Page	@kb/kb_terms_n:sw	
+Terms.SW	Text	String	@kb/kb_terms_d:sw	

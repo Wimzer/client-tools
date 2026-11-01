@@ -1,0 +1,24 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	BeastMastery	Page	@kb/kb_beastmaster_n:beastmastery	
+BeastMastery	Text	String	@kb/kb_beastmaster_d:beastmastery	
+BeastMastery	CraftingYourPet	Page	@kb/kb_beastmaster_n:craftingyourpet	
+BeastMastery.CraftingYourPet	Text	String	@kb/kb_beastmaster_d:craftingyourpet	
+BeastMastery.CraftingYourPet	Enzymes	Page	@kb/kb_beastmaster_n:enzymes	
+BeastMastery.CraftingYourPet.Enzymes	Text	String	@kb/kb_beastmaster_d:enzymes	
+BeastMastery.CraftingYourPet	GeneticTools	Page	@kb/kb_beastmaster_n:genetictools	
+BeastMastery.CraftingYourPet.GeneticTools	Text	String	@kb/kb_beastmaster_d:genetictools	
+BeastMastery.CraftingYourPet	RefiningHydros	Page	@kb/kb_beastmaster_n:refininghydros	
+BeastMastery.CraftingYourPet.RefiningHydros	Text	String	@kb/kb_beastmaster_d:refininghydros	
+BeastMastery.CraftingYourPet	Engineeringyourbeast	Page	@kb/kb_beastmaster_n:engineeringyourbeast	
+BeastMastery.CraftingYourPet.Engineeringyourbeast	Text	String	@kb/kb_beastmaster_d:engineeringyourbeast	
+BeastMastery.CraftingYourPet	Mutations	Page	@kb/kb_beastmaster_n:mutations	
+BeastMastery.CraftingYourPet.Mutations	Text	String	@kb/kb_beastmaster_d:mutations	
+BeastMastery	TrainingPet	Page	@kb/kb_beastmaster_n:trainingpet	
+BeastMastery.TrainingPet	Text	String	@kb/kb_beastmaster_d:trainingpet	
+BeastMastery.TrainingPet	LevelPet	Page	@kb/kb_beastmaster_n:levelpet	
+BeastMastery.TrainingPet.LevelPet	Text	String	@kb/kb_beastmaster_d:levelpet	
+BeastMastery.TrainingPet	Abilities	Page	@kb/kb_beastmaster_n:abilities	
+BeastMastery.TrainingPet.Abilities	Text	String	@kb/kb_beastmaster_d:abilities	
+BeastMastery.TrainingPet	BeastCombat	Page	@kb/kb_beastmaster_n:beastcombat	
+BeastMastery.TrainingPet.BeastCombat	Text	String	@kb/kb_beastmaster_d:beastcombat	

@@ -155,6 +155,37 @@ void CuiKnowledgeBaseManager::remove ()
 
 //----------------------------------------------------------------------
 
+namespace
+{
+	void warmBodyStringsRecursive(CuiKnowledgeBaseManager::BaseKBNode * const node)
+	{
+		if (!node)
+			return;
+		for (std::vector<CuiKnowledgeBaseManager::BaseKBNode *>::const_iterator it = node->m_children.begin();
+		     it != node->m_children.end(); ++it)
+		{
+			CuiKnowledgeBaseManager::BaseKBNode * const child = *it;
+			if (child->m_type == CuiKnowledgeBaseManager::s_stringType)
+			{
+				CuiKnowledgeBaseManager::StringKBNode * const sn =
+					static_cast<CuiKnowledgeBaseManager::StringKBNode *>(child);
+				if (sn->m_string.isValid())
+					IGNORE_RETURN(sn->m_string.localize());
+			}
+			warmBodyStringsRecursive(child);
+		}
+	}
+}
+
+void CuiKnowledgeBaseManager::warmAllBodyStrings()
+{
+	if (!s_installed || !m_kbRoot)
+		return;
+	warmBodyStringsRecursive(m_kbRoot);
+}
+
+//----------------------------------------------------------------------
+
 void CuiKnowledgeBaseManager::reloadData()
 {
 	DEBUG_FATAL (!s_installed, ("not installed"));

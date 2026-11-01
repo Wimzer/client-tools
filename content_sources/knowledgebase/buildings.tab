@@ -1,0 +1,24 @@
+Parent	Name	Type	Data1	Data2
+s	s	s	s	s
+	ImportantBuildings	Page	@kb/kb_buildings_n:importantbuildings	
+ImportantBuildings	Text	String	@kb/kb_buildings_d:importantbuildings	
+ImportantBuildings	Bank	Page	@kb/kb_buildings_n:bank	
+ImportantBuildings.Bank	Text	String	@kb/kb_buildings_d:bank	
+ImportantBuildings.Bank	Find	LinkButton	@kb/kb_buildings_d:findbank	Navigation.Buildings.Bank
+ImportantBuildings	CloningFacility	Page	@kb/kb_buildings_n:cloningfacility	
+ImportantBuildings.CloningFacility	Text	String	@kb/kb_buildings_d:cloningfacility	
+ImportantBuildings.CloningFacility	Find	LinkButton	@kb/kb_buildings_d:findcloningfacility	Navigation.Buildings.Cloning
+ImportantBuildings	Cantina	Page	@kb/kb_buildings_n:cantina	
+ImportantBuildings.Cantina	Text	String	@kb/kb_buildings_d:cantina	
+ImportantBuildings.Cantina	Find	LinkButton	@kb/kb_buildings_d:findcantina	Navigation.Buildings.Cantina
+ImportantBuildings	MedicalCenter	Page	@kb/kb_buildings_n:medicalcenter	
+ImportantBuildings.MedicalCenter	Text	String	@kb/kb_buildings_d:medicalcenter	
+ImportantBuildings	Starport	Page	@kb/kb_buildings_n:starport	
+ImportantBuildings.Starport	Text	String	@kb/kb_buildings_d:starport	
+ImportantBuildings.Starport	Find	LinkButton	@kb/kb_buildings_d:findstarport	Navigation.Buildings.Starport
+ImportantBuildings	Shuttleport	Page	@kb/kb_buildings_n:shuttleport	
+ImportantBuildings.Shuttleport	Text	String	@kb/kb_buildings_d:shuttleport	
+ImportantBuildings.Shuttleport	Find	LinkButton	@kb/kb_buildings_d:findshuttleport	Navigation.Buildings.Shuttleport
+ImportantBuildings	Garage	Page	@kb/kb_buildings_n:garage	
+ImportantBuildings.Garage	Text	String	@kb/kb_buildings_d:garage	
+ImportantBuildings.Garage	Find	LinkButton	@kb/kb_buildings_d:findgarage	Navigation.Buildings.Garage

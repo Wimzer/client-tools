@@ -1,0 +1,8 @@
+{
+  "table": "npe_atrium_tutorial",
+  "portrait": "object/mobile/dressed_commoner_naboo_human_female_07.iff",
+  "display_seconds": 10,
+  "lessons": [
+    {"topic": "loot", "key": "loot", "sound": "sound/tutorial_npe2_loot.snd", "text": "Double-click on a corpse to take items and credits off it."}
+  ]
+}
